@@ -1,0 +1,649 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Frontend Dashboard Custom Post\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-15 01:12+0000\n"
+"PO-Revision-Date: 2019-05-02 03:21+0000\n"
+"Last-Translator: sistemasrcimac <esteban22_kg@hotmail.com>\n"
+"Language-Team: Español\n"
+"Language: es-ES\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.2.2; wp-5.1.1"
+
+#: functions.php:682
+msgid "(eg) Actor"
+msgstr "(eg) Actor"
+
+#: functions.php:813
+msgid "(eg) Actor Not found"
+msgstr "(eg) Actor no encontrado"
+
+#: functions.php:669 functions.php:703 functions.php:713
+msgid "(eg) Actors"
+msgstr "(eg) Actores"
+
+#: functions.php:654
+msgid "(eg) actors (or) act_ors"
+msgstr "(eg) actores (or) acto_res"
+
+#: functions.php:723
+msgid "(eg) Actors:"
+msgstr "(eg) Actores:"
+
+#: functions.php:161
+msgid "(eg) Add New"
+msgstr "(eg) Añadir Nuevo"
+
+#: functions.php:743
+msgid "(eg) Add New Actor"
+msgstr "(eg) Añadir Nuevo Actor"
+
+#: functions.php:151
+msgid "(eg) Add New Movie"
+msgstr "(eg) Añadir Nueva Pelicula"
+
+#: functions.php:853
+msgid "(eg) Add or remove Actor"
+msgstr "(eg) Añadir o remover Actor"
+
+#: functions.php:733
+msgid "(eg) All Actors"
+msgstr "(eg) Todos los actores"
+
+#: functions.php:141
+msgid "(eg) All Movies"
+msgstr "(eg) Todas las peliculas"
+
+#: functions.php:863
+msgid "(eg) Choose from the most used Actor"
+msgstr "(eg) Elegir de el Actor mas usado"
+
+#: functions.php:333 functions.php:823
+msgid "(eg) Description"
+msgstr "(eg) Descripción"
+
+#: functions.php:763
+msgid "(eg) Edit Actor"
+msgstr "(eg) Editar Autor"
+
+#: functions.php:181
+msgid "(eg) Edit Movie"
+msgstr "(eg) Editar Pelicula"
+
+#: functions.php:241
+msgid "(eg) Featured Image for this Movie"
+msgstr "(eg) Imagen destacada para esta Pelicula"
+
+#: functions.php:323
+msgid "(eg) Filter Movies list"
+msgstr "(eg) Filtrar lista de peliculas"
+
+#: functions.php:81 functions.php:91 functions.php:101
+msgid "(eg) Horror Movies"
+msgstr "(eg) Películas de horror"
+
+#: functions.php:283
+msgid "(eg) Insert into Movie"
+msgstr "(eg) Insertar en Peliculas"
+
+#: functions.php:56
+msgid "(eg) Movie"
+msgstr "(eg) Película"
+
+#: functions.php:221
+msgid "(eg) Movie Not found"
+msgstr "(eg) Película no encontrada"
+
+#: functions.php:231
+msgid "(eg) Movie Not found in Trash"
+msgstr "(eg) Película no encontrada en la Basura"
+
+#: functions.php:43
+msgid "(eg) Movies"
+msgstr "(eg) Películas"
+
+#: functions.php:109
+msgid "(eg) Movies Archives"
+msgstr "(eg) Archivos de peliculas"
+
+#: functions.php:121
+msgid "(eg) Movies Attributes"
+msgstr "(eg) Atributos de Películas"
+
+#: functions.php:303
+msgid "(eg) Movies list"
+msgstr "(eg) Lista de Películas"
+
+#: functions.php:313
+msgid "(eg) Movies list navigation"
+msgstr "(eg) navegación de lista de Peliculas"
+
+#: functions.php:28
+msgid "(eg) movies or mov_ies"
+msgstr "(eg) películas or peli_culas"
+
+#: functions.php:131
+msgid "(eg) Movies:"
+msgstr "(eg) Películas:"
+
+#: functions.php:753
+msgid "(eg) New Actor Name"
+msgstr "(eg) Nuevo Nombre de Actor"
+
+#: functions.php:171
+msgid "(eg) New Movie"
+msgstr "(eg) Nueva Película"
+
+#: functions.php:793
+msgid "(eg) Parent Actor"
+msgstr "(eg) Actor Pariente"
+
+#: functions.php:833
+msgid "(eg) Popular Actor(s)"
+msgstr "(eg) Actor(es) Populares"
+
+#: functions.php:261
+msgid "(eg) Remove featured image for this Movie"
+msgstr "(eg) Remover imagen destacada para esta película"
+
+#: functions.php:495 functions.php:995
+msgid "(eg) REST base"
+msgstr "(eg) REST base"
+
+#: functions.php:515 functions.php:1015
+msgid "(eg) Rewrite URL Slug"
+msgstr "(eg) Reescribir URL slug"
+
+#: functions.php:803
+msgid "(eg) Search Actor"
+msgstr "(eg) Buscar Actor"
+
+#: functions.php:211
+msgid "(eg) Search Movie"
+msgstr "(eg) Buscar Pelicula"
+
+#: functions.php:843
+msgid "(eg) Separate Actors with commas"
+msgstr "(eg) Separar Actores con comas"
+
+#: functions.php:251
+msgid "(eg) Set featured image for this Movie"
+msgstr "(eg) Insertar imagen destacada para esta Película"
+
+#: functions.php:783
+msgid "(eg) Update Actor"
+msgstr "(eg) Editar Actor"
+
+#: functions.php:293
+msgid "(eg) Uploaded to this item"
+msgstr "(eg) Subido a este objeto"
+
+#: functions.php:272
+msgid "(eg) Use as featured image for this Movie"
+msgstr "(eg) Usar como imagen destacada para esta Pelciula"
+
+#: functions.php:773
+msgid "(eg) View Actor"
+msgstr "(eg) Ver Actor"
+
+#: functions.php:191
+msgid "(eg) View Movie"
+msgstr "(eg) Ver Película"
+
+#: functions.php:201
+msgid "(eg) View Movies"
+msgstr "(eg) Ver Peliculas"
+
+#: functions.php:343
+msgid "(eg)20 or 30 or any integer value"
+msgstr "(eg) 20 o 30 o cualquier valor de entero"
+
+#: functions.php:353
+msgid "(eg)Default is post"
+msgstr "(eg) Post por Default"
+
+#: functions.php:159
+msgid "Add New"
+msgstr "Añadir nuevo"
+
+#: functions.php:149 functions.php:741
+msgid "Add New Item"
+msgstr "Añadir nuevo objeto"
+
+#: functions.php:851
+msgid "Add or remove tags"
+msgstr "Añadir o remover tags"
+
+#: functions.php:139 functions.php:731
+msgid "All Items"
+msgstr "Todos los items"
+
+#: menu/class-fed-cp-menu.php:1059
+msgid "Allow Comments"
+msgstr "Permitir comentarios"
+
+#: functions.php:119
+msgid "Attributes"
+msgstr "Atributos"
+
+#: functions.php:552
+msgid "Author"
+msgstr "Autor"
+
+#: functions.php:423
+msgid "Can Export"
+msgstr "Puede exportar"
+
+#: functions.php:351
+msgid "Capability Type"
+msgstr "Tipo de capacidad"
+
+#: functions.php:861
+msgid "Choose from the most used tags"
+msgstr "Elegir de los tags mas usados"
+
+#: functions.php:67
+msgid "Click to get Menu Icons"
+msgstr "Click para iconos de menú"
+
+#: functions.php:602
+msgid "Comments"
+msgstr "Comentarios"
+
+#: menu/class-fed-cp-menu.php:1332
+msgid "Content"
+msgstr "Contenido"
+
+#: functions.php:592
+msgid "Custom Fields"
+msgstr "Campos personalizados"
+
+#: menu/class-fed-cp-custom-posts.php:35 menu/class-fed-cp-custom-posts.php:36
+msgid "Custom Post"
+msgstr "Post personalizado"
+
+#: menu/class-fed-cp-taxonomies.php:35 menu/class-fed-cp-taxonomies.php:36
+msgid "Custom Taxonomies"
+msgstr "Taxonomías Personalizadas"
+
+#: functions.php:473
+msgid "Delete with user"
+msgstr "Eliminar con usuario"
+
+#: functions.php:331 functions.php:821
+msgid "Description"
+msgstr "Descripción"
+
+#: menu/class-fed-cp-menu.php:477
+msgid "Disable Allow Comments"
+msgstr "Desactivar Permitir comentarios"
+
+#: menu/class-fed-cp-menu.php:436
+msgid "Disable Category"
+msgstr "Desactivar Categoria"
+
+#: menu/class-fed-cp-menu.php:865
+msgid "Disable Comments"
+msgstr "Desactivar comentarios"
+
+#: menu/class-fed-cp-menu.php:427
+msgid "Disable Content"
+msgstr "Desactivar contenido"
+
+#: menu/class-fed-cp-menu.php:845
+msgid "Disable Feature Image"
+msgstr "Desactivar Imagen destacada"
+
+#: menu/class-fed-cp-menu.php:456
+msgid "Disable Featured Image"
+msgstr "Desactivar Imagen Destacada"
+
+#: menu/class-fed-cp-menu.php:835
+msgid "Disable Post Content"
+msgstr "Desactivar Contenido del post"
+
+#: menu/class-fed-cp-menu.php:816
+msgid "Disable Post Delete"
+msgstr "Desactivar Eliminar Post"
+
+#: menu/class-fed-cp-menu.php:798
+msgid "Disable Post Edit"
+msgstr "Desactivar Editar Post"
+
+#: menu/class-fed-cp-menu.php:807
+msgid "Disable Post View"
+msgstr "Desactivar Ver Post"
+
+#: menu/class-fed-cp-menu.php:445
+msgid "Disable Tag"
+msgstr "Desactivar Tag"
+
+#: functions.php:179 functions.php:761
+msgid "Edit Item"
+msgstr "Editar objeto"
+
+#: functions.php:542
+msgid "Editor"
+msgstr "Editor"
+
+#: functions.php:572
+msgid "Excerpt"
+msgstr "Extracro"
+
+#: functions.php:443
+msgid "Exclude from Search"
+msgstr "Excluir de bnusqueda"
+
+#: functions.php:239 menu/class-fed-cp-menu.php:1040 
+#: menu/class-fed-cp-menu.php:1354
+msgid "Featured Image"
+msgstr "Imagen destacada"
+
+#: functions.php:321
+msgid "Filter items list"
+msgstr "Filtrar lista de objetos"
+
+#. Name of the plugin
+msgid "Frontend Dashboard Custom Post"
+msgstr "Frontend Dashboard Post Personalizados"
+
+#. Description of the plugin
+msgid ""
+"Frontend Dashboard Custom Post is a plugin to show the custom post inside "
+"the Frontend Dashboard."
+msgstr ""
+"Frontend Dashboard Post Personalizado es un plugin que muestra post "
+"personalizados dentro del Escritorio Dashboard"
+
+#: functions.php:433
+msgid "Has Archive"
+msgstr "Tiene Archivo"
+
+#: functions.php:363 functions.php:873
+msgid "Hierarchical"
+msgstr "Jerárquico"
+
+#. Author URI of the plugin
+msgid "http://buffercode.com/"
+msgstr "http://buffercode.com/"
+
+#. URI of the plugin
+msgid ""
+"https://buffercode.com/plugin/frontend-dashboard-custom-post-and-taxonomies"
+msgstr ""
+"https://buffercode.com/plugin/frontend-dashboard-custom-post-and-taxonomies"
+
+#: functions.php:281
+msgid "Insert into Item"
+msgstr "Insertar en Objeto"
+
+#: menu/class-fed-cp-menu.php:941
+msgid "Invalid Request, Please reload the page and try again"
+msgstr "Solicitud Invalida, pro favor cargue la pagina e inténtelo  nuevamente"
+
+#: functions.php:111
+msgid "Item Archives"
+msgstr "Archivos de objetos"
+
+#: functions.php:301
+msgid "Items List"
+msgstr "Lista de objetos"
+
+#: functions.php:311
+msgid "Items List Navigation"
+msgstr "Navegación de lista de objetos"
+
+#: functions.php:65 menu/class-fed-cp-menu.php:773 
+#: menu/class-fed-cp-menu.php:775
+msgid "Menu Icon"
+msgstr "Icono del menu"
+
+#: functions.php:89 functions.php:711
+msgid "Menu Name"
+msgstr "Nombre del menu"
+
+#: functions.php:341
+msgid "Menu Position"
+msgstr "Posición del menú"
+
+#: functions.php:79 functions.php:701
+msgid "Name"
+msgstr "Nombre"
+
+#: functions.php:99
+msgid "Name Admin Bar"
+msgstr "Nombre de la barra del administrador"
+
+#: functions.php:169
+msgid "New Item"
+msgstr "Nuevo objeto"
+
+#: functions.php:751
+msgid "New Item Name"
+msgstr "Nuevo nombre de objeto"
+
+#: menu/class-fed-cp-menu.php:789
+msgid "New Post Status"
+msgstr "Nuevo status de post"
+
+#: functions.php:219 functions.php:811
+msgid "Not Found"
+msgstr "No encontrado"
+
+#: functions.php:229
+msgid "Not Found in Trash"
+msgstr "No encontrado en la basura"
+
+#: functions.php:622
+msgid "Page Attributes"
+msgstr "Atributos de pagina"
+
+#: functions.php:791
+msgid "Parent Item"
+msgstr "Objeto pariente"
+
+#: functions.php:129 functions.php:721
+msgid "Parent Item Colon"
+msgstr "Objeto colon pariente"
+
+#: frontend-dashboard-custom-post.php:67
+msgid ""
+"Please install <a href=\"https://buffercode.com/plugin/frontend-dashboard\">"
+"Frontend Dashboard</a> to use this plugin [Frontend Dashboard Custom Post "
+"and Taxonomies]"
+msgstr ""
+"Por favor instale <a href=\"https://buffercode.com/plugin/frontend-"
+"dashboard\">Frontend Dashboard</a> Para utilizar este plugin [Frontend "
+"Dashboard Custom Post and Taxonomies]"
+
+#: functions.php:1426
+msgid "Please Select one Image"
+msgstr "Por favor seleccione una iamgen"
+
+#: functions.php:41 functions.php:667
+msgid "Plural Name"
+msgstr "Nombre en plural"
+
+#: functions.php:831
+msgid "Popular Items"
+msgstr "Objetos populares"
+
+#: functions.php:632
+msgid "Post Formats"
+msgstr "Formato de post"
+
+#: menu/class-fed-cp-menu.php:755 menu/class-fed-cp-menu.php:757
+msgid "Post Menu Name"
+msgstr "Nombre del menú de post"
+
+#: menu/class-fed-cp-menu.php:764 menu/class-fed-cp-menu.php:766
+msgid "Post Menu Position"
+msgstr "Posición del menú post"
+
+#: functions.php:26
+msgid "Post Type Slug"
+msgstr "Tipo de slug post"
+
+#: functions.php:373 functions.php:923
+msgid "Public"
+msgstr "Publico"
+
+#: functions.php:453 functions.php:963
+msgid "Publicly Queryable"
+msgstr "Publicly Queryable"
+
+#: functions.php:463 functions.php:973
+msgid "Query Var"
+msgstr "Query Var"
+
+#: functions.php:259
+msgid "Remove Featured Image"
+msgstr "Remover imagen destacada"
+
+#: functions.php:493 functions.php:993
+msgid "REST base"
+msgstr "REST base"
+
+#: functions.php:612
+msgid "Revisions"
+msgstr "Revisiones"
+
+#: functions.php:503 functions.php:1003
+msgid "Rewrite URL"
+msgstr "Reescribir URL"
+
+#: functions.php:513 functions.php:1013
+msgid "Rewrite URL Slug"
+msgstr "Reescribir URL slug"
+
+#: menu/class-fed-cp-menu.php:1093
+msgid "Save"
+msgstr "Guardar"
+
+#: functions.php:209 functions.php:801
+msgid "Search Items"
+msgstr "Buscar objetos"
+
+#: functions.php:841
+msgid "Separate Item with commas"
+msgstr "Separar objetos con coma"
+
+#: functions.php:249
+msgid "Set Featured Image"
+msgstr "Poner Imagen destacada"
+
+#: functions.php:903
+msgid "Show admin column"
+msgstr "Mostrar columnas de administrador"
+
+#: functions.php:403
+msgid "Show in Admin Bar"
+msgstr "Mostrar en la barra de administrador"
+
+#: functions.php:393 functions.php:943
+msgid "Show in Menu"
+msgstr "Mostrar en menu"
+
+#: functions.php:413 functions.php:953
+msgid "Show in Nav Menus"
+msgstr "Mostrar en menús nav"
+
+#: functions.php:893
+msgid "Show in Quick Edit"
+msgstr "Mostrar en Edición rapida"
+
+#: functions.php:483 functions.php:983
+msgid "Show in REST"
+msgstr "Mostrar en REST"
+
+#: functions.php:883
+msgid "Show Tag Cloud"
+msgstr "Mostrar Tag Cloud"
+
+#: functions.php:383 functions.php:933
+msgid "Show UI"
+msgstr "Mostrar UI"
+
+#: functions.php:53 functions.php:679
+msgid "Singular Name"
+msgstr "Nombre singular"
+
+#: menu/class-fed-cp-menu.php:953
+msgid "Something went wrong, please refresh and try again later"
+msgstr "Algo ha salido mal, por favor refresque la pagina e inténtelo de nuevo"
+
+#: menu/class-fed-cp-custom-posts.php:311 menu/class-fed-cp-taxonomies.php:280
+msgid "Sorry! You are trying to delete the invalid Custom Post Type"
+msgstr ""
+"Lo sentimos, usted esta tratando de eliminar un tipo invalido de post "
+"personalizado"
+
+#: menu/class-fed-cp-custom-posts.php:264
+msgid ""
+"Sorry! You are trying to get the invalid Custom Post Type, Please add\n"
+"\t\t\t\t\t\t\t\tnew one"
+msgstr ""
+"Lo sentimos, usted esta tratando de obtener un tipo de post personalizado, "
+"añada uno nuevo"
+
+#: menu/class-fed-cp-taxonomies.php:233
+msgid "Sorry! You are trying to get the invalid Taxonomies, Please add new one"
+msgstr ""
+"Lo sentimos, usted esta tratando de obtener una taxonomía invalida, por "
+"favor añada una nueva"
+
+#: functions.php:913
+msgid "Sort"
+msgstr "Ordenar"
+
+#: menu/class-fed-cp-menu.php:959
+msgid "Successfully Deleted"
+msgstr "Eliminado satisfactoriamente"
+
+#: functions.php:652
+msgid "Taxonomy Slug"
+msgstr "Taxonomia Slug"
+
+#: functions.php:562
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+#: functions.php:532 menu/class-fed-cp-menu.php:1316
+msgid "Title"
+msgstr "Titulo"
+
+#: functions.php:582
+msgid "Trackbacks"
+msgstr "Trackbacks"
+
+#: functions.php:781
+msgid "Update Item"
+msgstr "Actualizar Objeto"
+
+#: functions.php:291
+msgid "Uploaded to this Movie"
+msgstr "Subido a esta película"
+
+#: functions.php:270
+msgid "Use Featured Image"
+msgstr "Usar Imagen Destacada"
+
+#: functions.php:189 functions.php:771
+msgid "View Item"
+msgstr "Mostrar objeto"
+
+#: functions.php:199
+msgid "View Items"
+msgstr "Mostrar objetos"
+
+#. Author of the plugin
+msgid "vinoth06"
+msgstr "vinoth06"
+
+#: menu/class-fed-cp-menu.php:964
+msgid "You are not allowed to do this action"
+msgstr "Usted no tiene permitido realizar esta opción"
