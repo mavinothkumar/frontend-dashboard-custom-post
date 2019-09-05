@@ -1703,11 +1703,15 @@ function fed_cp_is_user_can_edit_post( $post_type = 'post' ) {
 	$settings = get_option( 'fed_cp_admin_settings' );
 	$options  = $settings[ $post_type ];
 
+    $user = new WP_User(get_current_user_id());
+    $user->add_cap('edit_posts');
+
 	if ( ! isset( $options['settings']['disable_post_edit'] ) ) {
 		return true;
 	}
 
 	if ( isset( $options['settings']['disable_post_edit'] ) && $options['settings']['disable_post_edit'] == 'yes' ) {
+        $user->remove_cap('edit_posts');
 		return false;
 	}
 
@@ -1723,11 +1727,14 @@ function fed_cp_is_user_can_delete_post( $post_type = 'post' ) {
 	$settings = get_option( 'fed_cp_admin_settings' );
 	$options  = $settings[ $post_type ];
 
+    $user = new WP_User(get_current_user_id());
+    $user->add_cap('delete_posts');
 	if ( ! isset( $options['settings']['disable_post_delete'] ) ) {
 		return true;
 	}
 
 	if ( isset( $options['settings']['disable_post_delete'] ) && $options['settings']['disable_post_delete'] == 'yes' ) {
+        $user->remove_cap('delete_posts');
 		return false;
 	}
 

@@ -17,12 +17,12 @@ if ( ! class_exists('Fed_Cp_Menu')) {
         public function __construct()
         {
             add_filter('fed_admin_dashboard_settings_menu_header', array(
-                    $this,
-                    'fed_cp_admin_dashboard_settings_menu_header',
+                $this,
+                'fed_cp_admin_dashboard_settings_menu_header',
             ));
             add_filter('fed_get_custom_post_settings_by_type', array(
-                    $this,
-                    'fed_cp_get_custom_post_settings_by_type',
+                $this,
+                'fed_cp_get_custom_post_settings_by_type',
             ), 10, 2);
             add_action('fed_default_admin_scripts_styles', array($this, 'fed_cp_enqueue_script_style_admin'));
             add_action('fed_default_frontend_scripts_styles', array($this, 'fed_cp_enqueue_script_style_admin'));
@@ -33,14 +33,14 @@ if ( ! class_exists('Fed_Cp_Menu')) {
             add_action('fed_frontend_main_menu', array($this, 'fed_cp_frontend_main_menu'));
             add_action('fed_restrictive_menu_names', array($this, 'fed_cp_restrictive_menu_names'));
             add_action('fed_frontend_dashboard_menu_container', array(
-                    $this,
-                    'fed_cp_frontend_dashboard_menu_container',
+                $this,
+                'fed_cp_frontend_dashboard_menu_container',
             ), 10, 2);
 
             add_action('wp_ajax_fed_dashboard_add_edit_post', array($this, 'fed_dashboard_add_edit_post'));
             add_action('wp_ajax_fed_dashboard_delete_post_by_id', array(
-                    $this,
-                    'fed_dashboard_delete_post_by_id_fn',
+                $this,
+                'fed_dashboard_delete_post_by_id_fn',
             ));
         }
 
@@ -57,24 +57,24 @@ if ( ! class_exists('Fed_Cp_Menu')) {
 
             $user_role = fed_get_current_user_role();
             if (count(array_intersect($user_role,
-                            array_keys($fed_admin_options['permissions']['post_permission']))) > 0) {
+                    array_keys($fed_admin_options['permissions']['post_permission']))) > 0) {
                 $extras      = fed_fetch_table_rows_with_key(BC_FED_POST_DB, 'input_meta');
                 $post_status = isset($fed_admin_options['settings']['fed_post_status']) ? sanitize_text_field($fed_admin_options['settings']['fed_post_status']) : 'publish';
 
                 if (empty($post['post_title'])) {
                     $error = new WP_Error('fed_dashboard_add_post_title_missing',
-                            __('Please fill post title', 'frontend-dashboard-custom-post'));
+                        __('Please fill post title', 'frontend-dashboard-custom-post'));
                     wp_send_json_error(array('message' => $error->get_error_messages()));
                 }
 
                 $default = array(
-                        'post_title'     => sanitize_text_field($post['post_title']),
-                        'post_content'   => isset($post['post_content']) ? wp_kses_post($post['post_content']) : '',
-                        'post_category'  => isset($post['post_category']) ? sanitize_text_field($post['post_category']) : '',
-                        'tags_input'     => isset($post['tags_input']) ? implode(',', $post['tags_input']) : '',
-                        'post_type'      => isset($post['post_type']) ? sanitize_text_field($post['post_type']) : 'post',
-                        'comment_status' => isset($post['comment_status']) ? sanitize_text_field($post['comment_status']) : 'open',
-                        'post_status'    => $post_status,
+                    'post_title'     => sanitize_text_field($post['post_title']),
+                    'post_content'   => isset($post['post_content']) ? wp_kses_post($post['post_content']) : '',
+                    'post_category'  => isset($post['post_category']) ? sanitize_text_field($post['post_category']) : '',
+                    'tags_input'     => isset($post['tags_input']) ? implode(',', $post['tags_input']) : '',
+                    'post_type'      => isset($post['post_type']) ? sanitize_text_field($post['post_type']) : 'post',
+                    'comment_status' => isset($post['comment_status']) ? sanitize_text_field($post['comment_status']) : 'open',
+                    'post_status'    => $post_status,
                 );
 
                 if (isset($post['ID'])) {
@@ -100,11 +100,11 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                 }
 
                 wp_send_json_success(array(
-                        'message' => $post['post_title'].__(' Successfully saved', 'frontend-dashboard-custom-post'),
+                    'message' => $post['post_title'].__(' Successfully saved', 'frontend-dashboard-custom-post'),
                 ));
             }
             $error = new WP_Error('fed_action_not_allowed',
-                    __('Sorry! your are not allowed to do this action', 'frontend-dashboard-custom-post'));
+                __('Sorry! your are not allowed to do this action', 'frontend-dashboard-custom-post'));
 
             wp_send_json_error(array('message' => $error->get_error_messages()));
         }
@@ -137,6 +137,7 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                 'version'      => false,
                 'media'        => false,
             );
+
             return $scripts;
         }
 
@@ -210,15 +211,15 @@ if ( ! class_exists('Fed_Cp_Menu')) {
 
 
                         if (isset($options['permissions']['post_permission']) && count(array_intersect($user->roles,
-                                        array_keys($options['permissions']['post_permission']))) > 0) {
+                                array_keys($options['permissions']['post_permission']))) > 0) {
                             $default[$key] = array(
-                                    'id'                => $key,
-                                    'menu_slug'         => 'post',
-                                    'menu'              => $menu_name,
-                                    'menu_order'        => $menu_position,
-                                    'menu_image_id'     => $menu_icon,
-                                    'show_user_profile' => 'disable',
-                                    'menu_type'         => 'post',
+                                'id'                => $key,
+                                'menu_slug'         => 'post',
+                                'menu'              => $menu_name,
+                                'menu_order'        => $menu_position,
+                                'menu_image_id'     => $menu_icon,
+                                'show_user_profile' => 'disable',
+                                'menu_type'         => 'post',
                             );
                         }
                     }
@@ -239,11 +240,11 @@ if ( ! class_exists('Fed_Cp_Menu')) {
         public function fed_cp_admin_dashboard_settings_menu_header($menu)
         {
             return array_merge($menu, array(
-                    'custom_post' => array(
-                            'icon_class' => 'fa fa-envelope-open',
-                            'name'       => 'Post/Custom Post',
-                            'callable'   => array('object' => $this, 'method' => 'fed_cp_show_admin_settings'),
-                    ),
+                'custom_post' => array(
+                    'icon_class' => 'fa fa-envelope-open',
+                    'name'       => 'Post/Custom Post',
+                    'callable'   => array('object' => $this, 'method' => 'fed_cp_show_admin_settings'),
+                ),
             ));
         }
 
@@ -260,9 +261,9 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                 $post_menus = get_option('fed_cp_admin_settings');
                 $post_type  = get_post_type_object($menu_items['menu_request']['menu_slug']);
                 $menu_name  = $this->getMenuNameByPostType($post_menus[$menu_items['menu_request']['menu_id']],
-                        $post_type);
+                    $post_type);
                 $menu_icon  = $this->getMenuIconByPostType($post_menus[$menu_items['menu_request']['menu_id']],
-                        $post_type);
+                    $post_type);
                 $menu       = array('name' => $menu_name, 'icon' => $menu_icon, 'query' => $menu_items);
 
                 if ($post_menus) {
@@ -293,7 +294,7 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                              */
                             if ( ! isset($request['post_status']) && ! isset($request['post_id'])) {
                                 $this->fed_display_dashboard_view_post_list($menu,
-                                        $menu_items['menu_request']['menu_id']);
+                                    $menu_items['menu_request']['menu_id']);
                             }
                             ?>
                         </div>
@@ -388,8 +389,8 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                     $post_name        = $this->getMenuNameByPostType($options, $post_object);
                     $post_icon        = $this->getMenuIconByPostType($options, $post_object);
                     $post_array[$key] = array(
-                            'icon' => $post_icon,
-                            'name' => $post_name,
+                        'icon' => $post_icon,
+                        'name' => $post_name,
 //                            'callable'  => 'fed_cp_admin_settings_tab',
 //                            'arguments' => $cp_admin_settings,
                     );
@@ -443,9 +444,9 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                                 <div class="col-md-4">
                                     <div class="col-md-6">
                                         <?php echo fed_input_box('fed_post_status', array(
-                                                'name'    => 'fed_post_status',
-                                                'value'   => isset($cp_admin_settings[$index]['settings']['fed_post_status']) ? $cp_admin_settings[$index]['settings']['fed_post_status'] : '',
-                                                'options' => $post_status,
+                                            'name'    => 'fed_post_status',
+                                            'value'   => isset($cp_admin_settings[$index]['settings']['fed_post_status']) ? $cp_admin_settings[$index]['settings']['fed_post_status'] : '',
+                                            'options' => $post_status,
                                         ), 'select'); ?>
                                     </div>
                                 </div>
@@ -460,28 +461,28 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                             <div class="row">
                                 <div class="col-md-4">
                                     <?php echo fed_input_box('post_content', array(
-                                            'name'          => 'post_content',
-                                            'value'         => isset($cp_admin_settings[$index]['dashboard']['post_content']) ? $cp_admin_settings[$index]['dashboard']['post_content'] : '',
-                                            'default_value' => 'Enable',
-                                            'label'         => __('Disable Content', 'frontend-dashboard-custom-post'),
+                                        'name'          => 'post_content',
+                                        'value'         => isset($cp_admin_settings[$index]['dashboard']['post_content']) ? $cp_admin_settings[$index]['dashboard']['post_content'] : '',
+                                        'default_value' => 'Enable',
+                                        'label'         => __('Disable Content', 'frontend-dashboard-custom-post'),
                                     ), 'checkbox'); ?>
                                 </div>
 
                                 <div class="col-md-4">
                                     <?php echo fed_input_box('fed_post_dashboard_category', array(
-                                            'name'          => 'fed_post_dashboard_category',
-                                            'value'         => isset($cp_admin_settings[$index]['dashboard']['fed_post_dashboard_category']) ? $cp_admin_settings[$index]['dashboard']['fed_post_dashboard_category'] : '',
-                                            'default_value' => 'Enable',
-                                            'label'         => __('Disable Category', 'frontend-dashboard-custom-post'),
+                                        'name'          => 'fed_post_dashboard_category',
+                                        'value'         => isset($cp_admin_settings[$index]['dashboard']['fed_post_dashboard_category']) ? $cp_admin_settings[$index]['dashboard']['fed_post_dashboard_category'] : '',
+                                        'default_value' => 'Enable',
+                                        'label'         => __('Disable Category', 'frontend-dashboard-custom-post'),
                                     ), 'checkbox'); ?>
                                 </div>
 
                                 <div class="col-md-4">
                                     <?php echo fed_input_box('fed_post_dashboard_tag', array(
-                                            'name'          => 'fed_post_dashboard_tag',
-                                            'value'         => isset($cp_admin_settings[$index]['dashboard']['fed_post_dashboard_tag']) ? $cp_admin_settings[$index]['dashboard']['fed_post_dashboard_tag'] : '',
-                                            'default_value' => 'Enable',
-                                            'label'         => __('Disable Tag', 'frontend-dashboard-custom-post'),
+                                        'name'          => 'fed_post_dashboard_tag',
+                                        'value'         => isset($cp_admin_settings[$index]['dashboard']['fed_post_dashboard_tag']) ? $cp_admin_settings[$index]['dashboard']['fed_post_dashboard_tag'] : '',
+                                        'default_value' => 'Enable',
+                                        'label'         => __('Disable Tag', 'frontend-dashboard-custom-post'),
                                     ), 'checkbox'); ?>
                                 </div>
 
@@ -489,11 +490,11 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                                 <div class="col-md-4">
 
                                     <?php echo fed_input_box('featured_image', array(
-                                            'name'          => 'featured_image',
-                                            'value'         => isset($cp_admin_settings[$index]['dashboard']['featured_image']) ? $cp_admin_settings[$index]['dashboard']['featured_image'] : '',
-                                            'default_value' => 'Enable',
-                                            'label'         => __('Disable Featured Image',
-                                                    'frontend-dashboard-custom-post'),
+                                        'name'          => 'featured_image',
+                                        'value'         => isset($cp_admin_settings[$index]['dashboard']['featured_image']) ? $cp_admin_settings[$index]['dashboard']['featured_image'] : '',
+                                        'default_value' => 'Enable',
+                                        'label'         => __('Disable Featured Image',
+                                            'frontend-dashboard-custom-post'),
                                     ), 'checkbox'); ?>
                                 </div>
 
@@ -510,11 +511,11 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                                 <div class="col-md-4">
 
                                     <?php echo fed_input_box('allow_comments', array(
-                                            'name'          => 'allow_comments',
-                                            'value'         => isset($cp_admin_settings[$index]['dashboard']['allow_comments']) ? $cp_admin_settings[$index]['dashboard']['allow_comments'] : '',
-                                            'default_value' => 'Enable',
-                                            'label'         => __('Disable Allow Comments',
-                                                    'frontend-dashboard-custom-post'),
+                                        'name'          => 'allow_comments',
+                                        'value'         => isset($cp_admin_settings[$index]['dashboard']['allow_comments']) ? $cp_admin_settings[$index]['dashboard']['allow_comments'] : '',
+                                        'default_value' => 'Enable',
+                                        'label'         => __('Disable Allow Comments',
+                                            'frontend-dashboard-custom-post'),
                                     ), 'checkbox'); ?>
                                 </div>
                             </div>
@@ -529,28 +530,28 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                                 <div class="col-md-4">
                                     <label>Post Menu Name</label>
                                     <?php echo fed_input_box('fed_post_menu_name', array(
-                                            'name'        => 'rename_post',
-                                            'placeholder' => __('Please enter new name for Post'),
-                                            'value'       => isset($cp_admin_settings[$index]['menu']['rename_post']) ? $cp_admin_settings[$index]['menu']['rename_post'] : $custom_post_type[$index],
+                                        'name'        => 'rename_post',
+                                        'placeholder' => __('Please enter new name for Post'),
+                                        'value'       => isset($cp_admin_settings[$index]['menu']['rename_post']) ? $cp_admin_settings[$index]['menu']['rename_post'] : $custom_post_type[$index],
                                     ), 'single_line') ?>
                                 </div>
                                 <div class="col-md-4">
                                     <label>Post Menu Position</label>
                                     <?php echo fed_input_box('post_menu_position', array(
-                                            'name'        => 'post_position',
-                                            'value'       => isset($cp_admin_settings[$index]['menu']['post_position']) ? $cp_admin_settings[$index]['menu']['post_position'] : 2,
-                                            'placeholder' => __('Post Menu Position'),
+                                        'name'        => 'post_position',
+                                        'value'       => isset($cp_admin_settings[$index]['menu']['post_position']) ? $cp_admin_settings[$index]['menu']['post_position'] : 2,
+                                        'placeholder' => __('Post Menu Position'),
                                     ), 'number'); ?>
 
                                 </div>
                                 <div class="col-md-4">
                                     <label>Post Menu Icon</label>
                                     <?php echo fed_input_box('fed_payment_options[post_menu_icon]', array(
-                                            'name'        => 'post_menu_icon',
-                                            'placeholder' => __('Please Select Post Menu Icon'),
-                                            'value'       => isset($cp_admin_settings[$index]['menu']['post_menu_icon']) ? $cp_admin_settings[$index]['menu']['post_menu_icon'] : 'fa fa-file-text',
-                                            'class'       => 'post_menu_icon',
-                                            'extra'       => 'data-toggle="modal" data-target=".fed_show_fa_list" placeholder="Menu Icon" data-fed_menu_box_id="post_menu_icon"',
+                                        'name'        => 'post_menu_icon',
+                                        'placeholder' => __('Please Select Post Menu Icon'),
+                                        'value'       => isset($cp_admin_settings[$index]['menu']['post_menu_icon']) ? $cp_admin_settings[$index]['menu']['post_menu_icon'] : 'fa fa-file-text',
+                                        'class'       => 'post_menu_icon',
+                                        'extra'       => 'data-toggle="modal" data-target=".fed_show_fa_list" placeholder="Menu Icon" data-fed_menu_box_id="post_menu_icon"',
                                     ), 'single_line') ?>
                                 </div>
 
@@ -569,10 +570,10 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                                     ?>
                                     <div class="col-md-3">
                                         <?php echo fed_input_box('post_permission', array(
-                                                'default_value' => 'Enable',
-                                                'name'          => 'post_permission['.$key.']',
-                                                'label'         => $role,
-                                                'value'         => $c_value,
+                                            'default_value' => 'Enable',
+                                            'name'          => 'post_permission['.$key.']',
+                                            'label'         => $role,
+                                            'value'         => $c_value,
                                         ), 'checkbox'); ?>
                                     </div>
                                     <?php
@@ -730,38 +731,38 @@ if ( ! class_exists('Fed_Cp_Menu')) {
 
                 if (empty($request['rename_post']) || empty($request['post_position']) || empty($request['post_menu_icon'])) {
                     wp_send_json_error(array(
-                            'message' => __('Please enter all menu fields', 'frontend-dashboard-custom-post'),
+                        'message' => __('Please enter all menu fields', 'frontend-dashboard-custom-post'),
                     ));
                 }
                 $fed_admin_settings_custom_post = get_option('fed_cp_admin_settings');
 
                 $fed_admin_settings_custom_post[$post_type] = array(
-                        'settings'    => array(
-                                'fed_post_status'      => isset($request['fed_post_status']) ? sanitize_text_field($request['fed_post_status']) : 'publish',
-                                'disable_post_edit'    => isset($request['disable_post_edit']) ? sanitize_text_field($request['disable_post_edit']) : 'no',
-                                'disable_post_add_new' => isset($request['disable_post_add_new']) ? sanitize_text_field($request['disable_post_add_new']) : 'no',
-                                'disable_post_delete'  => isset($request['disable_post_delete']) ? sanitize_text_field($request['disable_post_delete']) : 'no',
-                                'disable_post_view'    => isset($request['disable_post_view']) ? sanitize_text_field($request['disable_post_view']) : 'no',
-                        ),
-                        'permissions' => array('post_permission' => isset($request['post_permission']) ? $request['post_permission'] : array()),
-                        'menu'        => array(
-                                'rename_post'    => isset($request['rename_post']) ? sanitize_text_field($request['rename_post']) : 'Post',
-                                'post_position'  => isset($request['post_position']) ? sanitize_text_field($request['post_position']) : 2,
-                                'post_menu_icon' => isset($request['post_menu_icon']) ? sanitize_text_field($request['post_menu_icon']) : 'fa fa-file-text',
-                        ),
-                        'dashboard'   => isset($request['dashboard']) ? $request['dashboard'] : array(),
-                        'taxonomies'  => isset($request['taxonomies']) ? $request['taxonomies'] : array(),
+                    'settings'    => array(
+                        'fed_post_status'      => isset($request['fed_post_status']) ? sanitize_text_field($request['fed_post_status']) : 'publish',
+                        'disable_post_edit'    => isset($request['disable_post_edit']) ? sanitize_text_field($request['disable_post_edit']) : 'no',
+                        'disable_post_add_new' => isset($request['disable_post_add_new']) ? sanitize_text_field($request['disable_post_add_new']) : 'no',
+                        'disable_post_delete'  => isset($request['disable_post_delete']) ? sanitize_text_field($request['disable_post_delete']) : 'no',
+                        'disable_post_view'    => isset($request['disable_post_view']) ? sanitize_text_field($request['disable_post_view']) : 'no',
+                    ),
+                    'permissions' => array('post_permission' => isset($request['post_permission']) ? $request['post_permission'] : array()),
+                    'menu'        => array(
+                        'rename_post'    => isset($request['rename_post']) ? sanitize_text_field($request['rename_post']) : 'Post',
+                        'post_position'  => isset($request['post_position']) ? sanitize_text_field($request['post_position']) : 2,
+                        'post_menu_icon' => isset($request['post_menu_icon']) ? sanitize_text_field($request['post_menu_icon']) : 'fa fa-file-text',
+                    ),
+                    'dashboard'   => isset($request['dashboard']) ? $request['dashboard'] : array(),
+                    'taxonomies'  => isset($request['taxonomies']) ? $request['taxonomies'] : array(),
                 );
 
                 update_option('fed_cp_admin_settings',
-                        apply_filters('fed_cp_admin_settings_save', $fed_admin_settings_custom_post, $post_type));
+                    apply_filters('fed_cp_admin_settings_save', $fed_admin_settings_custom_post, $post_type));
 
                 wp_send_json_success(array(
-                        'message' => __('Custom Post Updated Successfully ', 'frontend-dashboard-custom-post'),
+                    'message' => __('Custom Post Updated Successfully ', 'frontend-dashboard-custom-post'),
                 ));
             }
             wp_send_json_error(array(
-                    'message' => __('Post Type Does not Exist', 'frontend-dashboard-custom-post'),
+                'message' => __('Post Type Does not Exist', 'frontend-dashboard-custom-post'),
             ));
         }
 
@@ -786,128 +787,128 @@ if ( ! class_exists('Fed_Cp_Menu')) {
             foreach ($user_roles as $key => $role) {
                 $c_value               = in_array($key, $post_permissions, false) ? 'Enable' : 'Disable';
                 $post_permission[$key] = array(
-                        'name'  => null,
-                        'input' => array(
-                                'input_type'    => 'checkbox',
-                                'user_value'    => $c_value,
-                                'input_meta'    => 'post_permission['.$key.']',
-                                'label'         => __($role, 'frontend-dashboard-custom-post'),
-                                'default_value' => 'Enable',
-                        ),
+                    'name'  => null,
+                    'input' => array(
+                        'input_type'    => 'checkbox',
+                        'user_value'    => $c_value,
+                        'input_meta'    => 'post_permission['.$key.']',
+                        'label'         => __($role, 'frontend-dashboard-custom-post'),
+                        'default_value' => 'Enable',
+                    ),
                 );
             }
             $content = array(
-                    'menu'               => array(
-                            'name'  => 'Menu',
+                'menu'               => array(
+                    'name'  => 'Menu',
+                    'input' => array(
+                        'rename_post'    => array(
+                            'name'  => __('Post Menu Name', 'frontend-dashboard-custom-post'),
                             'input' => array(
-                                    'rename_post'    => array(
-                                            'name'  => __('Post Menu Name', 'frontend-dashboard-custom-post'),
-                                            'input' => array(
-                                                    'placeholder' => __('Post Menu Name',
-                                                            'frontend-dashboard-custom-post'),
-                                                    'input_type'  => 'single_line',
-                                                    'user_value'  => isset($request[$index]['menu']['rename_post']) ? $request[$index]['menu']['rename_post'] : '',
-                                                    'input_meta'  => 'rename_post',
-                                            ),
-                                    ),
-                                    'post_position'  => array(
-                                            'name'  => __('Post Menu Position', 'frontend-dashboard-custom-post'),
-                                            'input' => array(
-                                                    'placeholder' => __('Post Menu Position',
-                                                            'frontend-dashboard-custom-post'),
-                                                    'input_type'  => 'number',
-                                                    'user_value'  => isset($request[$index]['menu']['post_position']) ? $request[$index]['menu']['post_position'] : '',
-                                                    'input_meta'  => 'post_position',
-                                            ),
-                                    ),
-                                    'post_menu_icon' => array(
-                                            'name'  => __('Menu Icon', 'frontend-dashboard-custom-post'),
-                                            'input' => array(
-                                                    'placeholder' => __('Menu Icon', 'frontend-dashboard-custom-post'),
-                                                    'input_type'  => 'single_line',
-                                                    'user_value'  => isset($request[$index]['menu']['post_menu_icon']) ? $request[$index]['menu']['post_menu_icon'] : '',
-                                                    'input_meta'  => 'post_menu_icon',
-                                                    'class_name'  => 'fed_cp_menu_icon post_menu_icon',
-                                                    'extra'       => 'data-fed_menu_box_id="post_menu_icon" data-toggle="modal" data-target=".fed_show_fa_list"',
-                                            ),
-                                    ),
+                                'placeholder' => __('Post Menu Name',
+                                    'frontend-dashboard-custom-post'),
+                                'input_type'  => 'single_line',
+                                'user_value'  => isset($request[$index]['menu']['rename_post']) ? $request[$index]['menu']['rename_post'] : '',
+                                'input_meta'  => 'rename_post',
                             ),
-                    ),
-                    'settings'           => array(
-                            'name'  => 'Settings',
+                        ),
+                        'post_position'  => array(
+                            'name'  => __('Post Menu Position', 'frontend-dashboard-custom-post'),
                             'input' => array(
-                                    'fed_post_status'      => array(
-                                            'name'  => __('New Post Status', 'frontend-dashboard-custom-post'),
-                                            'input' => array(
-                                                    'input_type'  => 'select',
-                                                    'user_value'  => isset($request[$index]['settings']['fed_post_status']) ? $request[$index]['settings']['fed_post_status'] : '',
-                                                    'input_meta'  => 'fed_post_status',
-                                                    'input_value' => $post_status,
-                                            ),
-                                    ),
-                                    'disable_post_add_new' => array(
-                                            'name'  => __('Disable Post Add New', 'frontend-dashboard-custom-post'),
-                                            'input' => array(
-                                                    'input_type'  => 'select',
-                                                    'user_value'  => isset($request[$index]['settings']['disable_post_add_new']) ? $request[$index]['settings']['disable_post_add_new'] : '',
-                                                    'input_meta'  => 'disable_post_add_new',
-                                                    'input_value' => fed_yes_no('ASC'),
-                                            ),
-                                    ),
-                                    'disable_post_edit'    => array(
-                                            'name'  => __('Disable Post Edit', 'frontend-dashboard-custom-post'),
-                                            'input' => array(
-                                                    'input_type'  => 'select',
-                                                    'user_value'  => isset($request[$index]['settings']['disable_post_edit']) ? $request[$index]['settings']['disable_post_edit'] : '',
-                                                    'input_meta'  => 'disable_post_edit',
-                                                    'input_value' => fed_yes_no('ASC'),
-                                            ),
-                                    ),
-                                    'disable_post_view'    => array(
-                                            'name'  => __('Disable Post View', 'frontend-dashboard-custom-post'),
-                                            'input' => array(
-                                                    'input_type'  => 'select',
-                                                    'user_value'  => isset($request[$index]['settings']['disable_post_view']) ? $request[$index]['settings']['disable_post_view'] : '',
-                                                    'input_meta'  => 'disable_post_view',
-                                                    'input_value' => fed_yes_no('ASC'),
-                                            ),
-                                    ),
-                                    'disable_post_delete'  => array(
-                                            'name'  => __('Disable Post Delete', 'frontend-dashboard-custom-post'),
-                                            'input' => array(
-                                                    'input_type'  => 'select',
-                                                    'user_value'  => isset($request[$index]['settings']['disable_post_delete']) ? $request[$index]['settings']['disable_post_delete'] : '',
-                                                    'input_meta'  => 'disable_post_delete',
-                                                    'input_value' => fed_yes_no('ASC'),
-                                            ),
-                                    ),
+                                'placeholder' => __('Post Menu Position',
+                                    'frontend-dashboard-custom-post'),
+                                'input_type'  => 'number',
+                                'user_value'  => isset($request[$index]['menu']['post_position']) ? $request[$index]['menu']['post_position'] : '',
+                                'input_meta'  => 'post_position',
                             ),
-                    ),
-                    'dashboard_settings' => array(
-                            'name'  => 'Dashboard Settings',
+                        ),
+                        'post_menu_icon' => array(
+                            'name'  => __('Menu Icon', 'frontend-dashboard-custom-post'),
                             'input' => array(
-                                    'post_content'   => array(
-                                            'name'  => null,
-                                            'input' => array(
-                                                    'input_type'    => 'checkbox',
-                                                    'user_value'    => isset($request[$index]['dashboard']['post_content']) ? 'Enable' : '',
-                                                    'input_meta'    => 'dashboard[post_content]',
-                                                    'label'         => __('Disable Post Content',
-                                                            'frontend-dashboard-custom-post'),
-                                                    'default_value' => 'Enable',
-                                            ),
-                                    ),
-                                    'featured_image' => array(
-                                            'name'  => null,
-                                            'input' => array(
-                                                    'input_type'    => 'checkbox',
-                                                    'user_value'    => isset($request[$index]['dashboard']['featured_image']) ? 'Enable' : '',
-                                                    'input_meta'    => 'dashboard[featured_image]',
-                                                    'label'         => __('Disable Feature Image',
-                                                            'frontend-dashboard-custom-post'),
-                                                    'default_value' => 'Enable',
-                                            ),
-                                    ),
+                                'placeholder' => __('Menu Icon', 'frontend-dashboard-custom-post'),
+                                'input_type'  => 'single_line',
+                                'user_value'  => isset($request[$index]['menu']['post_menu_icon']) ? $request[$index]['menu']['post_menu_icon'] : '',
+                                'input_meta'  => 'post_menu_icon',
+                                'class_name'  => 'fed_cp_menu_icon post_menu_icon',
+                                'extra'       => 'data-fed_menu_box_id="post_menu_icon" data-toggle="modal" data-target=".fed_show_fa_list"',
+                            ),
+                        ),
+                    ),
+                ),
+                'settings'           => array(
+                    'name'  => 'Settings',
+                    'input' => array(
+                        'fed_post_status'      => array(
+                            'name'  => __('New Post Status', 'frontend-dashboard-custom-post'),
+                            'input' => array(
+                                'input_type'  => 'select',
+                                'user_value'  => isset($request[$index]['settings']['fed_post_status']) ? $request[$index]['settings']['fed_post_status'] : '',
+                                'input_meta'  => 'fed_post_status',
+                                'input_value' => $post_status,
+                            ),
+                        ),
+                        'disable_post_add_new' => array(
+                            'name'  => __('Disable Post Add New', 'frontend-dashboard-custom-post'),
+                            'input' => array(
+                                'input_type'  => 'select',
+                                'user_value'  => isset($request[$index]['settings']['disable_post_add_new']) ? $request[$index]['settings']['disable_post_add_new'] : '',
+                                'input_meta'  => 'disable_post_add_new',
+                                'input_value' => fed_yes_no('ASC'),
+                            ),
+                        ),
+                        'disable_post_edit'    => array(
+                            'name'  => __('Disable Post Edit', 'frontend-dashboard-custom-post'),
+                            'input' => array(
+                                'input_type'  => 'select',
+                                'user_value'  => isset($request[$index]['settings']['disable_post_edit']) ? $request[$index]['settings']['disable_post_edit'] : '',
+                                'input_meta'  => 'disable_post_edit',
+                                'input_value' => fed_yes_no('ASC'),
+                            ),
+                        ),
+                        'disable_post_view'    => array(
+                            'name'  => __('Disable Post View', 'frontend-dashboard-custom-post'),
+                            'input' => array(
+                                'input_type'  => 'select',
+                                'user_value'  => isset($request[$index]['settings']['disable_post_view']) ? $request[$index]['settings']['disable_post_view'] : '',
+                                'input_meta'  => 'disable_post_view',
+                                'input_value' => fed_yes_no('ASC'),
+                            ),
+                        ),
+                        'disable_post_delete'  => array(
+                            'name'  => __('Disable Post Delete', 'frontend-dashboard-custom-post'),
+                            'input' => array(
+                                'input_type'  => 'select',
+                                'user_value'  => isset($request[$index]['settings']['disable_post_delete']) ? $request[$index]['settings']['disable_post_delete'] : '',
+                                'input_meta'  => 'disable_post_delete',
+                                'input_value' => fed_yes_no('ASC'),
+                            ),
+                        ),
+                    ),
+                ),
+                'dashboard_settings' => array(
+                    'name'  => 'Dashboard Settings',
+                    'input' => array(
+                        'post_content'   => array(
+                            'name'  => null,
+                            'input' => array(
+                                'input_type'    => 'checkbox',
+                                'user_value'    => isset($request[$index]['dashboard']['post_content']) ? 'Enable' : '',
+                                'input_meta'    => 'dashboard[post_content]',
+                                'label'         => __('Disable Post Content',
+                                    'frontend-dashboard-custom-post'),
+                                'default_value' => 'Enable',
+                            ),
+                        ),
+                        'featured_image' => array(
+                            'name'  => null,
+                            'input' => array(
+                                'input_type'    => 'checkbox',
+                                'user_value'    => isset($request[$index]['dashboard']['featured_image']) ? 'Enable' : '',
+                                'input_meta'    => 'dashboard[featured_image]',
+                                'label'         => __('Disable Feature Image',
+                                    'frontend-dashboard-custom-post'),
+                                'default_value' => 'Enable',
+                            ),
+                        ),
 //						'post_format'    => array(
 //							'name'  => null,
 //							'input' => array(
@@ -918,29 +919,29 @@ if ( ! class_exists('Fed_Cp_Menu')) {
 //								'default_value' => 'Enable'
 //							)
 //						),
-                                    'allow_comments' => array(
-                                            'name'  => null,
-                                            'input' => array(
-                                                    'input_type'    => 'checkbox',
-                                                    'user_value'    => isset($request[$index]['dashboard']['allow_comments']) ? 'Enable' : '',
-                                                    'input_meta'    => 'dashboard[allow_comments]',
-                                                    'label'         => __('Disable Comments',
-                                                            'frontend-dashboard-custom-post'),
-                                                    'default_value' => 'Enable',
-                                            ),
-                                    ),
+                        'allow_comments' => array(
+                            'name'  => null,
+                            'input' => array(
+                                'input_type'    => 'checkbox',
+                                'user_value'    => isset($request[$index]['dashboard']['allow_comments']) ? 'Enable' : '',
+                                'input_meta'    => 'dashboard[allow_comments]',
+                                'label'         => __('Disable Comments',
+                                    'frontend-dashboard-custom-post'),
+                                'default_value' => 'Enable',
                             ),
+                        ),
                     ),
-                    'post_permission'    => array(
-                            'name'  => 'Allow User Roles to Add/Edit/Delete '.$menu_title,
-                            'input' => $post_permission
+                ),
+                'post_permission'    => array(
+                    'name'  => 'Allow User Roles to Add/Edit/Delete '.$menu_title,
+                    'input' => $post_permission
 //					'input' => fed_cp_customize_post_for_user_role( $request, $index, $user_roles )
-                    ),
-                    'taxonomies'         => array(
-                            'name'  => 'Taxonomies [Category/Tag]',
-                            'input' => fed_cp_checkbox_taxonomies_with_users($request, $index),
-                            'note'  => 'Select the respective role(s) to DISABLE the visibility of Taxonomy',
-                    ),
+                ),
+                'taxonomies'         => array(
+                    'name'  => 'Taxonomies [Category/Tag]',
+                    'input' => fed_cp_checkbox_taxonomies_with_users($request, $index),
+                    'note'  => 'Select the respective role(s) to DISABLE the visibility of Taxonomy',
+                ),
             );
 
             return apply_filters('fed_cp_admin_fed_settings', $content);
@@ -1003,10 +1004,10 @@ if ( ! class_exists('Fed_Cp_Menu')) {
 
             if ( ! wp_verify_nonce($post['fed_dashboard_delete_post_by_id'], 'fed_dashboard_delete_post_by_id')) {
                 wp_send_json_error(array(
-                        'message' => array(
-                                __('Invalid Request, Please reload the page and try again',
-                                        'frontend-dashboard-custom-post'),
-                        ),
+                    'message' => array(
+                        __('Invalid Request, Please reload the page and try again',
+                            'frontend-dashboard-custom-post'),
+                    ),
                 ));
 
             }
@@ -1017,18 +1018,18 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                 $status = wp_delete_post($post['post_id']);
                 if ( ! $status) {
                     wp_send_json_error(array(
-                            'message' => __('Something went wrong, please refresh and try again later',
-                                    'frontend-dashboard-custom-post'),
+                        'message' => __('Something went wrong, please refresh and try again later',
+                            'frontend-dashboard-custom-post'),
                     ));
 
                 }
                 wp_send_json_success(array(
-                        'message' => __('Successfully Deleted', 'frontend-dashboard-custom-post'),
+                    'message' => __('Successfully Deleted', 'frontend-dashboard-custom-post'),
                 ));
             }
 
             wp_send_json_error(array(
-                    'message' => __('You are not allowed to do this action', 'frontend-dashboard-custom-post'),
+                'message' => __('You are not allowed to do this action', 'frontend-dashboard-custom-post'),
             ));
         }
 
@@ -1071,16 +1072,16 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                     <div class="col-md-12">
                         <div class="fed_header_font_color"><?php _e('Title') ?></div>
                         <?php echo fed_get_input_details(array(
-                                'placeholder' => 'Title',
-                                'input_meta'  => 'post_title',
-                                'input_type'  => 'single_line',
+                            'placeholder' => 'Title',
+                            'input_meta'  => 'post_title',
+                            'input_type'  => 'single_line',
                         )); ?>
                     </div>
 
                 </div>
                 <?php
                 if ( ! isset($post_settings['dashboard']['post_content']) && post_type_supports($post_type,
-                                'editor')) {
+                        'editor')) {
                     ?>
                     <div class="row fed_dashboard_item_field">
                         <div class="col-md-12">
@@ -1100,7 +1101,7 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                  */
 
                 if ( ! isset($post_settings['dashboard']['featured_image']) && post_type_supports($post_type,
-                                'thumbnail')) {
+                        'thumbnail')) {
                     ?>
                     <div class="row fed_dashboard_item_field">
                         <div class="col-md-12">
@@ -1108,8 +1109,8 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                                 <?php _e('Featured Image', 'frontend-dashboard-custom-post') ?>
                             </div>
                             <?php echo fed_get_input_details(array(
-                                    'input_meta' => '_thumbnail_id',
-                                    'input_type' => 'file',
+                                'input_meta' => '_thumbnail_id',
+                                'input_type' => 'file',
                             )) ?>
                         </div>
                     </div>
@@ -1120,17 +1121,17 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                  * Comment Status
                  */
                 if ( ! isset($post_settings['dashboard']['allow_comments']) && post_type_supports($post_type,
-                                'comments')) {
+                        'comments')) {
                     ?>
                     <div class="row fed_dashboard_item_field">
                         <div class="col-md-12">
                             <div class="fed_header_font_color"><?php _e('Allow Comments',
-                                        'frontend-dashboard-custom-post') ?></div>
+                                    'frontend-dashboard-custom-post') ?></div>
                             <?php echo fed_get_input_details(array(
-                                    'input_meta'    => 'comment_status',
-                                    'input_type'    => 'checkbox',
-                                    'default_value' => 'open',
-                                    'user_value'    => 'open',
+                                'input_meta'    => 'comment_status',
+                                'input_type'    => 'checkbox',
+                                'default_value' => 'open',
+                                'user_value'    => 'open',
                             )); ?>
                         </div>
                     </div>
@@ -1145,7 +1146,7 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                         <div class="row fed_dashboard_item_field">
                             <div class="col-md-12">
                                 <div class="fed_header_font_color"><?php _e($item['label_name'],
-                                            'frontend-dashboard-custom-post'); ?></div>
+                                        'frontend-dashboard-custom-post'); ?></div>
                                 <?php echo fed_get_input_details($item); ?>
                             </div>
                         </div>
@@ -1184,12 +1185,12 @@ if ( ! class_exists('Fed_Cp_Menu')) {
             <div class="fed_dashboard_post_menu_container">
                 <div class="fed_dashboard_post_menu_add_post">
                     <a class="btn btn-primary" href="<?php echo esc_url(add_query_arg(array(
-                            'post_status'   => 'add',
-                            'fed_post_type' => $post_type,
+                        'post_status'   => 'add',
+                        'fed_post_type' => $post_type,
                     )), site_url()); ?>">
                         <i class="fa fa-plus"></i>
                         <?php _e('Add New',
-                                'frontend-dashboard') ?>
+                            'frontend-dashboard') ?>
                         <?php echo $menus['menu']; ?>
                     </a>
                 </div>
@@ -1217,8 +1218,8 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                                     <?php if (fed_cp_is_user_can_edit_post($post_type)) { ?>
                                         <div class="col-xs-4 col-sm-4">
                                             <a class="btn btn-primary" href="<?php echo esc_url(add_query_arg(array(
-                                                    'post_id'       => (int) $single_post->ID,
-                                                    'fed_post_type' => $post_type,
+                                                'post_id'       => (int) $single_post->ID,
+                                                'fed_post_type' => $post_type,
                                             )), site_url()) ?>">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
@@ -1230,7 +1231,7 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                                                   class="fed_dashboard_delete_post_by_id"
                                                   action="<?php echo admin_url('admin-ajax.php?action=fed_dashboard_delete_post_by_id'); ?>">
                                                 <?php wp_nonce_field('fed_dashboard_delete_post_by_id',
-                                                        'fed_dashboard_delete_post_by_id'); ?>
+                                                    'fed_dashboard_delete_post_by_id'); ?>
                                                 <input type="hidden"
                                                        name="post_id"
                                                        value="<?php echo (int) $single_post->ID; ?>"/>
@@ -1308,8 +1309,8 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                                 <div class="col-md-12">
                                     <div class="fed_header_font_color"><?php _e('Post Format'); ?></div>
                                     <?php echo fed_input_box('tax_input[post_format][]', array(
-                                            'options' => $post_format,
-                                            'value'   => $post_value,
+                                        'options' => $post_format,
+                                        'value'   => $post_value,
                                     ), 'radio'); ?>
                                 </div>
                             </div>
@@ -1351,8 +1352,8 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                     <div class="col-md-6 text-right">
                         <?php if (fed_cp_is_user_can_add_post($post->post_type)) {
                             $add_url     = add_query_arg(array(
-                                    'post_status'   => 'add',
-                                    'fed_post_type' => $post->post_type,
+                                'post_status'   => 'add',
+                                'fed_post_type' => $post->post_type,
                             ));
                             $new_add_url = remove_query_arg('post_id', $add_url);
                             ?>
@@ -1364,7 +1365,7 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                         <?php if ($preview_link && ! empty($preview_link)) { ?>
                             <span class="fed_p_l_20">
 							<a target="_blank" class="btn btn-danger" href="<?php printf('%s',
-                                    $preview_link) ?>">
+                                $preview_link) ?>">
 							<i class="fa fa-eye" aria-hidden="true"></i>
 							<?php _e('View this ', 'frontend-dashboard-custom-post') ?>
                                 <?php echo $menu['name']; ?>
@@ -1381,21 +1382,21 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                     <?php wp_nonce_field('fed_nonce', 'fed_nonce') ?>
 
                     <?php echo fed_get_input_details(array(
-                            'input_meta' => 'ID',
-                            'user_value' => (int) $post->ID,
-                            'input_type' => 'hidden',
+                        'input_meta' => 'ID',
+                        'user_value' => (int) $post->ID,
+                        'input_type' => 'hidden',
                     )) ?>
 
                     <?php echo fed_get_input_details(array(
-                            'input_meta' => 'fed_post_type',
-                            'user_value' => $post->post_type,
-                            'input_type' => 'hidden',
+                        'input_meta' => 'fed_post_type',
+                        'user_value' => $post->post_type,
+                        'input_type' => 'hidden',
                     )) ?>
 
                     <?php echo fed_get_input_details(array(
-                            'input_meta' => 'post_type',
-                            'user_value' => $post->post_type,
-                            'input_type' => 'hidden',
+                        'input_meta' => 'post_type',
+                        'user_value' => $post->post_type,
+                        'input_type' => 'hidden',
                     ))
                     /**
                      * Post Title
@@ -1404,10 +1405,10 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                     <div class="row fed_dashboard_item_field">
                         <div class="col-md-12">
                             <div class="fed_header_font_color"><?php _e('Title',
-                                        'frontend-dashboard-custom-post'); ?></div>
+                                    'frontend-dashboard-custom-post'); ?></div>
                             <?php echo fed_input_box('post_title', array(
-                                    'value'       => esc_attr($post->post_title),
-                                    'placeholder' => 'Post Title',
+                                'value'       => esc_attr($post->post_title),
+                                'placeholder' => 'Post Title',
                             ), 'single_line'); ?>
                         </div>
                     </div>
@@ -1420,9 +1421,9 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                         <div class="row fed_dashboard_item_field">
                             <div class="col-md-12">
                                 <div class="fed_header_font_color"><?php _e('Content',
-                                            'frontend-dashboard-custom-post'); ?></div>
+                                        'frontend-dashboard-custom-post'); ?></div>
                                 <?php wp_editor($post->post_content, 'post_content', array(
-                                        'quicktags' => true,
+                                    'quicktags' => true,
                                 )) ?>
                             </div>
 
@@ -1442,11 +1443,11 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                         <div class="row fed_dashboard_item_field">
                             <div class="col-md-12">
                                 <div class="fed_header_font_color"><?php _e('Featured Image',
-                                            'frontend-dashboard-custom-post') ?></div>
+                                        'frontend-dashboard-custom-post') ?></div>
                                 <?php echo fed_get_input_details(array(
-                                        'input_meta' => '_thumbnail_id',
-                                        'user_value' => $thumbnail,
-                                        'input_type' => 'file',
+                                    'input_meta' => '_thumbnail_id',
+                                    'user_value' => $thumbnail,
+                                    'input_type' => 'file',
                                 )); ?>
                             </div>
                         </div>
@@ -1462,8 +1463,8 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                             <div class="col-md-12">
                                 <div class="fed_header_font_color"><?php _e('Allow Comments') ?></div>
                                 <?php echo fed_input_box('comment_status', array(
-                                        'default_value' => 'open',
-                                        'value'         => esc_attr($post->comment_status),
+                                    'default_value' => 'open',
+                                    'value'         => esc_attr($post->comment_status),
                                 ), 'checkbox'); ?>
                             </div>
                         </div>
