@@ -58,7 +58,7 @@ if ( ! class_exists('Fed_Cp_Menu')) {
             $user_role = fed_get_current_user_role();
             if (count(array_intersect($user_role,
                     array_keys($fed_admin_options['permissions']['post_permission']))) > 0) {
-                $extras      = fed_fetch_table_rows_with_key(BC_FED_POST_DB, 'input_meta');
+                $extras      = fed_fetch_table_rows_with_key(BC_FED_TABLE_POST, 'input_meta');
                 $post_status = isset($fed_admin_options['settings']['fed_post_status']) ? sanitize_text_field($fed_admin_options['settings']['fed_post_status']) : 'publish';
 
                 if (empty($post['post_title'])) {
@@ -1042,7 +1042,7 @@ if ( ! class_exists('Fed_Cp_Menu')) {
         private function fed_cp_frontend_dashboard_add_new_post($request, $menu)
         {
             $post_type     = isset($request['fed_post_type']) ? $request['fed_post_type'] : 'post';
-            $post_table    = fed_fetch_rows_by_table(BC_FED_POST_DB);
+            $post_table    = fed_fetch_rows_by_table(BC_FED_TABLE_POST);
             $post_settings = fed_get_post_settings_by_type($post_type);
             ?>
             <div class="row">
@@ -1334,7 +1334,7 @@ if ( ! class_exists('Fed_Cp_Menu')) {
             $preview_link = get_preview_post_link($post->ID);
 
             if (fed_cp_is_user_can_edit_post($post->post_type) && $post !== null && $post->post_author == $user->ID) {
-                $post_table    = fed_fetch_table_rows_by_key_value(BC_FED_POST_DB, 'post_type', $post->post_type);
+                $post_table    = fed_fetch_table_rows_by_key_value(BC_FED_TABLE_POST, 'post_type', $post->post_type);
                 $post_meta     = get_post_meta($post->ID);
                 $post_settings = fed_get_post_settings_by_type($post->post_type);
                 uasort($post_table, 'fed_sort_by_order');

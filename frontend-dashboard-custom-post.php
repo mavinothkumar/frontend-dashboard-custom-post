@@ -3,7 +3,7 @@
  * Plugin Name: Frontend Dashboard Custom Post
  * Plugin URI: https://buffercode.com/plugin/frontend-dashboard-custom-post-and-taxonomies
  * Description: Frontend Dashboard Custom Post is a plugin to show the custom post inside the Frontend Dashboard.
- * Version: 1.4.9
+ * Version: 1.4.10
  * Author: vinoth06
  * Author URI: http://buffercode.com/
  * License: GPLv2
