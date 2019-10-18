@@ -2,16 +2,16 @@
 # This file is distributed under the same license as the Frontend Dashboard Custom Post plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Frontend Dashboard Custom Post 1.4.4\n"
+"Project-Id-Version: Frontend Dashboard Custom Post 1.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/frontend-dashboard-custom-post\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-04-26T09:50:28+02:00\n"
+"POT-Creation-Date: 2019-10-17T03:11:26+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.1.0\n"
+"X-Generator: WP-CLI 2.2.0\n"
 "X-Domain: frontend-dashboard-custom-post\n"
 
 #. Plugin Name of the plugin
@@ -34,542 +34,698 @@ msgstr ""
 msgid "http://buffercode.com/"
 msgstr ""
 
-#: functions.php:26
+#: functions.php:27
 msgid "Post Type Slug"
 msgstr ""
 
-#: functions.php:28
+#: functions.php:29
 msgid "(eg) movies or mov_ies"
 msgstr ""
 
-#: functions.php:41
-#: functions.php:667
+#: functions.php:42
+#: functions.php:669
 msgid "Plural Name"
 msgstr ""
 
-#: functions.php:43
+#: functions.php:44
 msgid "(eg) Movies"
 msgstr ""
 
-#: functions.php:53
-#: functions.php:679
+#: functions.php:54
+#: functions.php:681
 msgid "Singular Name"
 msgstr ""
 
-#: functions.php:56
+#: functions.php:57
 msgid "(eg) Movie"
 msgstr ""
 
-#: functions.php:65
-#: menu/class-fed-cp-menu.php:804
-#: menu/class-fed-cp-menu.php:806
+#: functions.php:66
+#: menu/class-fed-cp-menu.php:816
+#: menu/class-fed-cp-menu.php:818
 msgid "Menu Icon"
 msgstr ""
 
-#: functions.php:67
+#: functions.php:68
 msgid "Click to get Menu Icons"
 msgstr ""
 
-#: functions.php:79
-#: functions.php:701
+#: functions.php:80
+#: functions.php:703
 msgid "Name"
 msgstr ""
 
-#: functions.php:81
-#: functions.php:91
-#: functions.php:101
+#: functions.php:82
+#: functions.php:92
+#: functions.php:102
 msgid "(eg) Horror Movies"
 msgstr ""
 
-#: functions.php:89
-#: functions.php:711
+#: functions.php:90
+#: functions.php:713
 msgid "Menu Name"
 msgstr ""
 
-#: functions.php:99
+#: functions.php:100
 msgid "Name Admin Bar"
 msgstr ""
 
-#: functions.php:109
+#: functions.php:110
 msgid "(eg) Movies Archives"
 msgstr ""
 
-#: functions.php:111
+#: functions.php:112
 msgid "Item Archives"
 msgstr ""
 
-#: functions.php:119
+#: functions.php:120
+#: menu/class-fed-cp-custom-posts.php:163
 msgid "Attributes"
 msgstr ""
 
-#: functions.php:121
+#: functions.php:122
 msgid "(eg) Movies Attributes"
 msgstr ""
 
-#: functions.php:129
-#: functions.php:721
+#: functions.php:130
+#: functions.php:723
 msgid "Parent Item Colon"
 msgstr ""
 
-#: functions.php:131
+#: functions.php:132
 msgid "(eg) Movies:"
 msgstr ""
 
-#: functions.php:139
-#: functions.php:731
+#: functions.php:140
+#: functions.php:733
 msgid "All Items"
 msgstr ""
 
-#: functions.php:141
+#: functions.php:142
 msgid "(eg) All Movies"
 msgstr ""
 
-#: functions.php:149
-#: functions.php:741
+#: functions.php:150
+#: functions.php:743
 msgid "Add New Item"
 msgstr ""
 
-#: functions.php:151
+#: functions.php:152
 msgid "(eg) Add New Movie"
 msgstr ""
 
-#: functions.php:159
+#: functions.php:157
+#: functions.php:750
+msgid "Default is Add New Post/Add New Page."
+msgstr ""
+
+#: functions.php:160
+#: menu/class-fed-cp-custom-posts.php:173
 msgid "Add New"
 msgstr ""
 
-#: functions.php:161
+#: functions.php:162
 msgid "(eg) Add New"
 msgstr ""
 
-#: functions.php:169
+#: functions.php:170
 msgid "New Item"
 msgstr ""
 
-#: functions.php:171
+#: functions.php:172
 msgid "(eg) New Movie"
 msgstr ""
 
-#: functions.php:179
-#: functions.php:761
+#: functions.php:180
+#: functions.php:763
 msgid "Edit Item"
 msgstr ""
 
-#: functions.php:181
+#: functions.php:182
 msgid "(eg) Edit Movie"
 msgstr ""
 
-#: functions.php:189
-#: functions.php:771
+#: functions.php:190
+#: functions.php:773
 msgid "View Item"
 msgstr ""
 
-#: functions.php:191
+#: functions.php:192
 msgid "(eg) View Movie"
 msgstr ""
 
-#: functions.php:199
+#: functions.php:200
 msgid "View Items"
 msgstr ""
 
-#: functions.php:201
+#: functions.php:202
 msgid "(eg) View Movies"
 msgstr ""
 
-#: functions.php:209
-#: functions.php:801
+#: functions.php:210
+#: functions.php:803
 msgid "Search Items"
 msgstr ""
 
-#: functions.php:211
+#: functions.php:212
 msgid "(eg) Search Movie"
 msgstr ""
 
-#: functions.php:219
-#: functions.php:811
+#: functions.php:220
+#: functions.php:813
 msgid "Not Found"
 msgstr ""
 
-#: functions.php:221
+#: functions.php:222
 msgid "(eg) Movie Not found"
 msgstr ""
 
-#: functions.php:229
+#: functions.php:230
 msgid "Not Found in Trash"
 msgstr ""
 
-#: functions.php:231
+#: functions.php:232
 msgid "(eg) Movie Not found in Trash"
 msgstr ""
 
-#: functions.php:239
-#: menu/class-fed-cp-menu.php:1088
-#: menu/class-fed-cp-menu.php:1415
+#: functions.php:240
+#: menu/class-fed-cp-menu.php:1101
+#: menu/class-fed-cp-menu.php:1437
 msgid "Featured Image"
 msgstr ""
 
-#: functions.php:241
+#: functions.php:242
 msgid "(eg) Featured Image for this Movie"
 msgstr ""
 
-#: functions.php:249
+#: functions.php:250
 msgid "Set Featured Image"
 msgstr ""
 
-#: functions.php:251
+#: functions.php:252
 msgid "(eg) Set featured image for this Movie"
 msgstr ""
 
-#: functions.php:259
+#: functions.php:260
 msgid "Remove Featured Image"
 msgstr ""
 
-#: functions.php:261
+#: functions.php:262
 msgid "(eg) Remove featured image for this Movie"
 msgstr ""
 
-#: functions.php:270
+#: functions.php:271
 msgid "Use Featured Image"
 msgstr ""
 
-#: functions.php:272
+#: functions.php:273
 msgid "(eg) Use as featured image for this Movie"
 msgstr ""
 
-#: functions.php:281
+#: functions.php:282
 msgid "Insert into Item"
 msgstr ""
 
-#: functions.php:283
+#: functions.php:284
 msgid "(eg) Insert into Movie"
 msgstr ""
 
-#: functions.php:291
+#: functions.php:292
 msgid "Uploaded to this Movie"
 msgstr ""
 
-#: functions.php:293
+#: functions.php:294
 msgid "(eg) Uploaded to this item"
 msgstr ""
 
-#: functions.php:301
+#: functions.php:302
 msgid "Items List"
 msgstr ""
 
-#: functions.php:303
+#: functions.php:304
 msgid "(eg) Movies list"
 msgstr ""
 
-#: functions.php:311
+#: functions.php:312
 msgid "Items List Navigation"
 msgstr ""
 
-#: functions.php:313
+#: functions.php:314
 msgid "(eg) Movies list navigation"
 msgstr ""
 
-#: functions.php:321
+#: functions.php:322
+#: menu/class-fed-cp-custom-posts.php:228
 msgid "Filter items list"
 msgstr ""
 
-#: functions.php:323
+#: functions.php:324
 msgid "(eg) Filter Movies list"
 msgstr ""
 
-#: functions.php:331
-#: functions.php:821
+#: functions.php:332
+#: functions.php:823
 msgid "Description"
 msgstr ""
 
-#: functions.php:333
-#: functions.php:823
+#: functions.php:334
+#: functions.php:825
 msgid "(eg) Description"
 msgstr ""
 
-#: functions.php:341
+#: functions.php:342
 msgid "Menu Position"
 msgstr ""
 
-#: functions.php:343
+#: functions.php:344
 msgid "(eg)20 or 30 or any integer value"
 msgstr ""
 
-#: functions.php:351
+#: functions.php:352
 msgid "Capability Type"
 msgstr ""
 
-#: functions.php:353
+#: functions.php:354
 msgid "(eg)Default is post"
 msgstr ""
 
-#: functions.php:363
-#: functions.php:873
+#: functions.php:364
+#: functions.php:875
 msgid "Hierarchical"
 msgstr ""
 
-#: functions.php:373
-#: functions.php:923
+#: functions.php:374
+#: functions.php:925
 msgid "Public"
 msgstr ""
 
-#: functions.php:383
-#: functions.php:933
+#: functions.php:384
+#: functions.php:935
 msgid "Show UI"
 msgstr ""
 
-#: functions.php:393
-#: functions.php:943
+#: functions.php:394
+#: functions.php:945
 msgid "Show in Menu"
 msgstr ""
 
-#: functions.php:403
+#: functions.php:404
 msgid "Show in Admin Bar"
 msgstr ""
 
-#: functions.php:413
-#: functions.php:953
+#: functions.php:414
+#: functions.php:955
 msgid "Show in Nav Menus"
 msgstr ""
 
-#: functions.php:423
+#: functions.php:424
 msgid "Can Export"
 msgstr ""
 
-#: functions.php:433
+#: functions.php:434
 msgid "Has Archive"
 msgstr ""
 
-#: functions.php:443
+#: functions.php:444
 msgid "Exclude from Search"
 msgstr ""
 
-#: functions.php:453
-#: functions.php:963
+#: functions.php:454
+#: functions.php:965
 msgid "Publicly Queryable"
 msgstr ""
 
-#: functions.php:463
-#: functions.php:973
+#: functions.php:464
+#: functions.php:975
 msgid "Query Var"
 msgstr ""
 
-#: functions.php:473
+#: functions.php:474
 msgid "Delete with user"
 msgstr ""
 
-#: functions.php:483
-#: functions.php:983
+#: functions.php:484
+#: functions.php:985
 msgid "Show in REST"
 msgstr ""
 
-#: functions.php:493
-#: functions.php:993
+#: functions.php:494
+#: functions.php:995
 msgid "REST base"
 msgstr ""
 
-#: functions.php:495
-#: functions.php:995
+#: functions.php:496
+#: functions.php:997
 msgid "(eg) REST base"
 msgstr ""
 
-#: functions.php:503
-#: functions.php:1003
+#: functions.php:504
+#: functions.php:1005
 msgid "Rewrite URL"
 msgstr ""
 
-#: functions.php:513
-#: functions.php:1013
+#: functions.php:514
+#: functions.php:1015
 msgid "Rewrite URL Slug"
 msgstr ""
 
-#: functions.php:515
-#: functions.php:1015
+#: functions.php:516
+#: functions.php:1017
 msgid "(eg) Rewrite URL Slug"
 msgstr ""
 
-#: functions.php:532
-#: menu/class-fed-cp-menu.php:1377
+#: functions.php:533
+#: menu/class-fed-cp-menu.php:1399
 msgid "Title"
 msgstr ""
 
-#: functions.php:542
+#: functions.php:543
 msgid "Editor"
 msgstr ""
 
-#: functions.php:552
+#: functions.php:553
 msgid "Author"
 msgstr ""
 
-#: functions.php:562
+#: functions.php:563
 msgid "Thumbnail"
 msgstr ""
 
-#: functions.php:572
+#: functions.php:573
 msgid "Excerpt"
 msgstr ""
 
-#: functions.php:582
+#: functions.php:583
 msgid "Trackbacks"
 msgstr ""
 
-#: functions.php:592
+#: functions.php:593
 msgid "Custom Fields"
 msgstr ""
 
-#: functions.php:602
+#: functions.php:603
 msgid "Comments"
 msgstr ""
 
-#: functions.php:612
+#: functions.php:613
 msgid "Revisions"
 msgstr ""
 
-#: functions.php:622
+#: functions.php:623
 msgid "Page Attributes"
 msgstr ""
 
-#: functions.php:632
+#: functions.php:633
 msgid "Post Formats"
 msgstr ""
 
-#: functions.php:652
+#: functions.php:654
 msgid "Taxonomy Slug"
 msgstr ""
 
-#: functions.php:654
+#: functions.php:656
 msgid "(eg) actors (or) act_ors"
 msgstr ""
 
-#: functions.php:669
-#: functions.php:703
-#: functions.php:713
+#: functions.php:665
+msgid "Taxonomy slug, No Capital letter, space and special characters"
+msgstr ""
+
+#: functions.php:671
+#: functions.php:705
+#: functions.php:715
 msgid "(eg) Actors"
 msgstr ""
 
-#: functions.php:682
+#: functions.php:678
+msgid " A plural descriptive name for the taxonomy marked for translation."
+msgstr ""
+
+#: functions.php:684
 msgid "(eg) Actor"
 msgstr ""
 
-#: functions.php:723
+#: functions.php:690
+msgid "General name for the taxonomy, usually singular."
+msgstr ""
+
+#: functions.php:697
+msgid "Select any one post type"
+msgstr ""
+
+#: functions.php:710
+msgid "General name for the taxonomy, usually plural."
+msgstr ""
+
+#: functions.php:720
+msgid "Default is the same as `name`"
+msgstr ""
+
+#: functions.php:725
 msgid "(eg) Actors:"
 msgstr ""
 
-#: functions.php:733
+#: functions.php:730
+msgid "This string isn't used on non-hierarchical types. In hierarchical ones the default is Parent Page:"
+msgstr ""
+
+#: functions.php:735
 msgid "(eg) All Actors"
 msgstr ""
 
-#: functions.php:743
+#: functions.php:740
+msgid "String for the submenu. Default is All Posts/All Pages."
+msgstr ""
+
+#: functions.php:745
 msgid "(eg) Add New Actor"
 msgstr ""
 
-#: functions.php:751
+#: functions.php:753
 msgid "New Item Name"
 msgstr ""
 
-#: functions.php:753
+#: functions.php:755
 msgid "(eg) New Actor Name"
 msgstr ""
 
-#: functions.php:763
+#: functions.php:760
+msgid "Default is New Item Name"
+msgstr ""
+
+#: functions.php:765
 msgid "(eg) Edit Actor"
 msgstr ""
 
-#: functions.php:773
+#: functions.php:770
+msgid "Default is Edit Post/Edit Page."
+msgstr ""
+
+#: functions.php:775
 msgid "(eg) View Actor"
 msgstr ""
 
-#: functions.php:781
-msgid "Update Item"
+#: functions.php:780
+msgid "Default is View Post/View Page"
 msgstr ""
 
 #: functions.php:783
+msgid "Update Item"
+msgstr ""
+
+#: functions.php:785
 msgid "(eg) Update Actor"
 msgstr ""
 
-#: functions.php:791
-msgid "Parent Item"
+#: functions.php:790
+#: functions.php:800
+msgid "Default is Update Item"
 msgstr ""
 
 #: functions.php:793
+msgid "Parent Item"
+msgstr ""
+
+#: functions.php:795
 msgid "(eg) Parent Actor"
 msgstr ""
 
-#: functions.php:803
+#: functions.php:805
 msgid "(eg) Search Actor"
 msgstr ""
 
-#: functions.php:813
+#: functions.php:810
+msgid "Default is Search Posts/Search Pages"
+msgstr ""
+
+#: functions.php:815
 msgid "(eg) Actor Not found"
 msgstr ""
 
-#: functions.php:831
-msgid "Popular Items"
+#: functions.php:820
+msgid "Default is No posts found/No pages found."
+msgstr ""
+
+#: functions.php:830
+msgid "A short descriptive summary of what the taxonomy is."
 msgstr ""
 
 #: functions.php:833
+msgid "Popular Items"
+msgstr ""
+
+#: functions.php:835
 msgid "(eg) Popular Actor(s)"
 msgstr ""
 
-#: functions.php:841
-msgid "Separate Item with commas"
+#: functions.php:840
+msgid "The popular items text. This string is not used on hierarchical taxonomies. Default is Popular Tags or null"
 msgstr ""
 
 #: functions.php:843
+msgid "Separate Item with commas"
+msgstr ""
+
+#: functions.php:845
 msgid "(eg) Separate Actors with commas"
 msgstr ""
 
-#: functions.php:851
-msgid "Add or remove tags"
+#: functions.php:850
+msgid "The separate item with commas text used in the taxonomy meta box. This string is not used on hierarchical taxonomies. Default is __( 'Separate tags with commas' ), or null"
 msgstr ""
 
 #: functions.php:853
+msgid "Add or remove tags"
+msgstr ""
+
+#: functions.php:855
 msgid "(eg) Add or remove Actor"
 msgstr ""
 
-#: functions.php:861
-msgid "Choose from the most used tags"
+#: functions.php:860
+msgid "the add or remove items text and used in the meta box when JavaScript is disabled. This string is not used on hierarchical taxonomies. Default is __( 'Add or remove tags' ) or null"
 msgstr ""
 
 #: functions.php:863
+msgid "Choose from the most used tags"
+msgstr ""
+
+#: functions.php:865
 msgid "(eg) Choose from the most used Actor"
 msgstr ""
 
-#: functions.php:883
+#: functions.php:870
+msgid "the choose from most used text used in the taxonomy meta box. This string is not used on hierarchical taxonomies. Default is __( 'Choose from the most used tags' ) or null"
+msgstr ""
+
+#: functions.php:882
+msgid "Whether the taxonomy is hierarchical (e.g. page). Allows Parent to be specified. The supports parameter should contain page-attributes to show the parent select box on the editor page.."
+msgstr ""
+
+#: functions.php:885
 msgid "Show Tag Cloud"
 msgstr ""
 
-#: functions.php:893
+#: functions.php:892
+msgid "Whether to allow the Tag Cloud widget to use this taxonomy."
+msgstr ""
+
+#: functions.php:895
 msgid "Show in Quick Edit"
 msgstr ""
 
-#: functions.php:903
+#: functions.php:902
+msgid "Whether to show the taxonomy in the quick/bulk edit panel"
+msgstr ""
+
+#: functions.php:905
 msgid "Show admin column"
 msgstr ""
 
-#: functions.php:913
+#: functions.php:912
+msgid "Whether to allow automatic creation of taxonomy columns on associated post-types table"
+msgstr ""
+
+#: functions.php:915
 msgid "Sort"
 msgstr ""
 
-#: functions.php:1426
+#: functions.php:922
+msgid "Whether this taxonomy should remember the order in which terms are added to objects"
+msgstr ""
+
+#: functions.php:932
+msgid "Controls how the type is visible to authors (show_in_nav_menus, show_ui) and readers (exclude_from_search, publicly_queryable)."
+msgstr ""
+
+#: functions.php:942
+msgid "Whether to generate a default UI for managing this taxonomy in the admin."
+msgstr ""
+
+#: functions.php:952
+msgid "Where to show the taxonomy in the admin menu"
+msgstr ""
+
+#: functions.php:962
+msgid "Whether post_type is available for selection in navigation menus"
+msgstr ""
+
+#: functions.php:972
+msgid "Whether queries can be performed on the front end as part of parse_request()"
+msgstr ""
+
+#: functions.php:982
+msgid "Sets the query_var key for this taxonomy."
+msgstr ""
+
+#: functions.php:992
+msgid "Whether to expose this taxonomy in the REST API."
+msgstr ""
+
+#: functions.php:1002
+msgid "The base slug that this taxonomy will use when accessed using the REST API."
+msgstr ""
+
+#: functions.php:1012
+msgid "Triggers the handling of rewrites for this taxonomy. To prevent rewrites, set to false."
+msgstr ""
+
+#: functions.php:1022
+msgid "Slug to rewrite the default url base"
+msgstr ""
+
+#: functions.php:1089
+#: functions.php:1115
+#: functions.php:1122
+msgid "%s"
+msgstr ""
+
+#: functions.php:1185
+msgid "(WP Core)"
+msgstr ""
+
+#: functions.php:1442
 msgid "Please Select one Image"
 msgstr ""
 
 #: menu/class-fed-cp-taxonomies.php:38
 #: menu/class-fed-cp-taxonomies.php:39
+#: menu/class-fed-cp-taxonomies.php:461
 msgid "Custom Taxonomies"
 msgstr ""
 
 #: menu/class-fed-cp-taxonomies.php:77
-#: menu/class-fed-cp-custom-posts.php:76
+#: menu/class-fed-cp-custom-posts.php:80
 msgid "Invalid Custom Post ID"
 msgstr ""
 
 #: menu/class-fed-cp-taxonomies.php:83
-#: menu/class-fed-cp-custom-posts.php:82
+#: menu/class-fed-cp-custom-posts.php:86
 msgid "Custom Post Type Successfully Deleted"
 msgstr ""
 
 #: menu/class-fed-cp-taxonomies.php:105
-#: menu/class-fed-cp-custom-posts.php:103
+#: menu/class-fed-cp-custom-posts.php:108
 msgid "Please fill mandatory fields"
 msgstr ""
 
@@ -577,49 +733,208 @@ msgstr ""
 msgid " Custom Post Type slug already exist"
 msgstr ""
 
-#: menu/class-fed-cp-taxonomies.php:136
-msgid "Taxonomy "
-msgstr ""
-
+#. translators: 1:  Taxonomy Name, 2: Status
 #: menu/class-fed-cp-taxonomies.php:137
-#: menu/class-fed-cp-custom-posts.php:133
-msgid " successfully "
+msgid "Taxonomy %1$s successfully %2$s"
 msgstr ""
 
-#: menu/class-fed-cp-taxonomies.php:245
+#: menu/class-fed-cp-taxonomies.php:154
+#: menu/class-fed-cp-custom-posts.php:167
+msgid "All Posts"
+msgstr ""
+
+#: menu/class-fed-cp-taxonomies.php:246
 msgid "Sorry! You are trying to get the invalid Taxonomies, Please add new one"
 msgstr ""
 
-#: menu/class-fed-cp-taxonomies.php:293
-#: menu/class-fed-cp-custom-posts.php:311
+#: menu/class-fed-cp-taxonomies.php:294
+#: menu/class-fed-cp-custom-posts.php:407
 msgid "Sorry! You are trying to delete the invalid Custom Post Type"
 msgstr ""
 
-#: menu/class-fed-cp-custom-posts.php:35
-#: menu/class-fed-cp-custom-posts.php:36
+#: menu/class-fed-cp-taxonomies.php:348
+msgid "Add New Taxonomies"
+msgstr ""
+
+#: menu/class-fed-cp-taxonomies.php:490
+msgid "No Custom Taxonomies Added"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:38
+#: menu/class-fed-cp-custom-posts.php:39
+#: menu/class-fed-cp-custom-posts.php:455
 msgid "Custom Post"
 msgstr ""
 
-#: menu/class-fed-cp-custom-posts.php:114
+#: menu/class-fed-cp-custom-posts.php:98
+msgid "added"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:119
 msgid "Custom Post Type "
 msgstr ""
 
-#: menu/class-fed-cp-custom-posts.php:114
+#: menu/class-fed-cp-custom-posts.php:120
 msgid " slug already exist"
 msgstr ""
 
-#: menu/class-fed-cp-custom-posts.php:133
-msgid "Custom post type "
+#: menu/class-fed-cp-custom-posts.php:126
+msgid "updated"
 msgstr ""
 
-#: menu/class-fed-cp-custom-posts.php:264
+#. translators: 1:  Custom Post Name, 2: Status
+#: menu/class-fed-cp-custom-posts.php:141
+msgid "Custom post type %1$s successfully %2$s"
+msgstr ""
+
+#. translators: 1:  Singular Name
+#: menu/class-fed-cp-custom-posts.php:161
+msgid "%1$s Archives"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:166
+msgid "Parent Page: Attributes"
+msgstr ""
+
+#. translators: 1:  New Item
+#: menu/class-fed-cp-custom-posts.php:171
+msgid "Add New %1$s"
+msgstr ""
+
+#. translators: 1:  New Item
+#: menu/class-fed-cp-custom-posts.php:177
+msgid "New %1$s"
+msgstr ""
+
+#. translators: 1:  Edit Item
+#: menu/class-fed-cp-custom-posts.php:181
+msgid "Edit %1$s"
+msgstr ""
+
+#. translators: 1:  View Item
+#: menu/class-fed-cp-custom-posts.php:185
+#: menu/class-fed-cp-custom-posts.php:189
+msgid "View %1$s"
+msgstr ""
+
+#. translators: 1:  Search Items
+#: menu/class-fed-cp-custom-posts.php:193
+msgid "Search %1$s"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:196
+msgid "No Post Found"
+msgstr ""
+
+#. translators: 1:  Items
+#: menu/class-fed-cp-custom-posts.php:200
+msgid "No %1$s found in Trash"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:203
+msgid "Featured image"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:206
+msgid "Set featured image"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:209
+msgid "Remove featured image"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:212
+msgid "Use featured image"
+msgstr ""
+
+#. translators: 1:  Name
+#: menu/class-fed-cp-custom-posts.php:216
+msgid "%1$s insert into page"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:219
+msgid "Uploaded to this page"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:222
+msgid "Items list"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:225
+msgid "Items list navigation"
+msgstr ""
+
+#. translators: 1: menu name
+#. translators: 1:  name admin bar
+#. translators: 1:  archives
+#. translators: 1:  attributes
+#. translators: 1:  parent_item_colon
+#. translators: 1:  all_items
+#. translators: 1:  add_new_item
+#. translators: 1:  add_new
+#. translators: 1:  new_item
+#. translators: 1: edit_item
+#. translators: 1:  view_item
+#. translators: 1:  view_items
+#. translators: 1:  search_items
+#. translators: 1:  not_found
+#. translators: 1:  not_found_in_trash
+#. translators: 1:  featured_image
+#. translators: 1:  set_featured_image
+#. translators: 1:  remove_featured_image
+#. translators: 1:  use_featured_image
+#. translators: 1:  insert_into_item
+#. translators: 1:  uploaded_to_this_item
+#. translators: 1:  items_list
+#. translators: 1:  items_list_navigation
+#. translators: 1:  filter_items_list
+#. translators: 1:  label
+#. translators: 1: description
+#: menu/class-fed-cp-custom-posts.php:254
+#: menu/class-fed-cp-custom-posts.php:256
+#: menu/class-fed-cp-custom-posts.php:258
+#: menu/class-fed-cp-custom-posts.php:260
+#: menu/class-fed-cp-custom-posts.php:262
+#: menu/class-fed-cp-custom-posts.php:265
+#: menu/class-fed-cp-custom-posts.php:267
+#: menu/class-fed-cp-custom-posts.php:269
+#: menu/class-fed-cp-custom-posts.php:271
+#: menu/class-fed-cp-custom-posts.php:273
+#: menu/class-fed-cp-custom-posts.php:275
+#: menu/class-fed-cp-custom-posts.php:277
+#: menu/class-fed-cp-custom-posts.php:279
+#: menu/class-fed-cp-custom-posts.php:281
+#: menu/class-fed-cp-custom-posts.php:283
+#: menu/class-fed-cp-custom-posts.php:286
+#: menu/class-fed-cp-custom-posts.php:288
+#: menu/class-fed-cp-custom-posts.php:291
+#: menu/class-fed-cp-custom-posts.php:294
+#: menu/class-fed-cp-custom-posts.php:297
+#: menu/class-fed-cp-custom-posts.php:300
+#: menu/class-fed-cp-custom-posts.php:303
+#: menu/class-fed-cp-custom-posts.php:305
+#: menu/class-fed-cp-custom-posts.php:308
+#: menu/class-fed-cp-custom-posts.php:313
+#: menu/class-fed-cp-custom-posts.php:316
+msgid "%1$s"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:359
 msgid ""
 "Sorry! You are trying to get the invalid Custom Post Type, Please add\n"
 "\t\t\t\t\t\t\t\tnew one"
 msgstr ""
 
-#: menu/class-fed-cp-custom-posts.php:363
+#: menu/class-fed-cp-custom-posts.php:461
 msgid "Add New Custom Post"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:541
+msgid "Custom Post Types"
+msgstr ""
+
+#: menu/class-fed-cp-custom-posts.php:569
+msgid "No Custom Post Type Added"
 msgstr ""
 
 #: menu/class-fed-cp-menu.php:66
@@ -627,126 +942,161 @@ msgid "Please fill post title"
 msgstr ""
 
 #: menu/class-fed-cp-menu.php:103
-msgid " Successfully saved"
+msgid " Successfully Saved"
 msgstr ""
 
 #: menu/class-fed-cp-menu.php:107
 msgid "Sorry! your are not allowed to do this action"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:446
+#: menu/class-fed-cp-menu.php:366
+msgid "Sorry! you don't have any public custom post type"
+msgstr ""
+
+#: menu/class-fed-cp-menu.php:439
+msgid "Settings"
+msgstr ""
+
+#: menu/class-fed-cp-menu.php:458
+msgid "Dashboard Settings"
+msgstr ""
+
+#: menu/class-fed-cp-menu.php:467
 msgid "Disable Content"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:455
+#: menu/class-fed-cp-menu.php:476
 msgid "Disable Category"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:464
+#: menu/class-fed-cp-menu.php:485
 msgid "Disable Tag"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:475
+#: menu/class-fed-cp-menu.php:495
 msgid "Disable Featured Image"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:496
+#: menu/class-fed-cp-menu.php:506
 msgid "Disable Allow Comments"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:712
-msgid "Please enter all menu fields"
+#: menu/class-fed-cp-menu.php:515
+msgid "Menu"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:740
-msgid "Custom Post Updated Successfully "
-msgstr ""
-
-#: menu/class-fed-cp-menu.php:744
-msgid "Post Type Does not Exist"
-msgstr ""
-
-#: menu/class-fed-cp-menu.php:784
-#: menu/class-fed-cp-menu.php:786
+#: menu/class-fed-cp-menu.php:520
+#: menu/class-fed-cp-menu.php:796
+#: menu/class-fed-cp-menu.php:798
 msgid "Post Menu Name"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:794
-#: menu/class-fed-cp-menu.php:796
+#: menu/class-fed-cp-menu.php:528
+#: menu/class-fed-cp-menu.php:806
+#: menu/class-fed-cp-menu.php:808
 msgid "Post Menu Position"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:820
+#: menu/class-fed-cp-menu.php:537
+msgid "Post Menu Icon"
+msgstr ""
+
+#: menu/class-fed-cp-menu.php:552
+msgid "Allow User Roles to Add/Edit/Delete Posts"
+msgstr ""
+
+#: menu/class-fed-cp-menu.php:723
+msgid "Please enter all menu fields"
+msgstr ""
+
+#: menu/class-fed-cp-menu.php:751
+msgid "Custom Post Updated Successfully "
+msgstr ""
+
+#: menu/class-fed-cp-menu.php:755
+msgid "Post Type Does not Exist"
+msgstr ""
+
+#: menu/class-fed-cp-menu.php:832
 msgid "New Post Status"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:829
+#: menu/class-fed-cp-menu.php:841
 msgid "Disable Post Add New"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:838
+#: menu/class-fed-cp-menu.php:850
 msgid "Disable Post Edit"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:847
+#: menu/class-fed-cp-menu.php:859
 msgid "Disable Post View"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:856
+#: menu/class-fed-cp-menu.php:868
 msgid "Disable Post Delete"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:875
+#: menu/class-fed-cp-menu.php:887
 msgid "Disable Post Content"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:886
+#: menu/class-fed-cp-menu.php:898
 msgid "Disable Feature Image"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:907
+#: menu/class-fed-cp-menu.php:919
 msgid "Disable Comments"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:987
+#: menu/class-fed-cp-menu.php:934
+msgid "Select the respective role(s) to DISABLE the visibility of Taxonomy"
+msgstr ""
+
+#: menu/class-fed-cp-menu.php:999
 msgid "Invalid Request, Please reload the page and try again"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:1000
+#: menu/class-fed-cp-menu.php:1012
 msgid "Something went wrong, please refresh and try again later"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:1006
+#: menu/class-fed-cp-menu.php:1018
 msgid "Successfully Deleted"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:1011
+#: menu/class-fed-cp-menu.php:1023
 msgid "You are not allowed to do this action"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:1031
-#: menu/class-fed-cp-menu.php:1319
+#: menu/class-fed-cp-menu.php:1044
+#: menu/class-fed-cp-menu.php:1339
 msgid "Back to"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:1107
+#: menu/class-fed-cp-menu.php:1120
 msgid "Allow Comments"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:1141
+#: menu/class-fed-cp-menu.php:1154
+#: menu/class-fed-cp-menu.php:1486
 msgid "Save"
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:1334
-msgid "Add New Post"
+#: menu/class-fed-cp-menu.php:1354
+msgid "Add New "
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:1341
+#: menu/class-fed-cp-menu.php:1362
 msgid "View this "
 msgstr ""
 
-#: menu/class-fed-cp-menu.php:1393
+#: menu/class-fed-cp-menu.php:1415
 msgid "Content"
+msgstr ""
+
+#: menu/class-fed-cp-menu.php:1493
+msgid "<h2>Unauthorised Access</h2>"
 msgstr ""
 
 #: frontend-dashboard-custom-post.php:67

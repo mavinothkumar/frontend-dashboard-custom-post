@@ -4,7 +4,7 @@ Tags: dashboard, frontend dashboard pages, pages in dashboard, custom pages
 Donate link: https://www.paypal.com/paypalme2/buffercode
 Requires at least: 4.6
 Tested up to: 5.2.3
-Stable tag: 1.4.10
+Stable tag: 1.5.1
 License: GPL V3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -45,6 +45,15 @@ Easy to add, edit and delete the taxonomies (category/tag)
 4. Do save.
 
 == Changelog ==
+= 1.5.1 [17-Oct-2019] =
+
+* Frontend Dashboard Post Ordering Fixed
+* Added Few Translation
+
+= 1.5 [12-Oct-2019] =
+
+* Support Frontend Dashboard 1.5
+
 = 1.4.10 [05-Sept-2019] =
 
 * Bug Fixes - Custom post not updating the custom taxonomy for few user roles.
@@ -112,9 +121,9 @@ Easy to add, edit and delete the taxonomies (category/tag)
 
 == Upgrade Notice ==
 
-= 1.4.10 [05-Sept-2019] =
+= 1.5 [12-Oct-2019] =
 
-* Bug Fixes - Custom post not updating the custom taxonomy for few user roles.
+* Support Frontend Dashboard 1.5
 
 == Screenshots ==
 1. Dashboard Settings

@@ -595,7 +595,7 @@ msgid "Please fill post title"
 msgstr ""
 
 #: menu/class-fed-cp-menu.php:103
-msgid " Successfully saved"
+msgid " Successfully Saved"
 msgstr ""
 
 #: menu/class-fed-cp-menu.php:107

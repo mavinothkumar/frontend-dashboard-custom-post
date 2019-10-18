@@ -133,9 +133,9 @@ if ( ! class_exists('Fed_Cp_Taxonomies')) {
             update_option('fed_cp_custom_taxonomies', $old_cpt);
 
             wp_send_json_success(array(
-                'message' => __('Taxonomy ',
-                        'frontend-dashboard-custom-post').$request['label'].__(' successfully ',
-                        'frontend-dashboard-custom-post').$status,
+                /* translators: 1:  Taxonomy Name, 2: Status */
+                'message' => sprintf(__('Taxonomy %1$s successfully %2$s', 'frontend-dashboard-custom-post'),
+                    $request['label'], $status),
                 'reload'  => $redirect_url,
             ));
         }
@@ -151,7 +151,8 @@ if ( ! class_exists('Fed_Cp_Taxonomies')) {
                     $name              = fed_request_empty($menu['name']) ? $menu['singular_name'] : $menu['name'];
                     $menu_name         = fed_request_empty($menu['menu_name']) ? $menu['label'] : $menu['menu_name'];
                     $parent_item_colon = fed_request_empty($menu['parent_item_colon']) ? 'Parent Page:'.' Attributes' : $menu['parent_item_colon'];
-                    $all_items         = fed_request_empty($menu['all_items']) ? 'All Posts' : $menu['all_items'];
+                    $all_items         = fed_request_empty($menu['all_items']) ? __('All Posts',
+                        'frontend-dashboard-custom-post') : $menu['all_items'];
                     $add_new_item      = fed_request_empty($menu['add_new_item']) ? 'Add New '.$name : $menu['add_new_item'];
                     $edit_item         = fed_request_empty($menu['edit_item']) ? 'Edit '.$name : $menu['edit_item'];
                     $view_item         = fed_request_empty($menu['view_item']) ? 'View '.$name : $menu['view_item'];
@@ -344,7 +345,7 @@ class="btn btn-danger fd_cp_custom_post_delete"> <i class="fa fa-trash fa-2x" ar
 											<a href="<?php echo menu_page_url('fed_taxonomies',
                                                 false) ?>" class="fed_add_new_custom_post">
 												<i class="fa fa-plus"></i>
-												Add New Taxonomies
+												<?php _e('Add New Taxonomies', 'frontend-dashboard-custom-post') ?>
 											</a>
 										</span>
                     </h3>
@@ -457,7 +458,7 @@ class="btn btn-danger fd_cp_custom_post_delete"> <i class="fa fa-trash fa-2x" ar
             ?>
             <div class="row p-b-20">
                 <div href="#" class="col-md-12 btn btn-warning">
-                    Custom Taxonomies
+                    <?php echo __('Custom Taxonomies','frontend-dashboard-custom-post'); ?>
                 </div>
             </div>
 
@@ -486,7 +487,7 @@ class="btn btn-danger fd_cp_custom_post_delete"> <i class="fa fa-trash fa-2x" ar
                 <div class="row">
                     <div class="col-md-12">
                         <a href="#" class="list-group-item">
-                            <?php echo 'No Custom Taxonomies Added' ?>
+                            <?php _e('No Custom Taxonomies Added','frontend-dashboard-custom-post') ?>
                         </a>
                     </div>
                 </div>

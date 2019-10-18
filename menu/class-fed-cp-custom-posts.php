@@ -95,7 +95,7 @@ if ( ! class_exists('Fed_Cp_Custom_Posts')) {
         {
             $request      = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             $redirect_url = admin_url().'admin.php?page=fed_custom_post';
-            $status       = 'added';
+            $status       = __('added', 'frontend-dashboard-custom-post');
             /**
              * Check for Nonce
              */
@@ -123,7 +123,7 @@ if ( ! class_exists('Fed_Cp_Custom_Posts')) {
             }
             if (isset($request['fed_cpt_edit'])) {
                 $redirect_url = admin_url().'admin.php?page=fed_custom_post&fed_type_id='.$request['slug'];
-                $status       = 'updated';
+                $status       = __('updated', 'frontend-dashboard-custom-post');
             }
 
             /**
@@ -137,9 +137,9 @@ if ( ! class_exists('Fed_Cp_Custom_Posts')) {
             update_option('fed_cp_custom_posts', $old_cpt);
 
             wp_send_json_success(array(
-                'message' => __('Custom post type ',
-                        'frontend-dashboard-custom-post').$request['label'].__(' successfully ',
-                        'frontend-dashboard-custom-post').$status,
+                /* translators: 1:  Custom Post Name, 2: Status */
+                'message' => sprintf(__('Custom post type %1$s successfully %2$s', 'frontend-dashboard-custom-post'),
+                    $request['label'], $status),
                 'reload'  => $redirect_url,
             ));
         }
@@ -152,33 +152,81 @@ if ( ! class_exists('Fed_Cp_Custom_Posts')) {
             $menus = get_option('fed_cp_custom_posts');
             if ($menus) {
                 foreach ($menus as $index => $menu) {
-                    $supports              = false;
-                    $taxonomies            = array();
-                    $name                  = fed_request_empty($menu['name']) ? $menu['singular_name'] : $menu['name'];
-                    $menu_name             = fed_request_empty($menu['menu_name']) ? $menu['label'] : $menu['menu_name'];
-                    $name_admin_bar        = fed_request_empty($menu['name_admin_bar']) ? $menu['singular_name'] : $menu['name_admin_bar'];
-                    $archives              = fed_request_empty($menu['archives']) ? $menu['singular_name'].' Archives' : $menu['archives'];
-                    $attributes            = fed_request_empty($menu['attributes']) ? 'Attributes' : $menu['attributes'];
-                    $parent_item_colon     = fed_request_empty($menu['parent_item_colon']) ? 'Parent Page:'.' Attributes' : $menu['parent_item_colon'];
-                    $all_items             = fed_request_empty($menu['all_items']) ? 'All Posts' : $menu['all_items'];
-                    $add_new_item          = fed_request_empty($menu['add_new_item']) ? 'Add New '.$name : $menu['add_new_item'];
-                    $add_new               = fed_request_empty($menu['add_new']) ? 'Add New' : $menu['add_new'];
-                    $new_item              = fed_request_empty($menu['new_item']) ? 'New '.$name : $menu['new_item'];
-                    $edit_item             = fed_request_empty($menu['edit_item']) ? 'Edit '.$name : $menu['edit_item'];
-                    $view_item             = fed_request_empty($menu['view_item']) ? 'View '.$name : $menu['view_item'];
-                    $view_items            = fed_request_empty($menu['view_items']) ? 'View '.$menu_name : $menu['view_items'];
-                    $search_items          = fed_request_empty($menu['search_items']) ? 'Search '.$name : $menu['search_items'];
-                    $not_found             = fed_request_empty($menu['not_found']) ? 'No Post Found' : $menu['not_found'];
-                    $not_found_in_trash    = fed_request_empty($menu['not_found_in_trash']) ? 'No '.$name.'found in Trash' : $menu['not_found_in_trash'];
-                    $featured_image        = fed_request_empty($menu['featured_image']) ? 'Featured image' : $menu['featured_image'];
-                    $set_featured_image    = fed_request_empty($menu['set_featured_image']) ? 'Set featured image' : $menu['set_featured_image'];
-                    $remove_featured_image = fed_request_empty($menu['remove_featured_image']) ? 'Remove featured image' : $menu['remove_featured_image'];
-                    $use_featured_image    = fed_request_empty($menu['use_featured_image']) ? 'Use featured image' : $menu['use_featured_image'];
-                    $insert_into_item      = fed_request_empty($menu['insert_into_item']) ? $name.' insert into page' : $menu['insert_into_item'];
-                    $uploaded_to_this_item = fed_request_empty($menu['uploaded_to_this_item']) ? 'Uploaded to this page' : $menu['uploaded_to_this_item'];
-                    $items_list            = fed_request_empty($menu['items_list']) ? 'Items list' : $menu['items_list'];
-                    $items_list_navigation = fed_request_empty($menu['items_list_navigation']) ? 'Items list navigation' : $menu['items_list_navigation'];
-                    $filter_items_list     = fed_request_empty($menu['filter_items_list']) ? 'Filter items list' : $menu['filter_items_list'];
+                    $supports       = false;
+                    $taxonomies     = array();
+                    $name           = fed_request_empty($menu['name']) ? $menu['singular_name'] : $menu['name'];
+                    $menu_name      = fed_request_empty($menu['menu_name']) ? $menu['label'] : $menu['menu_name'];
+                    $name_admin_bar = fed_request_empty($menu['name_admin_bar']) ? $menu['singular_name'] : $menu['name_admin_bar'];
+                    /* translators: 1:  Singular Name */
+                    $archives              = fed_request_empty($menu['archives']) ? sprintf(__('%1$s Archives',
+                        'frontend-dashboard-custom-post'), $menu['singular_name']) : $menu['archives'];
+                    $attributes            = fed_request_empty($menu['attributes']) ? __('Attributes',
+                        'frontend-dashboard-custom-post') : $menu['attributes'];
+                    $parent_item_colon     = fed_request_empty($menu['parent_item_colon']) ?
+                        __('Parent Page: Attributes', 'frontend-dashboard-custom-post') : $menu['parent_item_colon'];
+                    $all_items             = fed_request_empty($menu['all_items']) ? __('All Posts',
+                        'frontend-dashboard-custom-post') : $menu['all_items'];
+                    $add_new_item          = fed_request_empty($menu['add_new_item']) ?
+                        /* translators: 1:  New Item */
+                        sprintf(__('Add New %1$s', 'frontend-dashboard-custom-post'), $name) :
+                        $menu['add_new_item'];
+                    $add_new               = fed_request_empty($menu['add_new']) ? __('Add New',
+                        'frontend-dashboard-custom-post') : $menu['add_new'];
+                    $new_item              = fed_request_empty($menu['new_item']) ?
+                        /* translators: 1:  New Item */
+                        sprintf(__('New %1$s', 'frontend-dashboard-custom-post'), $name) :
+                        $menu['new_item'];
+                    $edit_item             = fed_request_empty($menu['edit_item']) ?
+                        /* translators: 1:  Edit Item */
+                        sprintf(__('Edit %1$s', 'frontend-dashboard-custom-post'), $name) :
+                        $menu['edit_item'];
+                    $view_item             = fed_request_empty($menu['view_item']) ?
+                        /* translators: 1:  View Item */
+                        sprintf(__('View %1$s', 'frontend-dashboard-custom-post'), $name) :
+                        $menu['view_item'];
+                    /* translators: 1:  View Items */
+                    $view_items            = fed_request_empty($menu['view_items']) ?
+                        sprintf(__('View %1$s', 'frontend-dashboard-custom-post'), $menu_name) :
+                        $menu['view_items'];
+                    $search_items          = fed_request_empty($menu['search_items']) ?
+                        /* translators: 1:  Search Items */
+                        sprintf(__('Search %1$s', 'frontend-dashboard-custom-post'), $name) :
+                        $menu['search_items'];
+                    $not_found             = fed_request_empty($menu['not_found']) ?
+                        __('No Post Found', 'frontend-dashboard-custom-post') :
+                        $menu['not_found'];
+                    $not_found_in_trash    = fed_request_empty($menu['not_found_in_trash']) ?
+                        /* translators: 1:  Items */
+                        sprintf(__('No %1$s found in Trash', 'frontend-dashboard-custom-post'), $name) :
+                        $menu['not_found_in_trash'];
+                    $featured_image        = fed_request_empty($menu['featured_image']) ?
+                        __('Featured image', 'frontend-dashboard-custom-post') :
+                        $menu['featured_image'];
+                    $set_featured_image    = fed_request_empty($menu['set_featured_image']) ?
+                        __('Set featured image', 'frontend-dashboard-custom-post') :
+                        $menu['set_featured_image'];
+                    $remove_featured_image = fed_request_empty($menu['remove_featured_image']) ?
+                        __('Remove featured image', 'frontend-dashboard-custom-post') :
+                        $menu['remove_featured_image'];
+                    $use_featured_image    = fed_request_empty($menu['use_featured_image']) ?
+                        __('Use featured image', 'frontend-dashboard-custom-post') :
+                        $menu['use_featured_image'];
+                    $insert_into_item      = fed_request_empty($menu['insert_into_item']) ?
+                        /* translators: 1:  Name */
+                        sprintf(__('%1$s insert into page', 'frontend-dashboard-custom-post'), $name) :
+                        $menu['insert_into_item'];
+                    $uploaded_to_this_item = fed_request_empty($menu['uploaded_to_this_item']) ?
+                        __('Uploaded to this page', 'frontend-dashboard-custom-post') :
+                        $menu['uploaded_to_this_item'];
+                    $items_list            = fed_request_empty($menu['items_list']) ?
+                        __('Items list', 'frontend-dashboard-custom-post') :
+                        $menu['items_list'];
+                    $items_list_navigation = fed_request_empty($menu['items_list_navigation']) ?
+                        __('Items list navigation', 'frontend-dashboard-custom-post') :
+                        $menu['items_list_navigation'];
+                    $filter_items_list     = fed_request_empty($menu['filter_items_list']) ?
+                        __('Filter items list', 'frontend-dashboard-custom-post') :
+                        $menu['filter_items_list'];
 
 
                     $capability_type = fed_request_empty($menu['capability_type']) ? 'post' : $menu['capability_type'];
@@ -202,34 +250,70 @@ if ( ! class_exists('Fed_Cp_Custom_Posts')) {
                             'frontend-dashboard-custom-post'),
                         'singular_name'         => _x($menu['singular_name'], 'post type singular name',
                             'frontend-dashboard-custom-post'),
-                        'menu_name'             => __($menu_name, 'frontend-dashboard-custom-post'),
-                        'name_admin_bar'        => __($name_admin_bar, 'frontend-dashboard-custom-post'),
-                        'archives'              => __($archives, 'frontend-dashboard-custom-post'),
-                        'attributes'            => __($attributes, 'frontend-dashboard-custom-post'),
-                        'parent_item_colon'     => __($parent_item_colon, 'frontend-dashboard-custom-post'),
-                        'all_items'             => __($all_items, 'frontend-dashboard-custom-post'),
-                        'add_new_item'          => __($add_new_item, 'frontend-dashboard-custom-post'),
-                        'add_new'               => __($add_new, 'frontend-dashboard-custom-post'),
-                        'new_item'              => __($new_item, 'frontend-dashboard-custom-post'),
-                        'edit_item'             => __($edit_item, 'frontend-dashboard-custom-post'),
-                        'view_item'             => __($view_item, 'frontend-dashboard-custom-post'),
-                        'view_items'            => __($view_items, 'frontend-dashboard-custom-post'),
-                        'search_items'          => __($search_items, 'frontend-dashboard-custom-post'),
-                        'not_found'             => __($not_found, 'frontend-dashboard-custom-post'),
-                        'not_found_in_trash'    => __($not_found_in_trash, 'frontend-dashboard-custom-post'),
-                        'featured_image'        => __($featured_image, 'frontend-dashboard-custom-post'),
-                        'set_featured_image'    => __($set_featured_image, 'frontend-dashboard-custom-post'),
-                        'remove_featured_image' => __($remove_featured_image, 'frontend-dashboard-custom-post'),
-                        'use_featured_image'    => __($use_featured_image, 'frontend-dashboard-custom-post'),
-                        'insert_into_item'      => __($insert_into_item, 'frontend-dashboard-custom-post'),
-                        'uploaded_to_this_item' => __($uploaded_to_this_item, 'frontend-dashboard-custom-post'),
-                        'items_list'            => __($items_list, 'frontend-dashboard-custom-post'),
-                        'items_list_navigation' => __($items_list_navigation, 'frontend-dashboard-custom-post'),
-                        'filter_items_list'     => __($filter_items_list, 'frontend-dashboard-custom-post'),
+                        /* translators: 1: menu name */
+                        'menu_name'             => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $menu_name),
+                        /* translators: 1:  name admin bar */
+                        'name_admin_bar'        => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $name_admin_bar),
+                        /* translators: 1:  archives */
+                        'archives'              => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $archives),
+                        /* translators: 1:  attributes */
+                        'attributes'            => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $attributes),
+                        /* translators: 1:  parent_item_colon */
+                        'parent_item_colon'     => sprintf(__('%1$s', 'frontend-dashboard-custom-post'),
+                            $parent_item_colon),
+                        /* translators: 1:  all_items */
+                        'all_items'             => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $all_items),
+                        /* translators: 1:  add_new_item */
+                        'add_new_item'          => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $add_new_item),
+                        /* translators: 1:  add_new */
+                        'add_new'               => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $add_new),
+                        /* translators: 1:  new_item */
+                        'new_item'              => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $new_item),
+                        /* translators: 1: edit_item */
+                        'edit_item'             => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $edit_item),
+                        /* translators: 1:  view_item */
+                        'view_item'             => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $view_item),
+                        /* translators: 1:  view_items */
+                        'view_items'            => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $view_items),
+                        /* translators: 1:  search_items */
+                        'search_items'          => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $search_items),
+                        /* translators: 1:  not_found */
+                        'not_found'             => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $not_found),
+                        /* translators: 1:  not_found_in_trash */
+                        'not_found_in_trash'    => sprintf(__('%1$s', 'frontend-dashboard-custom-post'),
+                            $not_found_in_trash),
+                        /* translators: 1:  featured_image */
+                        'featured_image'        => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $featured_image),
+                        /* translators: 1:  set_featured_image */
+                        'set_featured_image'    => sprintf(__('%1$s', 'frontend-dashboard-custom-post'),
+                            $set_featured_image),
+                        /* translators: 1:  remove_featured_image */
+                        'remove_featured_image' => sprintf(__('%1$s', 'frontend-dashboard-custom-post'),
+                            $remove_featured_image),
+                        /* translators: 1:  use_featured_image */
+                        'use_featured_image'    => sprintf(__('%1$s', 'frontend-dashboard-custom-post'),
+                            $use_featured_image),
+                        /* translators: 1:  insert_into_item */
+                        'insert_into_item'      => sprintf(__('%1$s', 'frontend-dashboard-custom-post'),
+                            $insert_into_item),
+                        /* translators: 1:  uploaded_to_this_item */
+                        'uploaded_to_this_item' => sprintf(__('%1$s', 'frontend-dashboard-custom-post'),
+                            $uploaded_to_this_item),
+                        /* translators: 1:  items_list */
+                        'items_list'            => sprintf(__('%1$s', 'frontend-dashboard-custom-post'), $items_list),
+                        /* translators: 1:  items_list_navigation */
+                        'items_list_navigation' => sprintf(__('%1$s', 'frontend-dashboard-custom-post'),
+                            $items_list_navigation),
+                        /* translators: 1:  filter_items_list */
+                        'filter_items_list'     => sprintf(__('%1$s', 'frontend-dashboard-custom-post'),
+                            $filter_items_list),
                     );
                     $args   = array(
-                        'label'               => __($menu['label'], 'frontend-dashboard-custom-post'),
-                        'description'         => __($menu['description'], 'frontend-dashboard-custom-post'),
+                        /* translators: 1:  label */
+                        'label'               => sprintf(__('%1$s', 'frontend-dashboard-custom-post'),
+                            $menu['label']),
+                        /* translators: 1: description */
+                        'description'         => sprintf(__('%1$s', 'frontend-dashboard-custom-post'),$menu['description']),
                         'labels'              => $labels,
                         'supports'            => $supports,
                         'hierarchical'        => fed_is_true_false($menu['hierarchical']),
@@ -368,7 +452,8 @@ if ( ! class_exists('Fed_Cp_Custom_Posts')) {
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <b><?php echo $type; ?> Custom Post <?php echo $cpt_name; ?></b>
+                        <b><?php echo $type; ?><?php _e('Custom Post',
+                                'frontend-dashboard-custom-post'); ?><?php echo $cpt_name; ?></b>
                         <span class="pull-right m-t-5">
 											<a href="<?php echo menu_page_url('fed_custom_post',
                                                 false) ?>" class="fed_add_new_custom_post">
@@ -453,7 +538,7 @@ if ( ! class_exists('Fed_Cp_Custom_Posts')) {
             ?>
             <div class="row p-b-20">
                 <div href="#" class="col-md-12 btn btn-warning">
-                    Custom Post Types
+                    <?php _e('Custom Post Types', 'frontend-dashboard-custom-post'); ?>
                 </div>
             </div>
 
@@ -481,7 +566,7 @@ if ( ! class_exists('Fed_Cp_Custom_Posts')) {
                 <div class="row">
                     <div class="col-md-12">
                         <a href="#" class="list-group-item">
-                            <?php echo 'No Custom Post Type Added' ?>
+                            <?php echo __('No Custom Post Type Added', 'frontend-dashboard-custom-post') ?>
                         </a>
                     </div>
                 </div>
