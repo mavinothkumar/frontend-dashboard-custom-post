@@ -217,7 +217,6 @@ if ( ! class_exists('Fed_Cp_Menu')) {
 
                         $menu_icon = $this->getMenuIconByPostType($options, $post_type);
 
-
                         if (isset($options['permissions']['post_permission']) && count(array_intersect($user->roles,
                                 array_keys($options['permissions']['post_permission']))) > 0) {
                             $default[$key] = array(
@@ -1014,7 +1013,13 @@ if ( ! class_exists('Fed_Cp_Menu')) {
             $post_type = get_post_type($post['post_id']);
 
             if ($post_type && fed_cp_is_user_can_delete_post($post_type)) {
-                $status = wp_delete_post($post['post_id']);
+                // All post will be soft delete from version 1.5.3
+                $status = wp_update_post(
+                    array(
+                        'ID'          => $post['post_id'],
+                        'post_status' => 'trash',
+                    )
+                );
                 if ( ! $status) {
                     wp_send_json_error(array(
                         'message' => __('Something went wrong, please refresh and try again later',
@@ -1478,7 +1483,7 @@ if ( ! class_exists('Fed_Cp_Menu')) {
                         $temp['user_value'] = isset($post_meta[$item['input_meta']][0]) ? $post_meta[$item['input_meta']][0] : '';
                         ?>
                         <div class="row fed_dashboard_item_field">
-                            <div class="col-md-9">
+                            <div class="col-md-12">
                                 <div class="fed_header_font_color"><?php _e($item['label_name']) ?></div>
                                 <?php echo fed_get_input_details($temp); ?>
                             </div>
