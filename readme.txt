@@ -4,7 +4,7 @@ Tags: dashboard, frontend dashboard pages, pages in dashboard, custom pages
 Donate link: https://www.paypal.com/paypalme2/buffercode
 Requires at least: 4.6
 Tested up to: 5.4.1
-Stable tag: 1.5.6
+Stable tag: 1.5.7
 License: GPL V3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -45,6 +45,10 @@ Easy to add, edit and delete the taxonomies (category/tag)
 4. Do save.
 
 == Changelog ==
+= 1.5.7 [14-May-2019] =
+
+* Bug fixes
+
 = 1.5.6 [11-May-2020] =
 * Frontend Dashboard Custom Post new features added and some bug fixes, now admin can see all post and can able to change the post status.
 

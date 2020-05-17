@@ -54,7 +54,7 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 
 			if ( isset( $post['ID'] ) && ! empty( $post['ID'] ) ) {
 				$user_post = get_post( (int) $post['ID'] );
-				if ( get_current_user_id() == $user_post->post_author || fed_is_admin() ) {
+				if ( (int) get_current_user_id() === (int) $user_post->post_author || fed_is_admin() ) {
 					$default['ID']          = (int) $user_post->ID;
 					$default['post_author'] = (int) $user_post->post_author;
 				} else {
@@ -71,9 +71,22 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 					array_keys( $fed_admin_options['permissions']['post_permission'] )
 				) ) > 0
 			) {
-				$extras      = fed_fetch_rows_by_table( BC_FED_TABLE_POST );
-				$post_status = isset( $fed_admin_options['settings']['fed_post_status'] ) ? sanitize_text_field( $fed_admin_options['settings']['fed_post_status'] ) : 'publish';
-				$post_status = fed_is_admin() ? $post['post_status'] : $post_status;
+				$extras               = fed_fetch_rows_by_table( BC_FED_TABLE_POST );
+				$post_status_settings = isset( $fed_admin_options['settings']['fed_post_status'] ) ? sanitize_text_field( $fed_admin_options['settings']['fed_post_status'] ) : 'publish';
+
+				if ( ! fed_is_admin() ) {
+					if ( 'publish' === $post_status_settings ) {
+						$post_status = isset( $post['post_status'] ) ? sanitize_text_field( $post['post_status'] ) : 'publish';
+					}
+					if ( 'pending' === $post_status_settings || 'draft' === $post_status_settings ) {
+						$post_status = isset( $post['post_status'] ) && ( 'pending' === $post['post_status'] || $post['draft'] ) ?
+							sanitize_text_field( $post['post_status'] ) : 'draft';
+					}
+				}
+
+				if ( fed_is_admin() ) {
+					$post_status = fed_get_data( 'post_status', $post, $post_status_settings );
+				}
 
 				if ( empty( $post['post_title'] ) ) {
 					$error = new WP_Error( 'fed_dashboard_add_post_title_missing',
@@ -90,7 +103,6 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 				$default['post_type']      = isset( $post['post_type'] ) ? sanitize_text_field( $post['post_type'] ) : 'post';
 				$default['comment_status'] = isset( $post['comment_status'] ) ? sanitize_text_field( $post['comment_status'] ) : 'open';
 				$default['post_status']    = fed_sanitize_text_field( $post_status );
-
 
 				if ( isset( $post['_thumbnail_id'] ) ) {
 					$default['_thumbnail_id'] = ( '' == $post['_thumbnail_id'] ) ? - 1 : (int) $post['_thumbnail_id'];
@@ -1104,6 +1116,21 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 			$post_type     = isset( $request['fed_post_type'] ) ? $request['fed_post_type'] : 'post';
 			$post_table    = fed_fetch_rows_by_table( BC_FED_TABLE_POST );
 			$post_settings = fed_get_post_settings_by_type( $post_type );
+
+			$default_post_status = fed_get_post_status();
+			$post_status         = fed_get_data( 'settings.fed_post_status', $post_settings, 'pending' );
+			if (
+				array_key_exists( $post_status, $default_post_status ) &&
+				( 'pending' === $post_status || 'draft' === $post_status ) &&
+				! fed_is_admin()
+			) {
+				if ( 'pending' === $post_status ) {
+					unset( $default_post_status['publish'] );
+				} else {
+					$default_post_status = array( 'draft' => 'Draft' );
+				}
+			}
+
 			usort( $post_table, 'fed_sort_by_order' );
 			?>
 			<div class="row">
@@ -1242,7 +1269,27 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 						<?php
 					}
 				}
+
 				?>
+				<div class="row fed_dashboard_item_field">
+					<div class="col-md-12">
+						<div class="fed_header_font_color">
+							<?php esc_attr_e( 'Post Status', 'frontend-dashboard-custom-post' ); ?>
+						</div>
+						<?php
+						// phpcs:ignore
+						echo fed_form_select(
+							array(
+								'input_value' => $default_post_status,
+								'input_meta'  => 'post_status',
+								'user_value'  => '',
+								'class_name'  => 'form-control',
+							)
+						)
+
+						?>
+					</div>
+				</div>
 				<div class="row fed_dashboard_item_field">
 					<div class="col-md-3 col-md-offset-4">
 						<button class="btn btn-primary"
@@ -1290,10 +1337,13 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 			<div class="fed_dashboard_item_field_container m-y-20">
 				<?php foreach ( $post->get_posts() as $single_post ) { ?>
 					<div class="fed_dashboard_item_field_wrapper">
-						<div class="row fed_dashboard_item_field">
+						<div class="row fed_dashboard_item_field <?php echo esc_attr( $single_post->post_status ); ?>">
 							<div class="col-md-1 col-xs-12 col-sm-12"><?php echo (int) $single_post->ID; ?></div>
 							<div class="col-md-4 col-xs-12 col-sm-12">
-								<?php echo wp_kses_post( fed_get_post_status_symbol( $single_post->post_status ) . ' ' . $single_post->post_title ); ?>
+								<?php echo esc_attr( $single_post->post_title ); ?>
+								<span class="badge fed_post_status_on_hover  <?php echo esc_attr( $single_post->post_status ); ?>">
+									<?php echo esc_attr( fed_get_display_post_status( $single_post->post_status ) ); ?>
+								</span>
 							</div>
 							<div class="col-md-2 col-xs-12 col-sm-12">
 								<?php echo esc_attr( get_the_author_meta( 'display_name',
@@ -1445,11 +1495,11 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 			$user         = get_userdata( get_current_user_id() );
 			$post         = get_post( (int) $post_id );
 			$preview_link = get_preview_post_link( $post->ID );
-
+			$post_status  = fed_get_data( 'post_status', $post, array() );
 			if (
 				null !== $post &&
 				(
-					( fed_cp_is_user_can_edit_post( $post->post_type ) && $post->post_author == $user->ID ) ||
+					( fed_cp_is_user_can_edit_post( $post->post_type ) && (int) $post->post_author === (int) $user->ID ) ||
 					fed_is_admin()
 				)
 			) {
@@ -1634,7 +1684,16 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 						<?php
 					}
 
-					if ( fed_is_admin() ) { ?>
+					if ( fed_is_admin() || ( ( 'draft' === $post_status || 'pending' === $post_status ) && ! fed_is_admin() ) ) {
+						$default_post_status = fed_get_post_status();
+						$post_status_setting = fed_get_data( 'settings.fed_post_status', $post_settings );
+						if ( 'pending' === $post_status_setting && ! fed_is_admin() ) {
+							unset( $default_post_status['publish'] );
+						}
+						if ( 'draft' === $post_status_setting && ! fed_is_admin() ) {
+							$default_post_status = array( 'draft' => 'Draft' );
+						}
+						?>
 						<div class="row fed_dashboard_item_field">
 							<div class="col-md-12">
 								<div class="fed_header_font_color">
@@ -1644,9 +1703,9 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 								// phpcs:ignore
 								echo fed_form_select(
 									array(
-										'input_value' => fed_get_post_status(),
+										'input_value' => $default_post_status,
 										'input_meta'  => 'post_status',
-										'user_value'  => fed_get_data( 'post_status', $post, array() ),
+										'user_value'  => $post_status,
 										'class_name'  => 'form-control',
 									)
 								)
