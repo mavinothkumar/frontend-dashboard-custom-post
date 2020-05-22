@@ -226,8 +226,8 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 			$get_default_post_items    = fed_get_public_post_types();
 			$admin_custom_post_options = get_option( 'fed_cp_admin_settings' );
 			$default                   = array();
-			if ( $admin_custom_post_options ) {
-				$user = get_userdata( get_current_user_id() );
+			$user                      = get_userdata( get_current_user_id() );
+			if ( $admin_custom_post_options && $user ) {
 				foreach ( $admin_custom_post_options as $key => $options ) {
 					if ( in_array( $key, array_keys( $get_default_post_items ) ) ) {
 						$post_type     = get_post_type_object( $key );
