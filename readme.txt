@@ -3,8 +3,8 @@ Contributors: vinoth06, buffercode
 Tags: dashboard, frontend dashboard pages, pages in dashboard, custom pages
 Donate link: https://www.paypal.com/paypalme2/buffercode
 Requires at least: 4.6
-Tested up to: 5.4.1
-Stable tag: 1.5.8
+Tested up to: 5.5.1
+Stable tag: 1.5.10
 License: GPL V3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -45,6 +45,12 @@ Easy to add, edit and delete the taxonomies (category/tag)
 4. Do save.
 
 == Changelog ==
+= 1.5.10 [03-Sept-2020] =
+* Added filter hooks  [fed_cp_list_details] (Thanks to @corne)
+
+= 1.5.9 [30-July-2019] =
+* Pagination updated and added an filter hook to show all post or single post to admin.(fed_show_all_post_to_admin)
+
 = 1.5.8 [18-May-2019] =
 * Added new features and styles to Post and Custom Post.
 
@@ -143,9 +149,8 @@ Easy to add, edit and delete the taxonomies (category/tag)
 
 == Upgrade Notice ==
 
-= 1.5.4 [28-Oct-2019] =
-
-* Bug fixes
+= 1.5.10 [03-Sept-2020] =
+* Added filter hooks  [fed_cp_list_details] (Thanks to @corne)
 
 == Screenshots ==
 1. Dashboard Settings
