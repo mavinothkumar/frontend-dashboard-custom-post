@@ -1338,22 +1338,34 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 				<?php foreach ( $post->get_posts() as $single_post ) { ?>
 					<div class="fed_dashboard_item_field_wrapper">
 						<div class="row fed_dashboard_item_field <?php echo esc_attr( $single_post->post_status ); ?>">
-							<div class="col-md-1 col-xs-12 col-sm-12"><?php echo (int) $single_post->ID; ?></div>
-							<div class="col-md-4 col-xs-12 col-sm-12">
-								<?php echo esc_attr( $single_post->post_title ); ?>
-								<span class="badge fed_post_status_on_hover  <?php echo esc_attr( $single_post->post_status ); ?>">
-									<?php echo esc_attr( fed_get_display_post_status( $single_post->post_status ) ); ?>
-								</span>
-							</div>
-							<div class="col-md-2 col-xs-12 col-sm-12">
-								<?php echo esc_attr( get_the_author_meta( 'display_name',
-									$single_post->post_author ) ); ?>
-							</div>
-							<div class="col-md-3 col-xs-12 col-sm-12">
-								<?php echo esc_attr( date( get_option( 'date_format' ),
-									strtotime( $single_post->post_date )
-								) ); ?>
-							</div>
+							$details = array(
+								'ID' => array(
+									'value' => (int) $single_post->ID,
+									'class' => 'col-md-1 col-xs-12 col-sm-12'
+								),
+								'post_title' => array(
+									'value' => $single_post->post_title .
+										'<span class="badge fed_post_status_on_hover ' . esc_attr( $single_post->post_status ) . '">' .
+												esc_attr( fed_get_display_post_status( $single_post->post_status ) ) .
+										'</span>',
+									'class' => 'col-md-4 col-xs-12 col-sm-12'
+								),
+								'post_author' => array(
+									'value' => esc_attr( get_the_author_meta( 'display_name',	$single_post->post_author ) ),
+									'class' => 'col-md-2 col-xs-12 col-sm-12'
+								),
+								'post_date' => array(
+									'value' => esc_attr( date( get_option( 'date_format' ),	strtotime( $single_post->post_date ) ) ),
+									'class' => 'col-md-3 col-xs-12 col-sm-12'
+								)
+							);
+
+							$details = apply_filters( 'fed_cp_list_details', $details, $single_post, $post_type );
+
+							foreach ($details as $detail) : ?>
+								<div class="<?php @print( $detail['class'] ); ?>"><?php @print( $detail['value'] ); ?></div>
+							<?php endforeach; ?>
+							
 							<div class="col-md-2 col-xs-12">
 								<div class="row">
 									<?php if ( fed_cp_is_user_can_view_post( $post_type ) ) { ?>
