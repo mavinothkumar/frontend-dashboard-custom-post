@@ -129,6 +129,10 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 				if ( $post_id instanceof WP_Error ) {
 					wp_send_json_error( $post_id->get_error_messages() );
 				}
+				
+				$post['ID'] = $post_id;
+
+				do_action( 'fed_dashboard_after_insert_post', $default, $post, $default['post_type'] );
 
 				wp_send_json_success( array(
 					'message' => $post['post_title'] . __( ' Successfully Saved', 'frontend-dashboard-custom-post' ),
