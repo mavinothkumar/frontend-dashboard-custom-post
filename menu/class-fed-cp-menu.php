@@ -1756,5 +1756,6 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 		}
 	}
 
-	new Fed_Cp_Menu();
+	global $fed_cp_menu;
+	$fed_cp_menu = new Fed_Cp_Menu();
 }
