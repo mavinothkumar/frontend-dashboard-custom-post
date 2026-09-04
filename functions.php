@@ -1138,7 +1138,7 @@ function fed_cp_checkbox_taxonomies_with_users(array $request = array(), $tax_na
  * @todo: working in custom post edit/delete/view
  *
  */
-function fed_cp_customize_post_for_user_role(array $request = array(), $tax_name = null, $user_roles)
+function fed_cp_customize_post_for_user_role(array $request = array(), $tax_name = null, $user_roles = array())
 {
     unset($user_roles['administrator']);
     foreach ($user_roles as $key => $role) {
