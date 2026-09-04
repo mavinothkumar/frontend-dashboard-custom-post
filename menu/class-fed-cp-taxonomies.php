@@ -763,37 +763,6 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 							}
 						});
 					});
-
-					// Form submission
-					$(document).on('submit', 'form.fed_admin_menu.fed_ajax', function(e) {
-						e.preventDefault();
-						e.stopImmediatePropagation();
-						var form = $(this);
-						var $loader = $('.fed_loader');
-						$loader.removeClass('hidden');
-
-						$.ajax({
-							type: 'POST',
-							url: form.attr('action'),
-							data: form.serialize(),
-							success: function(response) {
-								$loader.addClass('hidden');
-								var isSuccess = (response && (response.success || response.status === 'success'));
-								var msg = response && response.data && response.data.message ? response.data.message : (isSuccess ? 'Saved successfully.' : 'Error saving settings.');
-								showToast(msg, !isSuccess);
-
-								if (isSuccess && response.data && response.data.reload) {
-									setTimeout(function() {
-										window.location.href = response.data.reload;
-									}, 600);
-								}
-							},
-							error: function() {
-								$loader.addClass('hidden');
-								showToast('Network error while saving taxonomy.', true);
-							}
-						});
-					});
 				});
 			})(jQuery);
 			</script>

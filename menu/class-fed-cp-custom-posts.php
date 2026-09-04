@@ -540,7 +540,7 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 
 												<?php
 												if ( 'menu_icon' === $pindex ) {
-													$icon_val = isset( $post_type['input']['user_value'] ) ? $post_type['input']['user_value'] : 'dashicons-admin-post';
+													$icon_val = ! empty( $post_type['input']['user_value'] ) ? $post_type['input']['user_value'] : 'dashicons-admin-post';
 													?>
 													<div class="flex items-center gap-3">
 														<div class="w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center text-xl shrink-0" id="fed_cpt_icon_preview_box">
@@ -548,7 +548,7 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 														</div>
 														<input type="text" name="menu_icon" id="menu_icon" value="<?php echo esc_attr( $icon_val ); ?>" class="fed_convert_space_to_underscore flex-1 font-mono text-xs" />
 														<button type="button" id="fed_open_dashicon_modal_btn" class="fed-btn-secondary h-10 px-3.5 rounded-xl font-semibold text-xs inline-flex items-center gap-1.5 shrink-0 cursor-pointer">
-															<i class="fas fa-icons text-xs"></i>
+															<span class="dashicons dashicons-admin-appearance text-sm leading-none" style="font-size: 15px; width: 15px; height: 15px;"></span>
 															<span><?php esc_html_e( 'Browse Icons', 'frontend-dashboard-custom-post' ); ?></span>
 														</button>
 													</div>
@@ -836,10 +836,21 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 					$(document).on('click', '.fed_single_dashicon', function(e) {
 						e.preventDefault();
 						var iconKey = $(this).data('id');
-						$('#menu_icon').val(iconKey);
-						$('#fed_cpt_current_icon_span').attr('class', 'dashicons ' + iconKey);
-						$('#fed_cpt_header_icon_preview').attr('class', 'dashicons ' + iconKey);
+						$('#menu_icon').val(iconKey).trigger('change');
 						closeIconModal();
+					});
+
+					// Live update icon preview when input changes
+					$(document).on('input keyup change', '#menu_icon', function() {
+						var val = $.trim($(this).val()) || 'dashicons-admin-post';
+						if (val.indexOf('fa') === 0 || val.indexOf('fas ') === 0 || val.indexOf('fab ') === 0) {
+							$('#fed_cpt_current_icon_span').attr('class', val);
+							$('#fed_cpt_header_icon_preview').attr('class', val);
+						} else {
+							var dClass = val.indexOf('dashicons') === 0 ? val : ('dashicons-' + val);
+							$('#fed_cpt_current_icon_span').attr('class', 'dashicons ' + dClass);
+							$('#fed_cpt_header_icon_preview').attr('class', 'dashicons ' + dClass);
+						}
 					});
 
 					// Delete Confirmation Modal
@@ -901,37 +912,6 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 							error: function() {
 								$loader.addClass('hidden');
 								showToast('Server error while deleting custom post type.', true);
-							}
-						});
-					});
-
-					// Form submission
-					$(document).on('submit', 'form.fed_admin_menu.fed_ajax', function(e) {
-						e.preventDefault();
-						e.stopImmediatePropagation();
-						var form = $(this);
-						var $loader = $('.fed_loader');
-						$loader.removeClass('hidden');
-
-						$.ajax({
-							type: 'POST',
-							url: form.attr('action'),
-							data: form.serialize(),
-							success: function(response) {
-								$loader.addClass('hidden');
-								var isSuccess = (response && (response.success || response.status === 'success'));
-								var msg = response && response.data && response.data.message ? response.data.message : (isSuccess ? 'Saved successfully.' : 'Error saving settings.');
-								showToast(msg, !isSuccess);
-
-								if (isSuccess && response.data && response.data.reload) {
-									setTimeout(function() {
-										window.location.href = response.data.reload;
-									}, 600);
-								}
-							},
-							error: function() {
-								$loader.addClass('hidden');
-								showToast('Network error while saving post type.', true);
 							}
 						});
 					});

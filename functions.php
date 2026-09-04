@@ -1442,7 +1442,7 @@ function fed_cp_custom_menu_icons_popup()
                 <div class="flex items-center justify-between pb-4 border-b border-slate-100 shrink-0">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
-                            <i class="fas fa-icons"></i>
+                            <span class="dashicons dashicons-admin-appearance text-lg"></span>
                         </div>
                         <div>
                             <h3 class="text-base font-bold text-slate-900 m-0"><?php esc_html_e( 'Select Menu Icon', 'frontend-dashboard-custom-post' ); ?></h3>
