@@ -2,9 +2,9 @@
 Contributors: vinoth06, buffercode
 Tags: dashboard, frontend dashboard pages, pages in dashboard, custom pages
 Donate link: https://www.paypal.com/paypalme2/buffercode
-Requires at least: 4.6
-Tested up to: 5.5.1
-Stable tag: 1.5.10
+Requires at least: 5.8
+Tested up to: 7.1
+Stable tag: 3.0
 License: GPL V3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 

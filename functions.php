@@ -645,6 +645,16 @@ function fed_cp_get_custom_post_types(array $request = array())
  *
  * @return array
  */
+function fed_cp_get_custom_taxonomies(array $request = array())
+{
+    return fed_cp_get_taxonomies_label($request);
+}
+
+/**
+ * @param  array  $request
+ *
+ * @return array
+ */
 function fed_cp_get_taxonomies_label(array $request = array())
 {
 
@@ -1425,43 +1435,50 @@ function fed_cp_custom_menu_icons_popup()
 {
     ?>
     <div class="bc_fed">
-        <div class="modal fade fed_show_fa_list"
-             tabindex="-1"
-             role="dialog"
-        >
-            <div class="modal-dialog modal-lg"
-                 role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title"><?php _e('Please Select one Image',
-                                'frontend-dashboard-custom-post') ?></h4>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden"
-                               id="fed_menu_box_id"
-                               name="fed_menu_box_id"
-                               value=""/>
-                        <div class="row fed_fa_container">
-                            <?php foreach (fed_dashicon_list() as $key => $list) {
-                                echo '<div class="col-md-1 fed_single_fa" 
-							data-dismiss="modal"
-							data-id="'.$key.'"
-							data-toggle="popover"
-							title="'.$list.'"
-							data-trigger="hover"
-							data-viewport=""
-							data-content="'.$list.'"
-							>
-							<span class="dashicons '.$key.'"  data-id="'.$key.'" id="'.$key.'"></span>
-							</div>';
-                            } ?>
+        <!-- Modern Dashicon Picker Modal -->
+        <div id="fed_cpt_icon_modal" class="fixed inset-0 z-[999999] hidden items-center justify-center bg-slate-900/60 backdrop-blur-xs transition-all duration-200" style="z-index: 999999 !important; display: none;">
+            <div class="icon-modal-content bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full mx-4 shadow-2xl border border-slate-100 flex flex-col max-h-[85vh] transform scale-95 opacity-0 transition-all duration-200">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between pb-4 border-b border-slate-100 shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
+                            <i class="fas fa-icons"></i>
                         </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-900 m-0"><?php esc_html_e( 'Select Menu Icon', 'frontend-dashboard-custom-post' ); ?></h3>
+                            <p class="text-xs text-slate-500 m-0 mt-0.5"><?php esc_html_e( 'Choose a WordPress Dashicon for the admin & frontend menu.', 'frontend-dashboard-custom-post' ); ?></p>
+                        </div>
+                    </div>
+                    <button type="button" id="fed_close_icon_modal_btn" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-all cursor-pointer">
+                        <i class="fas fa-times text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Live Search Bar -->
+                <div class="py-3.5 shrink-0">
+                    <div class="relative w-full">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+                            <i class="fas fa-search text-xs"></i>
+                        </span>
+                        <input type="text" id="fed_dashicon_search_input" placeholder="<?php esc_attr_e( 'Search icons by name (e.g. post, media, cart, user)...', 'frontend-dashboard-custom-post' ); ?>" class="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200/90 text-xs text-slate-700 outline-none focus:border-indigo-500 focus:bg-white" />
+                    </div>
+                </div>
+
+                <!-- Icons Grid Container -->
+                <div class="overflow-y-auto pr-1 flex-1 min-h-0 py-2">
+                    <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2" id="fed_dashicons_grid">
+                        <?php foreach ( fed_dashicon_list() as $key => $list ) : ?>
+                            <button type="button"
+                                class="fed_single_dashicon flex flex-col items-center justify-center p-2.5 rounded-xl border border-slate-100 hover:border-indigo-400 hover:bg-indigo-50/60 text-slate-600 hover:text-indigo-600 transition-all cursor-pointer group"
+                                data-id="<?php echo esc_attr( $key ); ?>"
+                                data-name="<?php echo esc_attr( strtolower( $list . ' ' . $key ) ); ?>"
+                                title="<?php echo esc_attr( $list ); ?>">
+                                <span class="dashicons <?php echo esc_attr( $key ); ?> text-lg group-hover:scale-125 transition-transform"></span>
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
+                    <div id="fed_no_dashicons_found" class="hidden py-8 text-center text-xs text-slate-400">
+                        <?php esc_html_e( 'No matching dashicons found.', 'frontend-dashboard-custom-post' ); ?>
                     </div>
                 </div>
             </div>
