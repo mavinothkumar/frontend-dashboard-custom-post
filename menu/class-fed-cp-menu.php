@@ -349,48 +349,48 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 		public function fed_cp_show_admin_settings() {
 			$cp_admin_settings = get_option( 'fed_cp_admin_settings' );
 			$tabs              = $this->fed_cp_admin_settings_menu_options( $cp_admin_settings );
+			$no                = mt_rand( 1000, 9999 );
 
 			if ( count( $tabs ) ) {
 				?>
-				<div class="row">
-					<div class="col-md-3 padd_top_20">
-						<ul class="nav nav-pills nav-stacked"
-								id="fed_cp_admin_setting_tabs"
-								role="tablist">
+				<div class="flex flex-col lg:flex-row gap-6 items-start w-full fed-settings-subtab-container" id="fed_subtabs_wrap_<?php echo esc_attr( $no ); ?>">
+					<!-- Left Subtab Sidebar -->
+					<div class="w-full lg:w-64 shrink-0">
+						<div class="bg-white rounded-3xl p-3 border border-slate-200/80 shadow-xs space-y-1.5" role="tablist">
 							<?php
 							$menu_count = 0;
 							foreach ( $tabs as $index => $tab ) {
-								$active = ( 0 === $menu_count ) ? 'active' : '';
+								$active = ( 0 === $menu_count );
 								$menu_count ++;
 								?>
-								<li role="presentation"
-										class="<?php echo esc_attr( $active ); ?>">
-									<a href="#<?php echo esc_attr( $index ); ?>"
-											aria-controls="<?php echo esc_attr( $index ); ?>"
-											role="tab"
-											data-toggle="tab">
+								<a href="#<?php echo esc_attr( $index ); ?>"
+								   data-target="#subtab_pane_<?php echo esc_attr( $index . '_' . $no ); ?>"
+								   role="tab"
+								   data-toggle="tab"
+								   class="fed-subtab-link flex items-center gap-3 px-3.5 py-3 rounded-2xl text-xs font-semibold transition-all cursor-pointer no-underline <?php echo $active ? 'fed-subtab-active bg-indigo-50 border border-indigo-200 text-indigo-700 shadow-2xs font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'; ?>">
+									<div class="w-8 h-8 rounded-xl flex items-center justify-center text-sm shrink-0 <?php echo $active ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-500'; ?>">
 										<i class="<?php echo esc_attr( $tab['icon'] ); ?>"></i>
-										<?php echo esc_attr( $tab['name'] ); ?>
-									</a>
-								</li>
+									</div>
+									<span class="truncate"><?php echo esc_html( $tab['name'] ); ?></span>
+								</a>
 							<?php } ?>
-						</ul>
+						</div>
 					</div>
-					<div class="col-md-9">
-						<!-- Tab panes -->
-						<div class="tab-content">
+
+					<!-- Right Subtab Content Pane -->
+					<div class="flex-1 min-w-0 w-full">
+						<div class="tab-content w-full">
 							<?php
 							$content_count = 0;
 							foreach ( $tabs as $index => $tab ) {
-								$active = ( 0 === $content_count ) ? 'active' : '';
+								$active = ( 0 === $content_count );
 								$content_count ++;
 								?>
 								<div role="tabpanel"
-										class="tab-pane <?php echo esc_attr( $active ); ?>"
-										id="<?php echo esc_attr( $index ); ?>">
-									<?php
-									$this->fed_cp_admin_settings_tabs( $index, $cp_admin_settings );
-									?>
+									 class="tab-pane <?php echo $active ? 'active block' : 'hidden'; ?>"
+									 id="<?php echo esc_attr( $index ); ?>"
+									 id-full="subtab_pane_<?php echo esc_attr( $index . '_' . $no ); ?>">
+									<?php $this->fed_cp_admin_settings_tabs( $index, $cp_admin_settings ); ?>
 								</div>
 							<?php } ?>
 						</div>
@@ -399,15 +399,10 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 				<?php
 			} else {
 				?>
-				<div class="row">
-					<div class="col-md-12 padd_top_20">
-						<h5>
-							<?php
-							esc_attr_e( 'Sorry! you don\'t have any public custom post type',
-								'frontend-dashboard-custom-post' );
-							?>
-						</h5>
-					</div>
+				<div class="bg-white rounded-3xl p-12 text-center border border-slate-200/80 shadow-xs">
+					<i class="fas fa-cubes text-3xl text-slate-300 mb-3"></i>
+					<h3 class="text-sm font-bold text-slate-800 m-0"><?php esc_html_e( 'No Public Custom Post Types Found', 'frontend-dashboard-custom-post' ); ?></h3>
+					<p class="text-xs text-slate-500 mt-1"><?php esc_html_e( 'Please create a public custom post type first.', 'frontend-dashboard-custom-post' ); ?></p>
 				</div>
 				<?php
 			}
@@ -673,128 +668,93 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 			$menu        = $this->getMenuNameByPostType( $options, $post_object );
 			$menu_icons  = $this->getMenuIconByPostType( $options, $post_object );
 			$tabs        = $this->fed_cp_admin_settings_tab_content( $index, $cp_admin_settings );
-			$no          = mt_rand( 1, 9999 );
 			?>
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						<span class="<?php echo esc_attr( $menu_icons ); ?>"></span> <?php echo esc_attr( $menu ); ?>
-					</h3>
+			<div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs space-y-6">
+				<div class="flex items-center gap-3.5 pb-5 border-b border-slate-100">
+					<div class="w-10 h-10 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center text-base shrink-0">
+						<i class="<?php echo esc_attr( $menu_icons ); ?>"></i>
+					</div>
+					<div>
+						<h3 class="text-sm sm:text-base font-bold text-slate-900 m-0"><?php echo esc_html( $menu ); ?></h3>
+						<p class="text-xs text-slate-500 m-0 mt-0.5"><?php esc_html_e( 'Configure frontend submission settings, permissions, and layout for this post type.', 'frontend-dashboard-custom-post' ); ?></p>
+					</div>
 				</div>
-				<div class="panel-body">
-					<form method="post"
-							class="fed_admin_menu fed_ajax"
-							action="<?php echo esc_url( admin_url( 'admin-ajax.php?action=fed_cp_admin_settings' ) ); ?>">
 
-						<?php wp_nonce_field( 'fed_nonce', 'fed_nonce' ); ?>
+				<form method="post"
+						class="fed_admin_menu fed_ajax space-y-6"
+						action="<?php echo esc_url( admin_url( 'admin-ajax.php?action=fed_cp_admin_settings' ) ); ?>">
 
+					<?php wp_nonce_field( 'fed_nonce', 'fed_nonce' ); ?>
+					<?php echo fed_loader(); ?>
+
+					<input type="hidden" name="custom_post_type" value="<?php echo esc_attr( $index ); ?>"/>
+
+					<div class="space-y-6">
 						<?php
-						// phpcs:ignore
-						echo fed_loader();
-						?>
-
-						<input type="hidden"
-								name="custom_post_type"
-								value="<?php echo esc_attr( $index ); ?>"/>
-
-						<div class="panel-group" id="accordion<?php echo esc_attr( $no ); ?>" role="tablist"
-								aria-multiselectable="false">
-							<?php
-							$first = 0;
-							foreach ( $tabs as $tab_index => $tab ) {
-								$in        = '';
-								$collapsed = 'collapsed';
-								if ( 0 === $first ) {
-									$in        = 'in';
-									$collapsed = '';
-								}
-								$first ++;
-								?>
-								<div class="panel panel-secondary-heading">
-									<div class="panel-heading <?php echo esc_attr( $collapsed ); ?>" role="tab"
-											id="heading<?php echo esc_attr( $tab_index . $no ); ?>"
-											data-toggle="collapse"
-											data-parent="#accordion<?php echo esc_attr( $no ); ?>"
-											href="#collapse<?php echo esc_attr( $tab_index . $no ); ?>"
-											aria-expanded="true"
-											aria-controls="collapse<?php echo esc_attr( $tab_index . $no ); ?>">
-										<h4 class="panel-title">
-											<a>
-												<?php echo esc_attr( $tab['name'] ); ?>
-											</a>
-										</h4>
-									</div>
-									<div id="collapse<?php echo esc_attr( $tab_index . $no ); ?>"
-											class="panel-collapse collapse <?php echo esc_attr( $in ); ?>"
-											role="tabpanel"
-											aria-labelledby="heading<?php echo esc_attr( $tab_index . $no ); ?>">
-										<div class="panel-body">
-											<?php if ( isset( $tab['note'] ) ) { ?>
-												<div class="row p-b-20">
-													<div class="col-md-12">
-														<strong>
-															<?php echo esc_attr( isset( $tab['note'] ) ? $tab['note'] : '' ); ?>
-														</strong>
-													</div>
-												</div>
-											<?php } ?>
-											<?php foreach ( $tab['input'] as $post_type ) { ?>
-												<div class="col-md-6">
-													<div class="form-group">
-														<?php
-														if ( isset( $post_type['heading'] ) ) {
-															?>
-															<div class="bg-primary p-10">
-																<?php echo esc_attr( isset( $post_type['heading'] ) ? $post_type['heading'] : '' ); ?>
-															</div>
-															<?php
-														}
-														?>
-														<?php if ( isset( $post_type['name'] ) && null !== $post_type['name'] ) { ?>
-															<label>
-																<?php echo wp_kses_post( isset( $post_type['required'] ) ? '<span class="bg-red-font">' . $post_type['name'] . '</span>' : $post_type['name'] ); ?>
-																<?php echo wp_kses_post( isset( $post_type['help_message'] ) ? $post_type['help_message'] : '' ); ?>
-															</label>
-														<?php } ?>
-														<?php
-														if ( isset( $post_type['input'] ) ) {
-															// phpcs:ignore
-															echo fed_get_input_details( $post_type['input'] );
-														}
-														if ( isset( $post_type['extra'] ) ) {
-															echo '<br>';
-															foreach ( $post_type['extra'] as $extra ) {
-																?>
-																<div class="col-md-6">
-																	<?php
-																	if ( isset( $extra['label_title'] ) ) {
-																		echo esc_attr( $extra['label_title'] );
-																	}
-																	// phpcs:ignore
-																	echo fed_get_input_details( $extra );
-																	?>
-																</div>
-																<?php
-															}
-														}
-														?>
-													</div>
-												</div>
-											<?php } ?>
-										</div>
-									</div>
+						foreach ( $tabs as $tab_index => $tab ) {
+							?>
+							<div class="bg-slate-50/70 border border-slate-200/80 rounded-2xl p-5 sm:p-6 space-y-4">
+								<div class="flex items-center gap-2.5 pb-3 border-b border-slate-200/80">
+									<h4 class="text-xs font-bold text-slate-900 m-0"><?php echo esc_html( $tab['name'] ); ?></h4>
 								</div>
-							<?php } ?>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<input type="submit" class="btn btn-primary" value="Submit"/>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
 
+								<?php if ( isset( $tab['note'] ) ) : ?>
+									<p class="text-xs text-slate-500 m-0"><?php echo esc_html( $tab['note'] ); ?></p>
+								<?php endif; ?>
+
+								<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+									<?php foreach ( $tab['input'] as $post_type ) : ?>
+										<div class="space-y-1.5">
+											<?php if ( isset( $post_type['heading'] ) ) : ?>
+												<div class="text-xs font-bold text-indigo-700 bg-indigo-50/80 p-2 rounded-xl border border-indigo-100 mb-2">
+													<?php echo esc_html( $post_type['heading'] ); ?>
+												</div>
+											<?php endif; ?>
+
+											<?php if ( isset( $post_type['name'] ) && null !== $post_type['name'] ) : ?>
+												<label class="block text-xs font-bold text-slate-700">
+													<?php echo wp_kses_post( isset( $post_type['required'] ) ? '<span class="text-rose-500">' . $post_type['name'] . '</span>' : $post_type['name'] ); ?>
+												</label>
+											<?php endif; ?>
+
+											<?php
+											if ( isset( $post_type['input'] ) ) {
+												echo fed_get_input_details( $post_type['input'] );
+											}
+											if ( isset( $post_type['extra'] ) ) {
+												echo '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">';
+												foreach ( $post_type['extra'] as $extra ) {
+													?>
+													<div class="p-2.5 bg-white border border-slate-200/80 rounded-xl">
+														<?php if ( isset( $extra['label_title'] ) ) : ?>
+															<span class="block text-[11px] font-semibold text-slate-600 mb-1"><?php echo esc_html( $extra['label_title'] ); ?></span>
+														<?php endif; ?>
+														<?php echo fed_get_input_details( $extra ); ?>
+													</div>
+													<?php
+												}
+												echo '</div>';
+											}
+											?>
+
+											<?php if ( ! empty( $post_type['help_message'] ) ) : ?>
+												<p class="text-[11px] text-slate-400 m-0"><?php echo wp_strip_all_tags( $post_type['help_message'] ); ?></p>
+											<?php endif; ?>
+										</div>
+									<?php endforeach; ?>
+								</div>
+							</div>
+						<?php } ?>
+					</div>
+
+					<div class="pt-4 border-t border-slate-100 flex items-center justify-end">
+						<button type="submit" class="fed-btn-primary h-11 inline-flex items-center justify-center gap-2 px-6 rounded-xl font-semibold text-xs tracking-wide shadow-sm transition-all active:scale-95 cursor-pointer">
+							<i class="fas fa-save text-xs" style="color: #ffffff !important;"></i>
+							<span style="color: #ffffff !important;"><?php esc_html_e( 'Save Changes', 'frontend-dashboard-custom-post' ); ?></span>
+						</button>
+					</div>
+				</form>
+			</div>
 			<?php
 		}
 
