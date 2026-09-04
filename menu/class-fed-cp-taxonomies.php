@@ -129,29 +129,30 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 			$menus = get_option( 'fed_cp_custom_taxonomies' );
 			if ( $menus && is_array( $menus ) ) {
 				foreach ( $menus as $index => $menu ) {
-					$name              = fed_request_empty( $menu['name'] ) ? $menu['singular_name'] : $menu['name'];
-					$menu_name         = fed_request_empty( $menu['menu_name'] ) ? $menu['label'] : $menu['menu_name'];
-					$parent_item_colon = fed_request_empty( $menu['parent_item_colon'] ) ? 'Parent Page: Attributes' : $menu['parent_item_colon'];
-					$all_items         = fed_request_empty( $menu['all_items'] ) ? __( 'All Posts', 'frontend-dashboard-custom-post' ) : $menu['all_items'];
-					$add_new_item      = fed_request_empty( $menu['add_new_item'] ) ? 'Add New ' . $name : $menu['add_new_item'];
-					$edit_item         = fed_request_empty( $menu['edit_item'] ) ? 'Edit ' . $name : $menu['edit_item'];
-					$view_item         = fed_request_empty( $menu['view_item'] ) ? 'View ' . $name : $menu['view_item'];
-					$update_item                = fed_request_empty( $menu['update_item'] ) ? 'Update ' . $name : $menu['update_item'];
-					$new_item_name              = fed_request_empty( $menu['new_item_name'] ) ? 'New ' . $name : $menu['new_item_name'];
-					$popular_items              = fed_request_empty( $menu['popular_items'] ) ? 'Popular ' . $name : $menu['popular_items'];
-					$choose_from_most_used      = fed_request_empty( $menu['choose_from_most_used'] ) ? 'Choose from most used ' . $name : $menu['choose_from_most_used'];
-					$add_or_remove_items        = fed_request_empty( $menu['add_or_remove_items'] ) ? 'Add or Remove ' . $name : $menu['add_or_remove_items'];
-					$separate_items_with_commas = fed_request_empty( $menu['separate_items_with_commas'] ) ? 'Separate ' . $name . ' with commas' : $menu['separate_items_with_commas'];
-					$search_items = fed_request_empty( $menu['search_items'] ) ? 'Search ' . $name : $menu['search_items'];
-					$not_found    = fed_request_empty( $menu['not_found'] ) ? 'No Post Found' : $menu['not_found'];
+					$singular          = isset( $menu['singular_name'] ) && '' !== trim( (string) $menu['singular_name'] ) ? $menu['singular_name'] : ( isset( $menu['label'] ) ? $menu['label'] : $index );
+					$label             = isset( $menu['label'] ) && '' !== trim( (string) $menu['label'] ) ? $menu['label'] : $singular;
+					$name              = isset( $menu['name'] ) && '' !== trim( (string) $menu['name'] ) ? $menu['name'] : $singular;
+					$menu_name         = isset( $menu['menu_name'] ) && '' !== trim( (string) $menu['menu_name'] ) ? $menu['menu_name'] : $label;
+					$parent_item_colon = isset( $menu['parent_item_colon'] ) && '' !== trim( (string) $menu['parent_item_colon'] ) ? $menu['parent_item_colon'] : 'Parent ' . $singular . ':';
+					$all_items         = isset( $menu['all_items'] ) && '' !== trim( (string) $menu['all_items'] ) ? $menu['all_items'] : sprintf( __( 'All %s', 'frontend-dashboard-custom-post' ), $label );
+					$add_new_item      = isset( $menu['add_new_item'] ) && '' !== trim( (string) $menu['add_new_item'] ) ? $menu['add_new_item'] : sprintf( __( 'Add New %s', 'frontend-dashboard-custom-post' ), $singular );
+					$edit_item         = isset( $menu['edit_item'] ) && '' !== trim( (string) $menu['edit_item'] ) ? $menu['edit_item'] : sprintf( __( 'Edit %s', 'frontend-dashboard-custom-post' ), $singular );
+					$view_item         = isset( $menu['view_item'] ) && '' !== trim( (string) $menu['view_item'] ) ? $menu['view_item'] : sprintf( __( 'View %s', 'frontend-dashboard-custom-post' ), $singular );
+					$update_item                = isset( $menu['update_item'] ) && '' !== trim( (string) $menu['update_item'] ) ? $menu['update_item'] : sprintf( __( 'Update %s', 'frontend-dashboard-custom-post' ), $singular );
+					$new_item_name              = isset( $menu['new_item_name'] ) && '' !== trim( (string) $menu['new_item_name'] ) ? $menu['new_item_name'] : sprintf( __( 'New %s Name', 'frontend-dashboard-custom-post' ), $singular );
+					$popular_items              = isset( $menu['popular_items'] ) && '' !== trim( (string) $menu['popular_items'] ) ? $menu['popular_items'] : sprintf( __( 'Popular %s', 'frontend-dashboard-custom-post' ), $label );
+					$choose_from_most_used      = isset( $menu['choose_from_most_used'] ) && '' !== trim( (string) $menu['choose_from_most_used'] ) ? $menu['choose_from_most_used'] : sprintf( __( 'Choose from most used %s', 'frontend-dashboard-custom-post' ), $label );
+					$add_or_remove_items        = isset( $menu['add_or_remove_items'] ) && '' !== trim( (string) $menu['add_or_remove_items'] ) ? $menu['add_or_remove_items'] : sprintf( __( 'Add or Remove %s', 'frontend-dashboard-custom-post' ), $label );
+					$separate_items_with_commas = isset( $menu['separate_items_with_commas'] ) && '' !== trim( (string) $menu['separate_items_with_commas'] ) ? $menu['separate_items_with_commas'] : sprintf( __( 'Separate %s with commas', 'frontend-dashboard-custom-post' ), $label );
+					$search_items = isset( $menu['search_items'] ) && '' !== trim( (string) $menu['search_items'] ) ? $menu['search_items'] : sprintf( __( 'Search %s', 'frontend-dashboard-custom-post' ), $label );
+					$not_found    = isset( $menu['not_found'] ) && '' !== trim( (string) $menu['not_found'] ) ? $menu['not_found'] : sprintf( __( 'No %s Found', 'frontend-dashboard-custom-post' ), $label );
 
-					if ( fed_is_true_false( $menu['rewrite'] ) ) {
+					$rewrite = false;
+					if ( isset( $menu['rewrite'] ) && fed_is_true_false( $menu['rewrite'] ) ) {
 						$rewrite = true;
-						if ( ! fed_request_empty( $menu['rewrite_slug'] ) ) {
+						if ( isset( $menu['rewrite_slug'] ) && ! fed_request_empty( $menu['rewrite_slug'] ) ) {
 							$rewrite = array( 'slug' => $menu['rewrite_slug'] );
 						}
-					} else {
-						$rewrite = false;
 					}
 
 					$labels = array(
@@ -766,6 +767,7 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 					// Form submission
 					$(document).on('submit', 'form.fed_admin_menu.fed_ajax', function(e) {
 						e.preventDefault();
+						e.stopImmediatePropagation();
 						var form = $(this);
 						var $loader = $('.fed_loader');
 						$loader.removeClass('hidden');

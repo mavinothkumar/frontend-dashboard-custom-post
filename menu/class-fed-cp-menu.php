@@ -388,8 +388,8 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 								?>
 								<div role="tabpanel"
 									 class="tab-pane <?php echo $active ? 'active block' : 'hidden'; ?>"
-									 id="<?php echo esc_attr( $index ); ?>"
-									 id-full="subtab_pane_<?php echo esc_attr( $index . '_' . $no ); ?>">
+									 id="subtab_pane_<?php echo esc_attr( $index . '_' . $no ); ?>"
+									 data-pane="<?php echo esc_attr( $index ); ?>">
 									<?php $this->fed_cp_admin_settings_tabs( $index, $cp_admin_settings ); ?>
 								</div>
 							<?php } ?>
@@ -692,6 +692,78 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 					<div class="space-y-6">
 						<?php
 						foreach ( $tabs as $tab_index => $tab ) {
+							if ( 'post_permission' === $tab_index ) {
+								$current_post_perms = isset( $options['permissions']['post_permission'] ) ? array_keys( $options['permissions']['post_permission'] ) : array();
+								?>
+								<div class="bg-slate-50/70 border border-slate-200/80 rounded-2xl p-5 sm:p-6 space-y-4">
+									<?php
+									fed_render_user_roles_selector(
+										array(
+											'name_prefix'         => 'post_permission',
+											'selected'            => $current_post_perms,
+											'all_roles'           => fed_get_user_roles(),
+											'default_all_checked' => true,
+											'title'               => $tab['name'],
+											'description'         => __( 'Select user roles permitted to manage, author, edit, and delete posts for this post type.', 'frontend-dashboard-custom-post' ),
+										)
+									);
+									?>
+								</div>
+								<?php
+								continue;
+							}
+
+							if ( 'taxonomies' === $tab_index ) {
+								$taxonomies = get_object_taxonomies( $index, 'object' );
+								$core_tax   = array( 'category', 'post_tag' );
+								$all_roles  = fed_get_user_roles();
+								?>
+								<div class="bg-slate-50/70 border border-slate-200/80 rounded-2xl p-5 sm:p-6 space-y-5">
+									<div class="flex items-center gap-2.5 pb-3 border-b border-slate-200/80">
+										<div class="w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center text-xs">
+											<i class="fas fa-tags"></i>
+										</div>
+										<div>
+											<h4 class="text-xs font-bold text-slate-900 m-0"><?php echo esc_html( $tab['name'] ); ?></h4>
+											<?php if ( isset( $tab['note'] ) ) : ?>
+												<p class="text-[11px] text-slate-500 m-0 mt-0.5"><?php echo esc_html( $tab['note'] ); ?></p>
+											<?php endif; ?>
+										</div>
+									</div>
+
+									<?php if ( ! empty( $taxonomies ) ) : ?>
+										<div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+											<?php
+											foreach ( $taxonomies as $tax_key => $taxonomy ) :
+												$wp_core_tax    = in_array( $tax_key, $core_tax, true ) ? ' (WP Core)' : '';
+												$tax_title      = $taxonomy->label . $wp_core_tax;
+												$disabled_roles = isset( $options['taxonomies'][ $tax_key ] ) && is_array( $options['taxonomies'][ $tax_key ] ) ? array_keys( $options['taxonomies'][ $tax_key ] ) : array();
+												?>
+												<div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-2xs">
+													<?php
+													fed_render_user_roles_selector(
+														array(
+															'name_prefix'         => 'taxonomies[' . $tax_key . ']',
+															'selected'            => $disabled_roles,
+															'all_roles'           => $all_roles,
+															'default_all_checked' => false,
+															'title'               => $tax_title,
+															'description'         => sprintf( __( 'Select user role(s) to DISABLE the visibility of %s', 'frontend-dashboard-custom-post' ), $tax_title ),
+														)
+													);
+													?>
+												</div>
+											<?php endforeach; ?>
+										</div>
+									<?php else : ?>
+										<div class="p-4 bg-amber-50/70 border border-amber-200/70 rounded-2xl text-xs text-amber-800">
+											<?php esc_html_e( 'No taxonomies are currently registered or associated with this post type.', 'frontend-dashboard-custom-post' ); ?>
+										</div>
+									<?php endif; ?>
+								</div>
+								<?php
+								continue;
+							}
 							?>
 							<div class="bg-slate-50/70 border border-slate-200/80 rounded-2xl p-5 sm:p-6 space-y-4">
 								<div class="flex items-center gap-2.5 pb-3 border-b border-slate-200/80">
