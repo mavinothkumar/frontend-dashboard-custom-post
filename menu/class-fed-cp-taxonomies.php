@@ -62,10 +62,10 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 		 * Delete Custom Taxonomies Type
 		 */
 		public function fed_cp_delete_custom_taxonomies_type_delete() {
-			$request = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+			$request = isset( $_POST ) ? wp_unslash( $_POST ) : array();
 			fed_verify_nonce( $_GET );
 			$pt = get_option( 'fed_cp_custom_taxonomies', array() );
-			if ( ! isset( $pt[ $request['id'] ] ) ) {
+			if ( ! isset( $request['id'] ) || ! isset( $pt[ $request['id'] ] ) ) {
 				wp_send_json_error( array(
 					'message' => __( 'Invalid Custom Taxonomy ID', 'frontend-dashboard-custom-post' ),
 				) );
@@ -83,7 +83,7 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 		 * Add / Update Custom Taxonomies
 		 */
 		public function fed_cp_add_custom_taxonomies() {
-			$request      = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+			$request      = isset( $_POST ) ? wp_unslash( $_POST ) : array();
 			$redirect_url = admin_url( 'admin.php?page=fed_taxonomies' );
 			$status       = __( 'added', 'frontend-dashboard-custom-post' );
 

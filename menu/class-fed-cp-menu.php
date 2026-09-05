@@ -290,10 +290,10 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 			if ( 'post' === $menu_items['menu_request']['menu_type'] ) {
 				$post_menus = get_option( 'fed_cp_admin_settings' );
 				$post_type  = get_post_type_object( $menu_items['menu_request']['menu_slug'] );
-				$menu_name  = $this->getMenuNameByPostType( $post_menus[ $menu_items['menu_request']['menu_id'] ],
-					$post_type );
-				$menu_icon  = $this->getMenuIconByPostType( $post_menus[ $menu_items['menu_request']['menu_id'] ],
-					$post_type );
+				$menu_id    = isset( $menu_items['menu_request']['menu_id'] ) ? $menu_items['menu_request']['menu_id'] : '';
+				$menu_conf  = isset( $post_menus[ $menu_id ] ) ? $post_menus[ $menu_id ] : array();
+				$menu_name  = $this->getMenuNameByPostType( $menu_conf, $post_type );
+				$menu_icon  = $this->getMenuIconByPostType( $menu_conf, $post_type );
 				$menu       = array(
 					'name'  => $menu_name,
 					'icon'  => $menu_icon,
@@ -301,14 +301,29 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 				);
 				if ( $post_menus ) {
 					?>
-					<div class="panel panel-primary fed_dashboard_item active">
-						<div class="panel-heading">
-							<h3 class="panel-title">
-								<span class="<?php echo esc_attr( $menu_icon ); ?>"></span>
-								<?php echo esc_attr( $menu_name ); ?>
-							</h3>
+					<div class="fed_dashboard_item active">
+						<div class="flex items-center justify-between pb-5 mb-6 border-b border-slate-100">
+							<div class="flex items-center gap-3">
+								<div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
+									<span class="<?php echo esc_attr( $menu_icon ); ?>"></span>
+								</div>
+								<div>
+									<h2 class="text-xl font-bold text-slate-900 tracking-tight mb-0">
+										<?php echo esc_html( $menu_name ); ?>
+									</h2>
+									<p class="text-xs text-slate-500 mb-0">
+										<?php echo esc_html( sprintf( __( 'Manage your %s items', 'frontend-dashboard-custom-post' ), strtolower( $menu_name ) ) ); ?>
+									</p>
+								</div>
+							</div>
+							<?php if ( ! isset( $request['post_status'] ) && ! isset( $request['post_id'] ) && fed_cp_is_user_can_add_post( $menu_items['menu_request']['menu_id'] ) ) { ?>
+								<a class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-xs transition-all duration-150" href="<?php echo esc_url( add_query_arg( array( 'post_status' => 'add', 'fed_post_type' => $menu_items['menu_request']['menu_id'] ), site_url() ) ); ?>">
+									<i class="fa fa-plus text-xs"></i>
+									<span><?php esc_html_e( 'Add New', 'frontend-dashboard' ); ?></span>
+								</a>
+							<?php } ?>
 						</div>
-						<div class="panel-body fed_dashboard_panel_body">
+						<div class="fed_dashboard_panel_body">
 							<?php
 							do_action( 'fed_dashboard_panel_inside_top' );
 							do_action( 'fed_dashboard_panel_inside_top_' . fed_get_data( 'menu_request.menu_slug',
@@ -834,8 +849,8 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 		 * Admin Settings Save
 		 */
 		public function fed_cp_admin_settings() {
-			$request   = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
-			$post_type = $request['custom_post_type'];
+			$request   = isset( $_POST ) ? wp_unslash( $_POST ) : array();
+			$post_type = isset( $request['custom_post_type'] ) ? sanitize_text_field( $request['custom_post_type'] ) : '';
 			if ( fed_check_post_type( $post_type ) ) {
 
 				if ( empty( $request['rename_post'] ) || empty( $request['post_position'] ) || empty( $request['post_menu_icon'] ) ) {
@@ -1097,9 +1112,9 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 		 * Delete post by ID
 		 */
 		public function fed_dashboard_delete_post_by_id_fn() {
-			$post_payload = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+			$post_payload = isset( $_POST ) ? wp_unslash( $_POST ) : array();
 
-			if ( ! wp_verify_nonce( $post_payload['fed_dashboard_delete_post_by_id'],
+			if ( ! isset( $post_payload['fed_dashboard_delete_post_by_id'] ) || ! wp_verify_nonce( $post_payload['fed_dashboard_delete_post_by_id'],
 				'fed_dashboard_delete_post_by_id' )
 			) {
 				wp_send_json_error( array(
@@ -1343,123 +1358,111 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 		 * @param  array  $menu  Menu
 		 */
 		private function fed_display_dashboard_view_post_list( $menu, $post_type = 'post' ) {
-			$get_payload       = filter_input_array( INPUT_GET, FILTER_SANITIZE_STRING );
+			$get_payload       = isset( $_GET ) ? array_map( 'sanitize_text_field', wp_unslash( $_GET ) ) : array();
 			$post              = fed_process_dashboard_display_post( $post_type );
-			$item              = isset( $get_payload, $get_payload['menu_type'], $get_payload['menu_id'] ) ? $get_payload['menu_type'] . '_' . $get_payload['menu_id'] : '';
-			$menus             = fed_search_index_from_array_recursively( $menu['query']['menu_items'], $item );
 			$current_page      = isset( $_REQUEST['page_number'] ) ? absint( $_REQUEST['page_number'] ) : 1;
 			$pagination_counts = ceil( $post->found_posts / get_option( 'posts_per_page', 10 ) );
+			$posts             = $post->get_posts();
 			?>
-			<?php if ( fed_cp_is_user_can_add_post( $post_type ) ) { ?>
-				<div class="fed_dashboard_post_menu_container">
-					<div class="fed_dashboard_post_menu_add_post">
-						<a class="btn btn-primary" href="
-						<?php
-						echo esc_url( add_query_arg( array(
-							'post_status'   => 'add',
-							'fed_post_type' => $post_type,
-						) ), site_url() );
-						?>
-						">
-							<i class="fa fa-plus"></i>
-							<?php esc_attr_e( 'Add New', 'frontend-dashboard' ); ?>
-							<?php echo esc_attr( $menus['menu'] ); ?>
-						</a>
-					</div>
-				</div>
-			<?php } ?>
-			<div class="fed_dashboard_item_field_container m-y-20">
-				<?php foreach ( $post->get_posts() as $single_post ) { ?>
-					<div class="fed_dashboard_item_field_wrapper">
-						<div class="row fed_dashboard_item_field <?php echo esc_attr( $single_post->post_status ); ?>">
-							<?php
-							$details = array(
-								'ID'          => array(
-									'value' => (int) $single_post->ID,
-									'class' => 'col-md-1 col-xs-12 col-sm-12',
-								),
-								'post_title'  => array(
-									'value' => $single_post->post_title .
-									           '<span class="badge fed_post_status_on_hover ' . esc_attr( $single_post->post_status ) . '">' .
-									           esc_attr( fed_get_display_post_status( $single_post->post_status ) ) .
-									           '</span>',
-									'class' => 'col-md-4 col-xs-12 col-sm-12',
-								),
-								'post_author' => array(
-									'value' => esc_attr( get_the_author_meta( 'display_name',
-										$single_post->post_author ) ),
-									'class' => 'col-md-2 col-xs-12 col-sm-12',
-								),
-								'post_date'   => array(
-									'value' => esc_attr( date( get_option( 'date_format' ),
-										strtotime( $single_post->post_date ) ) ),
-									'class' => 'col-md-3 col-xs-12 col-sm-12',
-								),
-							);
-
-							$details = apply_filters( 'fed_cp_list_details', $details, $single_post, $post_type );
-
-							foreach ( $details as $detail ) {
+			<div class="overflow-x-auto rounded-xl border border-slate-200/80 bg-white shadow-xs">
+				<table class="w-full text-left border-collapse">
+					<thead>
+						<tr class="bg-slate-50/80 border-b border-slate-200/80 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+							<th class="py-3 px-4 w-16">#ID</th>
+							<th class="py-3 px-4"><?php esc_html_e( 'Title', 'frontend-dashboard' ); ?></th>
+							<th class="py-3 px-4"><?php esc_html_e( 'Author', 'frontend-dashboard' ); ?></th>
+							<th class="py-3 px-4 whitespace-nowrap"><?php esc_html_e( 'Date', 'frontend-dashboard' ); ?></th>
+							<th class="py-3 px-4 text-right"><?php esc_html_e( 'Actions', 'frontend-dashboard' ); ?></th>
+						</tr>
+					</thead>
+					<tbody class="divide-y divide-slate-100 text-sm text-slate-700">
+						<?php if ( empty( $posts ) ) { ?>
+							<tr>
+								<td colspan="5" class="py-12 text-center text-slate-400">
+									<i class="fa fa-folder-open-o text-3xl mb-2 block text-slate-300"></i>
+									<p class="text-sm font-medium mb-0"><?php esc_html_e( 'No records found.', 'frontend-dashboard' ); ?></p>
+								</td>
+							</tr>
+						<?php } else {
+							foreach ( $posts as $single_post ) {
+								$status = $single_post->post_status;
+								$status_classes = array(
+									'publish' => 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
+									'draft'   => 'bg-amber-50 text-amber-700 border-amber-200/60',
+									'pending' => 'bg-sky-50 text-sky-700 border-sky-200/60',
+									'trash'   => 'bg-red-50 text-red-700 border-red-200/60',
+								);
+								$badge_class = isset( $status_classes[ $status ] ) ? $status_classes[ $status ] : 'bg-slate-50 text-slate-700 border-slate-200';
+								$author_name = get_the_author_meta( 'display_name', $single_post->post_author );
+								$formatted_date = date_i18n( get_option( 'date_format' ), strtotime( $single_post->post_date ) );
 								?>
-								<div class="<?php echo esc_attr( $detail['class'] ); ?>">
-									<?php echo wp_kses_post( $detail['value'] ); ?>
-								</div>
-								<?php
-							}
-							?>
-							<div class="col-md-2 col-xs-12">
-								<div class="row">
-									<?php if ( fed_cp_is_user_can_view_post( $post_type ) ) { ?>
-										<div class="col-xs-4 col-sm-4">
-											<a class="btn btn-warning fed_no_background fed_primary_font_color"
+								<tr class="hover:bg-slate-50/60 transition-colors">
+									<td class="py-3.5 px-4 font-mono text-xs text-slate-400">
+										#<?php echo (int) $single_post->ID; ?>
+									</td>
+									<td class="py-3.5 px-4 font-medium text-slate-900">
+										<div class="flex items-center gap-2 flex-wrap">
+											<span><?php echo esc_html( $single_post->post_title ); ?></span>
+											<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border <?php echo esc_attr( $badge_class ); ?>">
+												<?php echo esc_html( fed_get_display_post_status( $status ) ); ?>
+											</span>
+										</div>
+									</td>
+									<td class="py-3.5 px-4 text-slate-600">
+										<div class="flex items-center gap-2">
+											<span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 text-xs flex items-center justify-center font-bold">
+												<?php echo esc_html( strtoupper( substr( $author_name, 0, 1 ) ) ); ?>
+											</span>
+											<span><?php echo esc_html( $author_name ); ?></span>
+										</div>
+									</td>
+									<td class="py-3.5 px-4 text-slate-500 whitespace-nowrap">
+										<?php echo esc_html( $formatted_date ); ?>
+									</td>
+									<td class="py-3.5 px-4 text-right whitespace-nowrap">
+										<div class="inline-flex items-center gap-1.5 justify-end">
+											<?php if ( fed_cp_is_user_can_view_post( $post_type ) ) { ?>
+												<a class="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
 													target="_blank"
+													title="<?php esc_attr_e( 'View', 'frontend-dashboard' ); ?>"
 													href="<?php echo esc_url( get_permalink( (int) $single_post->ID ) ); ?>">
-												<i class="fa fa-eye"></i>
-											</a>
-										</div>
-									<?php } ?>
+													<i class="fa fa-eye"></i>
+												</a>
+											<?php } ?>
 
-									<?php if ( fed_cp_is_user_can_edit_post( $post_type ) ) { ?>
-										<div class="col-xs-4 col-sm-4">
-											<a class="btn btn-primary fed_no_background fed_primary_font_color" href="
-											<?php
-											echo esc_url( add_query_arg( array(
-												'post_id'       => (int) $single_post->ID,
-												'fed_post_type' => $post_type,
-											) ), site_url() );
-											?>
-											">
-												<i class="fa fa-pencil"></i>
-											</a>
-										</div>
-									<?php } ?>
-									<?php if ( fed_cp_is_user_can_delete_post( $post_type ) ) { ?>
-										<div class="col-xs-4 col-sm-4">
-											<form method="post"
-													class="fed_dashboard_delete_post_by_id"
+											<?php if ( fed_cp_is_user_can_edit_post( $post_type ) ) { ?>
+												<a class="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+													title="<?php esc_attr_e( 'Edit', 'frontend-dashboard' ); ?>"
+													href="<?php echo esc_url( add_query_arg( array( 'post_id' => (int) $single_post->ID, 'fed_post_type' => $post_type ), site_url() ) ); ?>">
+													<i class="fa fa-pencil"></i>
+												</a>
+											<?php } ?>
+
+											<?php if ( fed_cp_is_user_can_delete_post( $post_type ) ) { ?>
+												<form method="post"
+													class="inline-block fed_dashboard_delete_post_by_id m-0"
 													action="<?php echo esc_url( admin_url( 'admin-ajax.php?action=fed_dashboard_delete_post_by_id' ) ); ?>">
-												<?php wp_nonce_field( 'fed_dashboard_delete_post_by_id',
-													'fed_dashboard_delete_post_by_id' ); ?>
-												<input type="hidden"
-														name="post_id"
-														value="<?php echo (int) $single_post->ID; ?>"/>
-												<button class="btn btn-danger fed_no_background fed_primary_font_color"
-														type="submit">
-													<i class="fa fa-trash"></i>
-												</button>
-											</form>
+													<?php wp_nonce_field( 'fed_dashboard_delete_post_by_id', 'fed_dashboard_delete_post_by_id' ); ?>
+													<input type="hidden" name="post_id" value="<?php echo (int) $single_post->ID; ?>"/>
+													<button class="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border-0 bg-transparent cursor-pointer"
+															title="<?php esc_attr_e( 'Delete', 'frontend-dashboard' ); ?>"
+															type="submit">
+														<i class="fa fa-trash"></i>
+													</button>
+												</form>
+											<?php } ?>
 										</div>
-									<?php } ?>
-								</div>
-							</div>
-						</div>
-					</div>
-					<?php
-				}
-				fed_get_pagination( $current_page, $pagination_counts );
-				?>
+									</td>
+								</tr>
+							<?php }
+						} ?>
+					</tbody>
+				</table>
 			</div>
 			<?php
+			if ( $pagination_counts > 1 ) {
+				fed_get_pagination( $current_page, $pagination_counts );
+			}
 		}
 
 		/**

@@ -63,10 +63,10 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 		 * Delete Custom Post Type
 		 */
 		public function fed_cp_delete_custom_post_type_delete() {
-			$request = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+			$request = isset( $_POST ) ? wp_unslash( $_POST ) : array();
 			fed_verify_nonce( $_GET );
 			$pt = get_option( 'fed_cp_custom_posts', array() );
-			if ( ! isset( $pt[ $request['id'] ] ) ) {
+			if ( ! isset( $request['id'] ) || ! isset( $pt[ $request['id'] ] ) ) {
 				wp_send_json_error( array(
 					'message' => __( 'Invalid Custom Post ID', 'frontend-dashboard-custom-post' ),
 				) );
@@ -84,7 +84,7 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 		 * Add / Update Custom Post Type
 		 */
 		public function fed_cp_add_custom_post_type_store() {
-			$request      = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+			$request      = isset( $_POST ) ? wp_unslash( $_POST ) : array();
 			$redirect_url = admin_url( 'admin.php?page=fed_custom_post' );
 			$status       = __( 'added', 'frontend-dashboard-custom-post' );
 
