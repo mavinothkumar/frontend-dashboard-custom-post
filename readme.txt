@@ -4,7 +4,7 @@ Tags: dashboard, frontend dashboard pages, pages in dashboard, custom pages
 Donate link: https://www.paypal.com/paypalme2/buffercode
 Requires at least: 5.8
 Tested up to: 7.1
-Stable tag: 3.0
+Stable tag: 3.0.0
 License: GPL V3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
