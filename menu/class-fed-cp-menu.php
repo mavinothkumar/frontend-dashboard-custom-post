@@ -850,6 +850,7 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 		 */
 		public function fed_cp_admin_settings() {
 			$request   = isset( $_POST ) ? wp_unslash( $_POST ) : array();
+			fed_verify_nonce( $request );
 			$post_type = isset( $request['custom_post_type'] ) ? sanitize_text_field( $request['custom_post_type'] ) : '';
 			if ( fed_check_post_type( $post_type ) ) {
 
