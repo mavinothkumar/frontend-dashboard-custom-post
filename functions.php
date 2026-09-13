@@ -1736,17 +1736,21 @@ function fed_dashicon_list()
 function fed_cp_is_user_can_edit_post($post_type = 'post')
 {
     $settings = get_option('fed_cp_admin_settings');
-    $options  = $settings[$post_type];
+    $options  = isset($settings[$post_type]) ? $settings[$post_type] : array();
 
-    $user = new WP_User(get_current_user_id());
-    $user->add_cap('edit_posts');
+    if (get_current_user_id() > 0) {
+        $user = new WP_User(get_current_user_id());
+        $user->add_cap('edit_posts');
+    }
 
     if ( ! isset($options['settings']['disable_post_edit'])) {
         return true;
     }
 
     if (isset($options['settings']['disable_post_edit']) && $options['settings']['disable_post_edit'] == 'yes') {
-        $user->remove_cap('edit_posts');
+        if (isset($user) && $user instanceof WP_User) {
+            $user->remove_cap('edit_posts');
+        }
 
         return false;
     }
@@ -1762,16 +1766,20 @@ function fed_cp_is_user_can_edit_post($post_type = 'post')
 function fed_cp_is_user_can_delete_post($post_type = 'post')
 {
     $settings = get_option('fed_cp_admin_settings');
-    $options  = $settings[$post_type];
+    $options  = isset($settings[$post_type]) ? $settings[$post_type] : array();
 
-    $user = new WP_User(get_current_user_id());
-    $user->add_cap('delete_posts');
+    if (get_current_user_id() > 0) {
+        $user = new WP_User(get_current_user_id());
+        $user->add_cap('delete_posts');
+    }
     if ( ! isset($options['settings']['disable_post_delete'])) {
         return true;
     }
 
     if (isset($options['settings']['disable_post_delete']) && $options['settings']['disable_post_delete'] == 'yes') {
-        $user->remove_cap('delete_posts');
+        if (isset($user) && $user instanceof WP_User) {
+            $user->remove_cap('delete_posts');
+        }
 
         return false;
     }
@@ -1787,7 +1795,7 @@ function fed_cp_is_user_can_delete_post($post_type = 'post')
 function fed_cp_is_user_can_view_post($post_type = 'post')
 {
     $settings = get_option('fed_cp_admin_settings');
-    $options  = $settings[$post_type];
+    $options  = isset($settings[$post_type]) ? $settings[$post_type] : array();
 
     if ( ! isset($options['settings']['disable_post_view'])) {
         return true;
@@ -1809,7 +1817,7 @@ function fed_cp_is_user_can_view_post($post_type = 'post')
 function fed_cp_is_user_can_add_post($post_type = 'post')
 {
     $settings = get_option('fed_cp_admin_settings');
-    $options  = $settings[$post_type];
+    $options  = isset($settings[$post_type]) ? $settings[$post_type] : array();
 
     if ( ! isset($options['settings']['disable_post_add_new'])) {
         return true;
