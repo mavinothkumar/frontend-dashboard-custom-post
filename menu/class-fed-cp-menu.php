@@ -864,6 +864,7 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 				$fed_admin_settings_custom_post[ $post_type ] = array(
 					'settings'    => array(
 						'fed_post_status'      => isset( $request['fed_post_status'] ) ? sanitize_text_field( $request['fed_post_status'] ) : 'publish',
+						'fed_editor_type'      => isset( $request['fed_editor_type'] ) ? sanitize_text_field( $request['fed_editor_type'] ) : 'classic',
 						'disable_post_edit'    => isset( $request['disable_post_edit'] ) ? sanitize_text_field( $request['disable_post_edit'] ) : 'no',
 						'disable_post_add_new' => isset( $request['disable_post_add_new'] ) ? sanitize_text_field( $request['disable_post_add_new'] ) : 'no',
 						'disable_post_delete'  => isset( $request['disable_post_delete'] ) ? sanitize_text_field( $request['disable_post_delete'] ) : 'no',
@@ -970,6 +971,19 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 								'user_value'  => isset( $request[ $index ]['settings']['fed_post_status'] ) ? $request[ $index ]['settings']['fed_post_status'] : '',
 								'input_meta'  => 'fed_post_status',
 								'input_value' => $post_status,
+							),
+						),
+						'fed_editor_type'      => array(
+							'name'  => __( 'Post Editor Type', 'frontend-dashboard-custom-post' ),
+							'input' => array(
+								'input_type'  => 'select',
+								'user_value'  => isset( $request[ $index ]['settings']['fed_editor_type'] ) ? $request[ $index ]['settings']['fed_editor_type'] : 'classic',
+								'input_meta'  => 'fed_editor_type',
+								'input_value' => array(
+									'classic'  => __( 'Classic Editor (TinyMCE)', 'frontend-dashboard-custom-post' ),
+									'tiptap'   => __( 'TipTap (Modern Rich & Slash Editor)', 'frontend-dashboard-custom-post' ),
+									'editorjs' => __( 'Editor.js (Block Editor)', 'frontend-dashboard-custom-post' ),
+								),
 							),
 						),
 						'disable_post_add_new' => array(
@@ -1239,8 +1253,8 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 								<label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
 									<?php esc_html_e( 'Content', 'frontend-dashboard-custom-post' ); ?>
 								</label>
-								<div class="rounded-xl overflow-hidden border border-slate-200">
-									<?php wp_editor( '', 'post_content', array( 'quicktags' => true ) ); ?>
+								<div>
+									<?php echo fed_render_post_editor( '', 'post_content', $post_type ); ?>
 								</div>
 							</div>
 							<?php
@@ -1687,12 +1701,8 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 									<label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
 										<?php esc_html_e( 'Content', 'frontend-dashboard-custom-post' ); ?>
 									</label>
-									<div class="rounded-xl overflow-hidden border border-slate-200">
-										<?php
-										wp_editor( $post->post_content, 'post_content', array(
-											'quicktags' => true,
-										) );
-										?>
+									<div>
+										<?php echo fed_render_post_editor( $post->post_content, 'post_content', $post->post_type ); ?>
 									</div>
 								</div>
 								<?php
