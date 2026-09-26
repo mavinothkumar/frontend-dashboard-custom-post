@@ -1,156 +1,102 @@
 === Frontend Dashboard Custom Post and Taxonomies ===
 Contributors: vinoth06, buffercode
-Tags: dashboard, frontend dashboard pages, pages in dashboard, custom pages
+Tags: dashboard, frontend dashboard, custom post, custom post type, custom taxonomies, cpt, frontend submission, post manager
 Donate link: https://www.paypal.com/paypalme2/buffercode
 Requires at least: 5.8
-Tested up to: 7.1
+Tested up to: 6.7
+Requires PHP: 7.4
 Stable tag: 3.0.0
-License: GPL V3
-License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Frontend Dashboard Custom Post is an add-on to add and customize the custom posts and taxonomies (category and tag) inside the Frontend Dashboard.
+Frontend Dashboard Custom Post is an add-on to add, manage, and customize custom post types and custom taxonomies directly inside Frontend Dashboard.
 
 == Description ==
 
 > #### Notice
-> This is an Add-on plugin of [Frontend Dashboard](https://wordpress.org/plugins/frontend-dashboard/), So please install [Frontend Dashboard](https://buffercode.com/plugin/frontend-dashboard) to use this plugin **
+> This is a free add-on plugin for [Frontend Dashboard](https://buffercode.com/plugin/frontend-dashboard). Please install and activate Frontend Dashboard (v3.0.0+) to use this plugin.
 
-Frontend Dashboard Custom Post is an add-on to add and customize the custom posts and taxonomies (category and tag) inside the Frontend Dashboard.
+**Frontend Dashboard Custom Post and Taxonomies** enables seamless creation and frontend submission workflows for WordPress custom post types, categories, and tags.
 
-= Post Status =
-Allow users to either publish or pending their post
-
-= Disable Default Post =
-Disable the default post attributes like content, featured image, comments of that post type.
-
-= Customize Menu =
-Customize the post name, icon and order of the each post types shown in Frontend Dashboard
-
-= Disable User Roles =
-Disable user roles to access the post/custom post type
-
-= Disable Taxonomies =
-Disable user roles to access the assigned Taxonomies (Category/Tags) of the post/custom post
-
-= Add/Edit/Delete Custom Post =
-Easy to add, edit and delete the custom post
-
-= Add/Edit/Delete Taxonomies =
-Easy to add, edit and delete the taxonomies (category/tag)
+### Key Features
+* **Post Status Control**: Allow frontend users to submit posts directly to Published or Pending Review status based on user roles.
+* **Custom Post Type Builder**: Create, edit, and configure custom post types with custom icons, menu order, and supported attributes.
+* **Custom Taxonomy Builder**: Create custom hierarchical (categories) and non-hierarchical (tags) taxonomies attached to any post type.
+* **Role-Based Access**: Restrict post submission, editing, and taxonomy assignments based on specific user roles.
+* **Disable Default Attributes**: Selectively disable built-in post attributes (featured images, content editor, excerpt, comments) per post type.
+* **Frontend Post Management**: Full frontend CRUD interface for users to add, edit, preview, and delete their own posts.
 
 == Installation ==
-1. Upload the “frontend-dashboard-custom-post” directory to the plugins directory.
-2. Go to the plugins setting page and activate “Frontend Dashboard Custom Post”
-3. Go to Frontend Dashboard Menu | Custom Post to configure.
-4. Do save.
+
+1. Upload the `frontend-dashboard-custom-post` directory to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Ensure **Frontend Dashboard** is installed and active.
+4. Navigate to **Frontend Dashboard > Custom Post** or **Custom Taxonomies** to start configuring.
+5. Save settings.
 
 == Changelog ==
+
+= 3.0.0 =
+* Major Release: Full compatibility and deep integration with Frontend Dashboard 3.0.0 App Shell.
+* Modernized admin settings and field builders.
+* Improved frontend submission forms, file attachment handling, and taxonomy selection.
+* Enhanced role permissions, soft-delete capabilities, and post listing pagination.
+* Security: Enhanced nonce verification and capability checks on all submission actions.
+* Fully tested with WordPress 6.7 and PHP 8.1 / 8.2 / 8.3.
+
 = 1.5.10 [03-Sept-2020] =
-* Added filter hooks  [fed_cp_list_details] (Thanks to @corne)
+* Added filter hooks [fed_cp_list_details] (Thanks to @corne)
 
 = 1.5.9 [30-July-2019] =
-* Pagination updated and added an filter hook to show all post or single post to admin.(fed_show_all_post_to_admin)
+* Pagination updated and added a filter hook to show all posts or single post to admin (fed_show_all_post_to_admin).
 
 = 1.5.8 [18-May-2019] =
 * Added new features and styles to Post and Custom Post.
 
 = 1.5.7 [14-May-2019] =
-
 * Bug fixes
 
 = 1.5.6 [11-May-2020] =
-* Frontend Dashboard Custom Post new features added and some bug fixes, now admin can see all post and can able to change the post status.
+* Frontend Dashboard Custom Post new features added and bug fixes.
 
 = 1.5.5 [19-Apr-2019] =
-
 * Bug fixes
 
 = 1.5.3 [23-Oct-2019] =
-
-* Post and Custom Post will be soft delete.
+* Post and Custom Post soft delete support.
 
 = 1.5.2 [20-Oct-2019] =
-
 * Bug fixes
 
 = 1.5.1 [17-Oct-2019] =
-
 * Frontend Dashboard Post Ordering Fixed
-* Added Few Translation
+* Added translations
 
 = 1.5 [12-Oct-2019] =
-
 * Support Frontend Dashboard 1.5
 
 = 1.4.10 [05-Sept-2019] =
-
-* Bug Fixes - Custom post not updating the custom taxonomy for few user roles.
+* Bug Fixes: Custom post taxonomy update for specific roles.
 
 = 1.4.9 [27-August-2019] =
-
-* Bug Fixes - Custom post not able to delete and save.
+* Bug Fixes: Custom post delete and save.
 
 = 1.4.8 [04-August-2019] =
-
 * Bug Fixes
 
 = 1.4.7 [21-Jun-2019] =
-
-* Bug Fixes: Post/Custom post show the post content.
-
-= 1.4.6 [20-Jun-2019] =
-
-* Few minor Bug fixes and supports to latest Frontend Dashboard.
-
-
-= 1.4.5 [26-Apr-2019] =
-
-* Taxonomies (Tags and Categories) inside the post has been changed to multiselect Dropdown.
-* Few bug fixes.
-
-= v 1.4.4 [23-April-2019] =
-* Added local translation for Javascript files
-* Few bug fixes
-
-= v 1.4.3 [09-April-2019] =
-* Added local translation
-
-= v 1.4.2 [22-Feb-2019] =
-* Bug fixes : Sorting the Post items.
-
-= v 1.4.1 [03-Oct-2018] =
-* Bug fixes
-
-= v 1.4 [13-Apr-2018] =
-* Enable/Disable the View/Edit/Delete of post/custom post
-
-= v 1.3.2 [20-Feb-2018] =
-* Bug:Post section url are not working properly on custom URL.
-
-= v 1.3.1 [16-January-2018] =
-* Taxonomy and Custom post not able to delete
-* Show the empty Category/Tag Names
-
-= v 1.3 [6-December-2017] =
-* Completely renovated for flexibility.
-
-= v 1.2.1 [26-November-2017] =
-* Bug: Added to notify users to install Frontend Dashboard as a core plugin to use this plugin
-
-= v 1.2 [24-November-2017] =
-* Bug: Mandatory to fill the Menu name, order and icon.
-* Bug: Post status pending not working
-
-= v1.1 [20-November-2017] =
-* Bug: Post type name and image missing in Frontend Dashboard
+* Bug Fixes: Post/Custom post show post content.
 
 = v1.0 [07-November-2017] =
 * Public release
 
 == Upgrade Notice ==
 
+= 3.0.0 =
+Major release: Modernized CPT/Taxonomy management and complete compatibility with Frontend Dashboard 3.0.0.
+
 = 1.5.10 [03-Sept-2020] =
-* Added filter hooks  [fed_cp_list_details] (Thanks to @corne)
+* Added filter hooks [fed_cp_list_details]
 
 == Screenshots ==
 1. Dashboard Settings
