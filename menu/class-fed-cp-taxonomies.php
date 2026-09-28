@@ -101,6 +101,7 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 
 			if ( ! isset( $request['fed_cpt_edit'] ) && isset( $merge_cpt[ $request['slug'] ] ) ) {
 				wp_send_json_error( array(
+					/* translators: %s: Custom taxonomy slug */
 					'message' => sprintf( __( 'Custom Taxonomy slug "%s" already exists.', 'frontend-dashboard-custom-post' ), esc_html( $request['slug'] ) ),
 				) );
 			}
@@ -117,6 +118,7 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 			update_option( 'fed_cp_custom_taxonomies', $old_cpt );
 
 			wp_send_json_success( array(
+				/* translators: 1: Taxonomy label, 2: Action status (e.g. created, updated) */
 				'message' => sprintf( __( 'Taxonomy "%1$s" successfully %2$s.', 'frontend-dashboard-custom-post' ), $request['label'], $status ),
 				'reload'  => $redirect_url,
 			) );
@@ -134,17 +136,29 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 					$name              = isset( $menu['name'] ) && '' !== trim( (string) $menu['name'] ) ? $menu['name'] : $singular;
 					$menu_name         = isset( $menu['menu_name'] ) && '' !== trim( (string) $menu['menu_name'] ) ? $menu['menu_name'] : $label;
 					$parent_item_colon = isset( $menu['parent_item_colon'] ) && '' !== trim( (string) $menu['parent_item_colon'] ) ? $menu['parent_item_colon'] : 'Parent ' . $singular . ':';
+					/* translators: %s: Taxonomy label */
 					$all_items         = isset( $menu['all_items'] ) && '' !== trim( (string) $menu['all_items'] ) ? $menu['all_items'] : sprintf( __( 'All %s', 'frontend-dashboard-custom-post' ), $label );
+					/* translators: %s: Taxonomy singular name */
 					$add_new_item      = isset( $menu['add_new_item'] ) && '' !== trim( (string) $menu['add_new_item'] ) ? $menu['add_new_item'] : sprintf( __( 'Add New %s', 'frontend-dashboard-custom-post' ), $singular );
+					/* translators: %s: Taxonomy singular name */
 					$edit_item         = isset( $menu['edit_item'] ) && '' !== trim( (string) $menu['edit_item'] ) ? $menu['edit_item'] : sprintf( __( 'Edit %s', 'frontend-dashboard-custom-post' ), $singular );
+					/* translators: %s: Taxonomy singular name */
 					$view_item         = isset( $menu['view_item'] ) && '' !== trim( (string) $menu['view_item'] ) ? $menu['view_item'] : sprintf( __( 'View %s', 'frontend-dashboard-custom-post' ), $singular );
+					/* translators: %s: Taxonomy singular name */
 					$update_item                = isset( $menu['update_item'] ) && '' !== trim( (string) $menu['update_item'] ) ? $menu['update_item'] : sprintf( __( 'Update %s', 'frontend-dashboard-custom-post' ), $singular );
+					/* translators: %s: Taxonomy singular name */
 					$new_item_name              = isset( $menu['new_item_name'] ) && '' !== trim( (string) $menu['new_item_name'] ) ? $menu['new_item_name'] : sprintf( __( 'New %s Name', 'frontend-dashboard-custom-post' ), $singular );
+					/* translators: %s: Taxonomy label */
 					$popular_items              = isset( $menu['popular_items'] ) && '' !== trim( (string) $menu['popular_items'] ) ? $menu['popular_items'] : sprintf( __( 'Popular %s', 'frontend-dashboard-custom-post' ), $label );
+					/* translators: %s: Taxonomy label */
 					$choose_from_most_used      = isset( $menu['choose_from_most_used'] ) && '' !== trim( (string) $menu['choose_from_most_used'] ) ? $menu['choose_from_most_used'] : sprintf( __( 'Choose from most used %s', 'frontend-dashboard-custom-post' ), $label );
+					/* translators: %s: Taxonomy label */
 					$add_or_remove_items        = isset( $menu['add_or_remove_items'] ) && '' !== trim( (string) $menu['add_or_remove_items'] ) ? $menu['add_or_remove_items'] : sprintf( __( 'Add or Remove %s', 'frontend-dashboard-custom-post' ), $label );
+					/* translators: %s: Taxonomy label */
 					$separate_items_with_commas = isset( $menu['separate_items_with_commas'] ) && '' !== trim( (string) $menu['separate_items_with_commas'] ) ? $menu['separate_items_with_commas'] : sprintf( __( 'Separate %s with commas', 'frontend-dashboard-custom-post' ), $label );
+					/* translators: %s: Taxonomy label */
 					$search_items = isset( $menu['search_items'] ) && '' !== trim( (string) $menu['search_items'] ) ? $menu['search_items'] : sprintf( __( 'Search %s', 'frontend-dashboard-custom-post' ), $label );
+					/* translators: %s: Taxonomy label */
 					$not_found    = isset( $menu['not_found'] ) && '' !== trim( (string) $menu['not_found'] ) ? $menu['not_found'] : sprintf( __( 'No %s Found', 'frontend-dashboard-custom-post' ), $label );
 
 					$rewrite = false;
@@ -156,23 +170,24 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 					}
 
 					$labels = array(
-						'name'                       => _x( $name, 'post type General Name', 'frontend-dashboard-custom-post' ),
-						'singular_name'              => _x( $menu['singular_name'], 'post type singular name', 'frontend-dashboard-custom-post' ),
-						'menu_name'                  => __( $menu_name, 'frontend-dashboard-custom-post' ),
-						'parent_item_colon'          => __( $parent_item_colon, 'frontend-dashboard-custom-post' ),
-						'all_items'                  => __( $all_items, 'frontend-dashboard-custom-post' ),
-						'add_new_item'               => __( $add_new_item, 'frontend-dashboard-custom-post' ),
-						'edit_item'                  => __( $edit_item, 'frontend-dashboard-custom-post' ),
-						'update_item'                => __( $update_item, 'frontend-dashboard-custom-post' ),
-						'new_item_name'              => __( $new_item_name, 'frontend-dashboard-custom-post' ),
-						'popular_items'              => __( $popular_items, 'frontend-dashboard-custom-post' ),
-						'choose_from_most_used'      => __( $choose_from_most_used, 'frontend-dashboard-custom-post' ),
-						'add_or_remove_items'        => __( $add_or_remove_items, 'frontend-dashboard-custom-post' ),
-						'separate_items_with_commas' => __( $separate_items_with_commas, 'frontend-dashboard-custom-post' ),
-						'view_item'                  => __( $view_item, 'frontend-dashboard-custom-post' ),
-						'search_items'               => __( $search_items, 'frontend-dashboard-custom-post' ),
-						'not_found'                  => __( $not_found, 'frontend-dashboard-custom-post' ),
+						'name'                       => $name,
+						'singular_name'              => $singular,
+						'menu_name'                  => $menu_name,
+						'parent_item_colon'          => $parent_item_colon,
+						'all_items'                  => $all_items,
+						'add_new_item'               => $add_new_item,
+						'edit_item'                  => $edit_item,
+						'update_item'                => $update_item,
+						'new_item_name'              => $new_item_name,
+						'popular_items'              => $popular_items,
+						'choose_from_most_used'      => $choose_from_most_used,
+						'add_or_remove_items'        => $add_or_remove_items,
+						'separate_items_with_commas' => $separate_items_with_commas,
+						'view_item'                  => $view_item,
+						'search_items'               => $search_items,
+						'not_found'                  => $not_found,
 					);
+
 
 					$args = array(
 						'labels'                => $labels,
@@ -324,7 +339,7 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 			</style>
 
 			<div class="bc_fed fed-admin-wrap w-full max-w-none px-4 sm:px-8 py-6 sm:py-8 font-sans text-slate-800">
-				<?php echo fed_loader(); ?>
+				<?php echo fed_loader(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 				<!-- Toast Notification Element -->
 				<div id="fed_toast_notification" class="fixed bottom-6 right-6 transform translate-y-16 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700" style="z-index: 99999999 !important;">
@@ -507,10 +522,10 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 													$post_type['input']['readonly'] = true;
 													$post_type['input']['class']    = 'bg-slate-100 font-mono text-xs text-slate-600';
 												}
-												echo fed_get_input_details( $post_type['input'] );
+												echo fed_get_input_details( $post_type['input'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 												?>
 												<?php if ( ! empty( $post_type['help_message'] ) ) : ?>
-													<p class="text-[11px] text-slate-400 m-0"><?php echo wp_strip_all_tags( $post_type['help_message'] ); ?></p>
+													<p class="text-[11px] text-slate-400 m-0"><?php echo esc_html( wp_strip_all_tags( $post_type['help_message'] ) ); ?></p>
 												<?php endif; ?>
 											</div>
 										<?php endforeach; ?>
@@ -539,7 +554,7 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 										?>
 											<label class="p-3.5 bg-slate-50/80 hover:bg-slate-100/80 border border-slate-200/80 rounded-2xl flex items-center justify-between gap-2 cursor-pointer transition-colors">
 												<span class="text-xs font-bold text-slate-800 select-none"><?php echo esc_html( $item_label ); ?></span>
-												<?php echo fed_get_input_details( $input_data ); ?>
+												<?php echo fed_get_input_details( $input_data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 											</label>
 										<?php endforeach; ?>
 									</div>
@@ -565,9 +580,9 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 												<label class="block text-xs font-bold text-slate-700">
 													<?php echo esc_html( $post_type['name'] ); ?>
 												</label>
-												<?php echo fed_get_input_details( $post_type['input'] ); ?>
+												<?php echo fed_get_input_details( $post_type['input'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 												<?php if ( ! empty( $post_type['help_message'] ) ) : ?>
-													<p class="text-[11px] text-slate-400 m-0"><?php echo wp_strip_all_tags( $post_type['help_message'] ); ?></p>
+													<p class="text-[11px] text-slate-400 m-0"><?php echo esc_html( wp_strip_all_tags( $post_type['help_message'] ) ); ?></p>
 												<?php endif; ?>
 											</div>
 										<?php endforeach; ?>
@@ -599,9 +614,9 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 												<label class="block text-xs font-bold text-slate-700">
 													<?php echo esc_html( $post_type['name'] ); ?>
 												</label>
-												<?php echo fed_get_input_details( $post_type['input'] ); ?>
+												<?php echo fed_get_input_details( $post_type['input'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 												<?php if ( ! empty( $post_type['help_message'] ) ) : ?>
-													<p class="text-[11px] text-slate-400 m-0"><?php echo wp_strip_all_tags( $post_type['help_message'] ); ?></p>
+													<p class="text-[11px] text-slate-400 m-0"><?php echo esc_html( wp_strip_all_tags( $post_type['help_message'] ) ); ?></p>
 												<?php endif; ?>
 											</div>
 										<?php endforeach; ?>

@@ -117,6 +117,7 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 
 			if ( ! isset( $request['fed_cpt_edit'] ) && isset( $merge_cpt[ $slug ] ) ) {
 				wp_send_json_error( array(
+					/* translators: %s: Custom post type slug */
 					'message' => sprintf( __( 'Custom Post Type slug "%s" already exists.', 'frontend-dashboard-custom-post' ), esc_html( $slug ) ),
 				) );
 			}
@@ -143,6 +144,7 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 			}
 
 			wp_send_json_success( array(
+				/* translators: 1: Custom post type label, 2: Action status (e.g. created, updated) */
 				'message' => sprintf( __( 'Custom post type "%1$s" successfully %2$s.', 'frontend-dashboard-custom-post' ), $request['label'], $status ),
 				'reload'  => $redirect_url,
 			) );
@@ -163,23 +165,32 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 					$name           = isset( $menu['name'] ) && '' !== trim( (string) $menu['name'] ) ? $menu['name'] : $singular;
 					$menu_name      = isset( $menu['menu_name'] ) && '' !== trim( (string) $menu['menu_name'] ) ? $menu['menu_name'] : $label;
 					$name_admin_bar = isset( $menu['name_admin_bar'] ) && '' !== trim( (string) $menu['name_admin_bar'] ) ? $menu['name_admin_bar'] : $singular;
+					/* translators: %1$s: Post type singular name */
 					$archives          = isset( $menu['archives'] ) && '' !== trim( (string) $menu['archives'] ) ? $menu['archives'] : sprintf( __( '%1$s Archives', 'frontend-dashboard-custom-post' ), $singular );
 					$attributes        = isset( $menu['attributes'] ) && '' !== trim( (string) $menu['attributes'] ) ? $menu['attributes'] : __( 'Attributes', 'frontend-dashboard-custom-post' );
 					$parent_item_colon = isset( $menu['parent_item_colon'] ) && '' !== trim( (string) $menu['parent_item_colon'] ) ? $menu['parent_item_colon'] : __( 'Parent Page: Attributes', 'frontend-dashboard-custom-post' );
 					$all_items         = isset( $menu['all_items'] ) && '' !== trim( (string) $menu['all_items'] ) ? $menu['all_items'] : __( 'All Posts', 'frontend-dashboard-custom-post' );
+					/* translators: %1$s: Post type name */
 					$add_new_item      = isset( $menu['add_new_item'] ) && '' !== trim( (string) $menu['add_new_item'] ) ? $menu['add_new_item'] : sprintf( __( 'Add New %1$s', 'frontend-dashboard-custom-post' ), $name );
 					$add_new           = isset( $menu['add_new'] ) && '' !== trim( (string) $menu['add_new'] ) ? $menu['add_new'] : __( 'Add New', 'frontend-dashboard-custom-post' );
+					/* translators: %1$s: Post type name */
 					$new_item          = isset( $menu['new_item'] ) && '' !== trim( (string) $menu['new_item'] ) ? $menu['new_item'] : sprintf( __( 'New %1$s', 'frontend-dashboard-custom-post' ), $name );
+					/* translators: %1$s: Post type name */
 					$edit_item         = isset( $menu['edit_item'] ) && '' !== trim( (string) $menu['edit_item'] ) ? $menu['edit_item'] : sprintf( __( 'Edit %1$s', 'frontend-dashboard-custom-post' ), $name );
+					/* translators: %1$s: Post type name */
 					$view_item         = isset( $menu['view_item'] ) && '' !== trim( (string) $menu['view_item'] ) ? $menu['view_item'] : sprintf( __( 'View %1$s', 'frontend-dashboard-custom-post' ), $name );
+					/* translators: %1$s: Menu name */
 					$view_items        = isset( $menu['view_items'] ) && '' !== trim( (string) $menu['view_items'] ) ? $menu['view_items'] : sprintf( __( 'View %1$s', 'frontend-dashboard-custom-post' ), $menu_name );
+					/* translators: %1$s: Post type name */
 					$search_items      = isset( $menu['search_items'] ) && '' !== trim( (string) $menu['search_items'] ) ? $menu['search_items'] : sprintf( __( 'Search %1$s', 'frontend-dashboard-custom-post' ), $name );
 					$not_found         = isset( $menu['not_found'] ) && '' !== trim( (string) $menu['not_found'] ) ? $menu['not_found'] : __( 'No Post Found', 'frontend-dashboard-custom-post' );
+					/* translators: %1$s: Post type name */
 					$not_found_in_trash    = isset( $menu['not_found_in_trash'] ) && '' !== trim( (string) $menu['not_found_in_trash'] ) ? $menu['not_found_in_trash'] : sprintf( __( 'No %1$s found in Trash', 'frontend-dashboard-custom-post' ), $name );
 					$featured_image        = isset( $menu['featured_image'] ) && '' !== trim( (string) $menu['featured_image'] ) ? $menu['featured_image'] : __( 'Featured image', 'frontend-dashboard-custom-post' );
 					$set_featured_image    = isset( $menu['set_featured_image'] ) && '' !== trim( (string) $menu['set_featured_image'] ) ? $menu['set_featured_image'] : __( 'Set featured image', 'frontend-dashboard-custom-post' );
 					$remove_featured_image = isset( $menu['remove_featured_image'] ) && '' !== trim( (string) $menu['remove_featured_image'] ) ? $menu['remove_featured_image'] : __( 'Remove featured image', 'frontend-dashboard-custom-post' );
 					$use_featured_image    = isset( $menu['use_featured_image'] ) && '' !== trim( (string) $menu['use_featured_image'] ) ? $menu['use_featured_image'] : __( 'Use featured image', 'frontend-dashboard-custom-post' );
+					/* translators: %1$s: Post type name */
 					$insert_into_item      = isset( $menu['insert_into_item'] ) && '' !== trim( (string) $menu['insert_into_item'] ) ? $menu['insert_into_item'] : sprintf( __( '%1$s insert into page', 'frontend-dashboard-custom-post' ), $name );
 					$uploaded_to_this_item = isset( $menu['uploaded_to_this_item'] ) && '' !== trim( (string) $menu['uploaded_to_this_item'] ) ? $menu['uploaded_to_this_item'] : __( 'Uploaded to this page', 'frontend-dashboard-custom-post' );
 					$items_list            = isset( $menu['items_list'] ) && '' !== trim( (string) $menu['items_list'] ) ? $menu['items_list'] : __( 'Items list', 'frontend-dashboard-custom-post' );
@@ -202,36 +213,36 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 					}
 
 					$labels = array(
-						'name'                  => _x( $name, 'post type General Name', 'frontend-dashboard-custom-post' ),
-						'singular_name'         => _x( $menu['singular_name'], 'post type singular name', 'frontend-dashboard-custom-post' ),
-						'menu_name'             => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $menu_name ),
-						'name_admin_bar'        => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $name_admin_bar ),
-						'archives'              => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $archives ),
-						'attributes'            => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $attributes ),
-						'parent_item_colon'     => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $parent_item_colon ),
-						'all_items'             => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $all_items ),
-						'add_new_item'          => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $add_new_item ),
-						'add_new'               => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $add_new ),
-						'new_item'              => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $new_item ),
-						'edit_item'             => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $edit_item ),
-						'view_item'             => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $view_item ),
-						'view_items'            => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $view_items ),
-						'search_items'          => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $search_items ),
-						'not_found'             => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $not_found ),
-						'not_found_in_trash'    => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $not_found_in_trash ),
-						'featured_image'        => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $featured_image ),
-						'set_featured_image'    => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $set_featured_image ),
-						'remove_featured_image' => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $remove_featured_image ),
-						'use_featured_image'    => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $use_featured_image ),
-						'insert_into_item'      => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $insert_into_item ),
-						'uploaded_to_this_item' => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $uploaded_to_this_item ),
-						'items_list'            => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $items_list ),
-						'items_list_navigation' => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $items_list_navigation ),
-						'filter_items_list'     => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $filter_items_list ),
+						'name'                  => $name,
+						'singular_name'         => $singular,
+						'menu_name'             => $menu_name,
+						'name_admin_bar'        => $name_admin_bar,
+						'archives'              => $archives,
+						'attributes'            => $attributes,
+						'parent_item_colon'     => $parent_item_colon,
+						'all_items'             => $all_items,
+						'add_new_item'          => $add_new_item,
+						'add_new'               => $add_new,
+						'new_item'              => $new_item,
+						'edit_item'             => $edit_item,
+						'view_item'             => $view_item,
+						'view_items'            => $view_items,
+						'search_items'          => $search_items,
+						'not_found'             => $not_found,
+						'not_found_in_trash'    => $not_found_in_trash,
+						'featured_image'        => $featured_image,
+						'set_featured_image'    => $set_featured_image,
+						'remove_featured_image' => $remove_featured_image,
+						'use_featured_image'    => $use_featured_image,
+						'insert_into_item'      => $insert_into_item,
+						'uploaded_to_this_item' => $uploaded_to_this_item,
+						'items_list'            => $items_list,
+						'items_list_navigation' => $items_list_navigation,
+						'filter_items_list'     => $filter_items_list,
 					);
 					$args   = array(
-						'label'               => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $menu['label'] ),
-						'description'         => sprintf( __( '%1$s', 'frontend-dashboard-custom-post' ), $menu['description'] ),
+						'label'               => isset( $menu['label'] ) ? $menu['label'] : $name,
+						'description'         => isset( $menu['description'] ) ? $menu['description'] : '',
 						'labels'              => $labels,
 						'supports'            => $supports,
 						'hierarchical'        => fed_is_true_false( $menu['hierarchical'] ),
@@ -243,6 +254,7 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 						'show_in_nav_menus'   => fed_is_true_false( $menu['show_in_nav_menus'] ),
 						'can_export'          => fed_is_true_false( $menu['can_export'] ),
 						'has_archive'         => fed_is_true_false( $menu['has_archive'] ),
+
 						'exclude_from_search' => fed_is_true_false( $menu['exclude_from_search'] ),
 						'publicly_queryable'  => fed_is_true_false( $menu['publicly_queryable'] ),
 						'capability_type'     => $capability_type,
@@ -389,7 +401,7 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 			</style>
 
 			<div class="bc_fed fed-admin-wrap w-full max-w-none px-4 sm:px-8 py-6 sm:py-8 font-sans text-slate-800">
-				<?php echo fed_loader(); ?>
+				<?php echo fed_loader(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 				<!-- Toast Notification Element -->
 				<div id="fed_toast_notification" class="fixed bottom-6 right-6 transform translate-y-16 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700" style="z-index: 99999999 !important;">
@@ -588,11 +600,11 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 														$post_type['input']['readonly'] = true;
 														$post_type['input']['class']    = 'bg-slate-100 font-mono text-xs text-slate-600';
 													}
-													echo fed_get_input_details( $post_type['input'] );
+													echo fed_get_input_details( $post_type['input'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 												}
 												?>
 												<?php if ( ! empty( $post_type['help_message'] ) ) : ?>
-													<p class="text-[11px] text-slate-400 m-0"><?php echo wp_strip_all_tags( $post_type['help_message'] ); ?></p>
+													<p class="text-[11px] text-slate-400 m-0"><?php echo esc_html( wp_strip_all_tags( $post_type['help_message'] ) ); ?></p>
 												<?php endif; ?>
 											</div>
 										<?php endforeach; ?>
@@ -619,9 +631,9 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 												<label class="block text-xs font-bold text-slate-700">
 													<?php echo esc_html( $post_type['name'] ); ?>
 												</label>
-												<?php echo fed_get_input_details( $post_type['input'] ); ?>
+												<?php echo fed_get_input_details( $post_type['input'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 												<?php if ( ! empty( $post_type['help_message'] ) ) : ?>
-													<p class="text-[11px] text-slate-400 m-0"><?php echo wp_strip_all_tags( $post_type['help_message'] ); ?></p>
+													<p class="text-[11px] text-slate-400 m-0"><?php echo esc_html( wp_strip_all_tags( $post_type['help_message'] ) ); ?></p>
 												<?php endif; ?>
 											</div>
 										<?php endforeach; ?>
@@ -650,7 +662,7 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 										?>
 											<label class="p-3.5 bg-slate-50/80 hover:bg-slate-100/80 border border-slate-200/80 rounded-2xl flex items-center justify-between gap-2 cursor-pointer transition-colors">
 												<span class="text-xs font-bold text-slate-800 select-none"><?php echo esc_html( $item_label ); ?></span>
-												<?php echo fed_get_input_details( $input_data ); ?>
+												<?php echo fed_get_input_details( $input_data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 											</label>
 										<?php endforeach; ?>
 									</div>
@@ -678,7 +690,7 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 										?>
 											<label class="p-3.5 bg-slate-50/80 hover:bg-slate-100/80 border border-slate-200/80 rounded-2xl flex items-center justify-between gap-2 cursor-pointer transition-colors">
 												<span class="text-xs font-bold text-slate-800 select-none"><?php echo esc_html( $item_label ); ?></span>
-												<?php echo fed_get_input_details( $input_data ); ?>
+												<?php echo fed_get_input_details( $input_data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 											</label>
 										<?php endforeach; ?>
 									</div>
@@ -709,9 +721,9 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 												<label class="block text-xs font-bold text-slate-700">
 													<?php echo esc_html( $post_type['name'] ); ?>
 												</label>
-												<?php echo fed_get_input_details( $post_type['input'] ); ?>
+												<?php echo fed_get_input_details( $post_type['input'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 												<?php if ( ! empty( $post_type['help_message'] ) ) : ?>
-													<p class="text-[11px] text-slate-400 m-0"><?php echo wp_strip_all_tags( $post_type['help_message'] ); ?></p>
+													<p class="text-[11px] text-slate-400 m-0"><?php echo esc_html( wp_strip_all_tags( $post_type['help_message'] ) ); ?></p>
 												<?php endif; ?>
 											</div>
 										<?php endforeach; ?>

@@ -5,9 +5,14 @@
  * @package frontend-dashboard-custom-post
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Installation and Migration
  */
+
 function fed_custom_post_install()
 {
     $cp_admin_settings = get_option('fed_cp_admin_settings', array());

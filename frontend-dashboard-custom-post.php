@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name: Frontend Dashboard Custom Post
+ * Plugin Name: Frontend Dashboard Custom Post and Taxonomies
  * Plugin URI: https://buffercode.com/plugin/frontend-dashboard-custom-post-and-taxonomies
  * Description: Frontend Dashboard Custom Post is a plugin to show the custom post inside the Frontend Dashboard.
- * Version: 3.0.0
+ * Version: 3.0.1
  * Author: vinoth06
  * Author URI: http://buffercode.com/
- * License: GPLv2
- * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: frontend-dashboard-custom-post
  *
  * @package frontend-dashboard
@@ -23,7 +23,7 @@ if ( $fed_check && is_plugin_active( 'frontend-dashboard/frontend-dashboard.php'
 	/**
 	 * Version Number
 	 */
-	define( 'FED_CP_PLUGIN_VERSION', '3.0.0' );
+	define( 'FED_CP_PLUGIN_VERSION', '3.0.1' );
 
 	/**
 	 * App Name
@@ -64,8 +64,12 @@ else {
 		<div class="notice notice-warning">
 			<p>
 				<b>
-					<?php _e( 'Please install <a href="https://buffercode.com/plugin/frontend-dashboard">Frontend Dashboard</a> to use this plugin [Frontend Dashboard Custom Post and Taxonomies]',
-						'frontend-dashboard-custom-post' );
+					<?php
+					printf(
+						/* translators: %s: Link to Frontend Dashboard */
+						esc_html__( 'Please install %s to use this plugin [Frontend Dashboard Custom Post and Taxonomies]', 'frontend-dashboard-custom-post' ),
+						'<a href="' . esc_url( 'https://buffercode.com/plugin/frontend-dashboard' ) . '">' . esc_html__( 'Frontend Dashboard', 'frontend-dashboard-custom-post' ) . '</a>'
+					);
 					?>
 				</b>
 			</p>
@@ -76,3 +80,4 @@ else {
 
 	add_action( 'admin_notices', 'fed_global_admin_notification_post' );
 }
+

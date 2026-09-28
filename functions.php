@@ -1,16 +1,18 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Append the Version -- Custom Post
  */
-add_filter(/**
- * @param $version
- *
- * @return array
- */
-    'fed_plugin_versions', function ($version) {
-    return array_merge($version, array('custom_post' => 'Custom Post ('.FED_CP_PLUGIN_VERSION.')'));
-});
+add_filter(
+    'fed_plugin_versions',
+    function ($version) {
+        return array_merge($version, array('custom_post' => 'Custom Post ('.FED_CP_PLUGIN_VERSION.')'));
+    }
+);
+
 
 
 /**
@@ -1096,7 +1098,7 @@ function fed_cp_checkbox_taxonomies(array $request = array())
                 'input_type'    => 'checkbox',
                 'user_value'    => isset($request['taxonomies'][$index]) ? $request['taxonomies'][$index] : '',
                 'input_meta'    => 'taxonomies['.$index.']',
-                'label'         => sprintf(__('%s', 'frontend-dashboard-custom-post'),$taxonomy->label.$wp_core_tax),
+                'label'         => $taxonomy->label . $wp_core_tax,
                 'default_value' => 'Enable',
             ),
         );
@@ -1122,14 +1124,14 @@ function fed_cp_checkbox_taxonomies_with_users(array $request = array(), $tax_na
     foreach ($taxonomies as $index => $taxonomy) {
         $wp_core_tax     = in_array($index, $core_tax, true) ? ' (WP Core)' : '';
         $new_tax[$index] = array(
-            'heading' => sprintf(__('%s', 'frontend-dashboard-custom-post'),$taxonomy->label.$wp_core_tax),
+            'heading' => $taxonomy->label . $wp_core_tax,
         );
         foreach ($users as $key => $user) {
             $new_tax[$index]['extra'][$key] = array(
                 'input_type'    => 'checkbox',
                 'user_value'    => isset($request[$tax_name][$taxo][$index][$key]) ? $request[$tax_name][$taxo][$index][$key] : '',
                 'input_meta'    => $taxo.'['.$index.']['.$key.']',
-                'label'         => sprintf(__('%s', 'frontend-dashboard-custom-post'),$user),
+                'label'         => $user,
                 'default_value' => 'Enable',
             );
         }
@@ -1153,7 +1155,7 @@ function fed_cp_customize_post_for_user_role(array $request = array(), $tax_name
     unset($user_roles['administrator']);
     foreach ($user_roles as $key => $role) {
         $new_tax[$key]                                 = array(
-            'heading' => __($role, 'frontend-dashboard-custom-post'),
+            'heading' => $role,
         );
         $new_tax[$key]['extra']['disable_post_edit']   = array(
             'input_type'  => 'select',
@@ -1192,14 +1194,14 @@ function fed_cp_checkbox_post_type(array $request = array())
     $core_tax   = array('post', 'page', 'attachment');
     $new_tax    = array();
     foreach ($taxonomies as $index => $taxonomy) {
-        $wp_core_tax     = in_array($index, $core_tax, true) ? __('(WP Core)','frontend-dashboard-custom-post') : '';
+        $wp_core_tax     = in_array($index, $core_tax, true) ? ' (' . __('WP Core', 'frontend-dashboard-custom-post') . ')' : '';
         $new_tax[$index] = array(
             'name'     => null,
             'input'    => array(
                 'input_type'    => 'checkbox',
                 'user_value'    => isset($request['object_type'][$index]) ? $request['object_type'][$index] : '',
                 'input_meta'    => 'object_type['.$index.']',
-                'label'         => __($taxonomy.$wp_core_tax, 'frontend-dashboard-custom-post'),
+                'label'         => $taxonomy . $wp_core_tax,
                 'default_value' => 'Enable',
             ),
             'required' => true,

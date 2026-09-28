@@ -5,11 +5,11 @@ Donate link: https://www.paypal.com/paypalme2/buffercode
 Requires at least: 6.1
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Frontend Dashboard Custom Post is an add-on to add, manage, and customize custom post types and custom taxonomies directly inside Frontend Dashboard.
+Add, manage, and customize custom post types and custom taxonomies directly inside Frontend Dashboard.
 
 == Description ==
 
@@ -38,6 +38,9 @@ For more documentation and FAQs, visit [https://faq.frontenddashboard.com/addons
 
 == Changelog ==
 
+= 3.0.1 =
+* Fix: WordPress.org plugin review and security compliance improvements.
+
 = 3.0.0 =
 * Major Release: Full compatibility and deep integration with Frontend Dashboard 3.0.0 App Shell.
 * Modernized admin settings and field builders.
@@ -50,6 +53,9 @@ More Changelogs:
 https://faq.frontenddashboard.com/changelog/custom-post/
 
 == Upgrade Notice ==
+
+= 3.0.1 =
+Minor update: Security escaping and WordPress standards compliance fixes.
 
 = 3.0.0 =
 Major release: Modernized CPT/Taxonomy management and complete compatibility with Frontend Dashboard 3.0.0.
