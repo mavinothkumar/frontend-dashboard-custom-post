@@ -34,6 +34,8 @@ Frontend Dashboard Custom Post is an add-on to add, manage, and customize custom
 4. Navigate to **Frontend Dashboard > Custom Post** or **Custom Taxonomies** to start configuring.
 5. Save settings.
 
+For more documentation and FAQs, visit [https://faq.frontenddashboard.com/addons-free/custom-post/overview/](https://faq.frontenddashboard.com/addons-free/custom-post/overview/).
+
 == Changelog ==
 
 = 3.0.0 =
@@ -44,50 +46,8 @@ Frontend Dashboard Custom Post is an add-on to add, manage, and customize custom
 * Security: Enhanced nonce verification and capability checks on all submission actions.
 * Fully tested with WordPress 6.7 and PHP 8.0 / 8.1 / 8.2 / 8.3.
 
-= 1.5.10 =
-* Added filter hooks [fed_cp_list_details].
-
-= 1.5.9 =
-* Pagination updated and added a filter hook to show all posts or single post to admin.
-
-= 1.5.8 =
-* Added new features and styles to Post and Custom Post.
-
-= 1.5.7 =
-* Bug fixes.
-
-= 1.5.6 =
-* Frontend Dashboard Custom Post new features added and bug fixes.
-
-= 1.5.5 =
-* Bug fixes.
-
-= 1.5.3 =
-* Post and Custom Post soft delete support.
-
-= 1.5.2 =
-* Bug fixes.
-
-= 1.5.1 =
-* Frontend Dashboard Post Ordering Fixed and translation updates.
-
-= 1.5 =
-* Support Frontend Dashboard 1.5.
-
-= 1.4.10 =
-* Bug Fixes: Custom post taxonomy update for specific roles.
-
-= 1.4.9 =
-* Bug Fixes: Custom post delete and save.
-
-= 1.4.8 =
-* Bug Fixes.
-
-= 1.4.7 =
-* Bug Fixes: Post/Custom post show post content.
-
-= 1.0 =
-* Public release.
+More Changelogs:
+https://faq.frontenddashboard.com/changelog/custom-post/
 
 == Upgrade Notice ==
 
@@ -95,15 +55,6 @@ Frontend Dashboard Custom Post is an add-on to add, manage, and customize custom
 Major release: Modernized CPT/Taxonomy management and complete compatibility with Frontend Dashboard 3.0.0.
 
 == Screenshots ==
-1. Dashboard Settings
-2. Settings
-3. Add Taxonomy - Settings
-4. Add Taxonomy - Label Settings
-5. Add Taxonomy - Basic Settings
-6. Add Custom Post - Built-in Taxonomies
-7. Add Custom Post - Supports
-8. Add Custom Post - Label Settings
-9. Add Custom Post - Basic Settings
-10. Admin Post/Custom Post Taxonomies
-11. Admin Post/Custom Post Menu
-12. Admin Post/Custom Allow user role to Add/Edit/Delete Post
+1. Custom Post Type
+2. Frontend Custom Post View
+3. Settings - Custom post type
