@@ -211,13 +211,17 @@ if ( ! class_exists( 'Fed_Cp_Taxonomies' ) ) {
 		 */
 		protected function fed_cp_edit_custom_taxonomies( $request ) {
 			$pt = get_option( 'fed_cp_custom_taxonomies', array() );
-			if ( ! isset( $pt[ $request['fed_type_id'] ] ) ) {
-				$url = menu_page_url( 'fed_taxonomies', false ) . '&error=invalid_post_type';
-				wp_safe_redirect( $url );
-				exit;
+			$type_id = isset( $request['fed_type_id'] ) ? sanitize_key( $request['fed_type_id'] ) : '';
+			if ( ! isset( $pt[ $type_id ] ) && isset( $request['fed_type_id'], $pt[ $request['fed_type_id'] ] ) ) {
+				$type_id = $request['fed_type_id'];
 			}
-			$cpt = fed_cp_get_taxonomies_label( $pt[ $request['fed_type_id'] ] );
-			$this->render_page( $cpt, $pt, 'Edit', $request['fed_type_id'] );
+			if ( empty( $type_id ) || ! isset( $pt[ $type_id ] ) ) {
+				$cpt = fed_cp_get_taxonomies_label();
+				$this->render_page( $cpt, $pt, 'Add' );
+				return;
+			}
+			$cpt = fed_cp_get_taxonomies_label( $pt[ $type_id ] );
+			$this->render_page( $cpt, $pt, 'Edit', $type_id );
 		}
 
 		/**

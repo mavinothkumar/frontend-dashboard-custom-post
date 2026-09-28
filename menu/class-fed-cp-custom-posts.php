@@ -66,14 +66,26 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 			$request = isset( $_POST ) ? wp_unslash( $_POST ) : array();
 			fed_verify_nonce( $_GET );
 			$pt = get_option( 'fed_cp_custom_posts', array() );
-			if ( ! isset( $request['id'] ) || ! isset( $pt[ $request['id'] ] ) ) {
+			$del_id = isset( $request['id'] ) ? sanitize_key( $request['id'] ) : '';
+			if ( ! isset( $pt[ $del_id ] ) && isset( $request['id'], $pt[ $request['id'] ] ) ) {
+				$del_id = $request['id'];
+			}
+			if ( empty( $del_id ) || ! isset( $pt[ $del_id ] ) ) {
 				wp_send_json_error( array(
 					'message' => __( 'Invalid Custom Post ID', 'frontend-dashboard-custom-post' ),
 				) );
 			}
 			$url = admin_url( 'admin.php?page=fed_custom_post' );
-			unset( $pt[ $request['id'] ] );
+			unset( $pt[ $del_id ] );
 			update_option( 'fed_cp_custom_posts', $pt );
+
+			// Also clean up fed_cp_admin_settings for this post type
+			$cp_admin_settings = get_option( 'fed_cp_admin_settings', array() );
+			if ( isset( $cp_admin_settings[ $del_id ] ) ) {
+				unset( $cp_admin_settings[ $del_id ] );
+				update_option( 'fed_cp_admin_settings', $cp_admin_settings );
+			}
+
 			wp_send_json_success( array(
 				'message' => __( 'Custom Post Type Successfully Deleted', 'frontend-dashboard-custom-post' ),
 				'reload'  => $url,
@@ -96,26 +108,39 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 				) );
 			}
 
+			$slug = sanitize_key( $request['slug'] );
+			$request['slug'] = $slug;
+
 			$old_cpt    = get_option( 'fed_cp_custom_posts', array() );
 			$public_cpt = get_post_types();
 			$merge_cpt  = array_merge( $old_cpt, $public_cpt );
 
-			if ( ! isset( $request['fed_cpt_edit'] ) && isset( $merge_cpt[ $request['slug'] ] ) ) {
+			if ( ! isset( $request['fed_cpt_edit'] ) && isset( $merge_cpt[ $slug ] ) ) {
 				wp_send_json_error( array(
-					'message' => sprintf( __( 'Custom Post Type slug "%s" already exists.', 'frontend-dashboard-custom-post' ), esc_html( $request['slug'] ) ),
+					'message' => sprintf( __( 'Custom Post Type slug "%s" already exists.', 'frontend-dashboard-custom-post' ), esc_html( $slug ) ),
 				) );
 			}
 
 			if ( isset( $request['fed_cpt_edit'] ) ) {
-				$redirect_url = admin_url( 'admin.php?page=fed_custom_post&fed_type_id=' . $request['slug'] );
+				$redirect_url = admin_url( 'admin.php?page=fed_custom_post&fed_type_id=' . $slug );
 				$status       = __( 'updated', 'frontend-dashboard-custom-post' );
 			}
 
-			$default                     = fed_cp_default_custom_post_types_key();
-			$output                      = fed_compare_two_arrays_get_second_value( $default, $request );
-			$old_cpt[ $request['slug'] ] = $output;
+			$default            = fed_cp_default_custom_post_types_key();
+			$output             = fed_compare_two_arrays_get_second_value( $default, $request );
+			$old_cpt[ $slug ]   = $output;
 
 			update_option( 'fed_cp_custom_posts', $old_cpt );
+
+			// Seed fed_cp_admin_settings if not already set
+			$cp_admin_settings = get_option( 'fed_cp_admin_settings', array() );
+			if ( ! isset( $cp_admin_settings[ $slug ] ) ) {
+				$all_roles = function_exists( 'fed_get_user_roles' ) ? fed_get_user_roles() : array();
+				$cp_admin_settings[ $slug ] = fed_get_default_post_options( $all_roles );
+				$cp_admin_settings[ $slug ]['menu']['rename_post']    = $request['label'];
+				$cp_admin_settings[ $slug ]['menu']['post_menu_icon'] = ! empty( $request['menu_icon'] ) ? $request['menu_icon'] : 'dashicons-admin-post';
+				update_option( 'fed_cp_admin_settings', $cp_admin_settings );
+			}
 
 			wp_send_json_success( array(
 				'message' => sprintf( __( 'Custom post type "%1$s" successfully %2$s.', 'frontend-dashboard-custom-post' ), $request['label'], $status ),
@@ -132,7 +157,8 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 				foreach ( $menus as $index => $menu ) {
 					$supports       = false;
 					$taxonomies     = array();
-					$singular       = isset( $menu['singular_name'] ) && '' !== trim( (string) $menu['singular_name'] ) ? $menu['singular_name'] : ( isset( $menu['label'] ) ? $menu['label'] : $index );
+					$cpt_slug       = sanitize_key( ! empty( $menu['slug'] ) ? $menu['slug'] : $index );
+					$singular       = isset( $menu['singular_name'] ) && '' !== trim( (string) $menu['singular_name'] ) ? $menu['singular_name'] : ( isset( $menu['label'] ) ? $menu['label'] : $cpt_slug );
 					$label          = isset( $menu['label'] ) && '' !== trim( (string) $menu['label'] ) ? $menu['label'] : $singular;
 					$name           = isset( $menu['name'] ) && '' !== trim( (string) $menu['name'] ) ? $menu['name'] : $singular;
 					$menu_name      = isset( $menu['menu_name'] ) && '' !== trim( (string) $menu['menu_name'] ) ? $menu['menu_name'] : $label;
@@ -228,7 +254,7 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 						'rest_base'           => $menu['rest_base'],
 						'taxonomies'          => $taxonomies,
 					);
-					register_post_type( $menu['slug'], $args );
+					register_post_type( $cpt_slug, $args );
 				}
 			}
 		}
@@ -249,13 +275,17 @@ if ( ! class_exists( 'Fed_Cp_Custom_Posts' ) ) {
 		 */
 		protected function fed_cp_edit_custom_post_type( $request ) {
 			$pt = get_option( 'fed_cp_custom_posts', array() );
-			if ( ! isset( $pt[ $request['fed_type_id'] ] ) ) {
-				$url = menu_page_url( 'fed_custom_post', false ) . '&error=invalid_post_type';
-				wp_safe_redirect( $url );
-				exit;
+			$type_id = isset( $request['fed_type_id'] ) ? sanitize_key( $request['fed_type_id'] ) : '';
+			if ( ! isset( $pt[ $type_id ] ) && isset( $request['fed_type_id'], $pt[ $request['fed_type_id'] ] ) ) {
+				$type_id = $request['fed_type_id'];
 			}
-			$cpt = fed_cp_get_custom_post_types( $pt[ $request['fed_type_id'] ] );
-			$this->render_page( $cpt, $pt, 'Edit', $request['fed_type_id'] );
+			if ( empty( $type_id ) || ! isset( $pt[ $type_id ] ) ) {
+				$cpt = fed_cp_get_custom_post_types();
+				$this->render_page( $cpt, $pt, 'Add' );
+				return;
+			}
+			$cpt = fed_cp_get_custom_post_types( $pt[ $type_id ] );
+			$this->render_page( $cpt, $pt, 'Edit', $type_id );
 		}
 
 		/**

@@ -170,6 +170,16 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 				'media'        => false,
 			);
 
+			$scripts['styles']['dashicons'] = array(
+				'wp_core'      => true,
+				'name'         => 'Dashicons',
+				'plugin_name'  => 'Frontend Dashboard Custom Post',
+				'src'          => '',
+				'dependencies' => array(),
+				'version'      => false,
+				'media'        => false,
+			);
+
 			return $scripts;
 		}
 
@@ -224,34 +234,44 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 		 */
 		public function fed_cp_frontend_main_menu( $menus ) {
 			$get_default_post_items    = fed_get_public_post_types();
-			$admin_custom_post_options = get_option( 'fed_cp_admin_settings' );
+			$admin_custom_post_options = get_option( 'fed_cp_admin_settings', array() );
 			$default                   = array();
 			$user                      = get_userdata( get_current_user_id() );
-			if ( $admin_custom_post_options && $user ) {
-				foreach ( $admin_custom_post_options as $key => $options ) {
-					if ( in_array( $key, array_keys( $get_default_post_items ) ) ) {
-						$post_type     = get_post_type_object( $key );
-						$menu_position = ( isset( $options['menu']['post_position'] ) && '' != $options['menu']['post_position'] ) ? (int) $options['menu']['post_position'] : 99;
 
-						$menu_name = $this->getMenuNameByPostType( $options, $post_type );
+			if ( $user && is_array( $get_default_post_items ) ) {
+				foreach ( $get_default_post_items as $key => $post_type_label ) {
+					if ( 'attachment' === $key ) {
+						continue;
+					}
+					$post_type = get_post_type_object( $key );
+					if ( ! $post_type ) {
+						continue;
+					}
 
-						$menu_icon = $this->getMenuIconByPostType( $options, $post_type );
+					$options       = isset( $admin_custom_post_options[ $key ] ) ? $admin_custom_post_options[ $key ] : array();
+					$menu_position = ( isset( $options['menu']['post_position'] ) && '' !== (string) $options['menu']['post_position'] ) ? (int) $options['menu']['post_position'] : 99;
+					$menu_name     = $this->getMenuNameByPostType( $options, $post_type );
+					$menu_icon     = $this->getMenuIconByPostType( $options, $post_type );
 
-						if (
-							isset( $options['permissions']['post_permission'] ) &&
-							count( array_intersect( $user->roles,
-								array_keys( $options['permissions']['post_permission'] ) ) ) > 0
-						) {
-							$default[ $key ] = array(
-								'id'                => $key,
-								'menu_slug'         => 'post',
-								'menu'              => $menu_name,
-								'menu_order'        => $menu_position,
-								'menu_image_id'     => $menu_icon,
-								'show_user_profile' => 'disable',
-								'menu_type'         => 'post',
-							);
-						}
+					$is_allowed = false;
+					if ( isset( $options['permissions']['post_permission'] ) && is_array( $options['permissions']['post_permission'] ) ) {
+						$allowed_roles = array_keys( $options['permissions']['post_permission'] );
+						$is_allowed    = count( array_intersect( (array) $user->roles, $allowed_roles ) ) > 0;
+					} else {
+						// Default allow all roles if not explicitly restricted
+						$is_allowed = true;
+					}
+
+					if ( $is_allowed ) {
+						$default[ $key ] = array(
+							'id'                => $key,
+							'menu_slug'         => 'post',
+							'menu'              => $menu_name,
+							'menu_order'        => $menu_position,
+							'menu_image_id'     => $menu_icon,
+							'show_user_profile' => 'disable',
+							'menu_type'         => 'post',
+						);
 					}
 				}
 			}
@@ -288,9 +308,12 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 		 */
 		public function fed_cp_frontend_dashboard_menu_container( $request, $menu_items ) {
 			if ( 'post' === $menu_items['menu_request']['menu_type'] ) {
-				$post_menus = get_option( 'fed_cp_admin_settings' );
-				$post_type  = get_post_type_object( $menu_items['menu_request']['menu_slug'] );
-				$menu_id    = isset( $menu_items['menu_request']['menu_id'] ) ? $menu_items['menu_request']['menu_id'] : '';
+				$post_menus = get_option( 'fed_cp_admin_settings', array() );
+				$menu_id    = ! empty( $menu_items['menu_request']['menu_id'] ) ? $menu_items['menu_request']['menu_id'] : ( ! empty( $menu_items['menu_request']['menu_slug'] ) ? $menu_items['menu_request']['menu_slug'] : 'post' );
+				$post_type  = get_post_type_object( $menu_id );
+				if ( ! $post_type ) {
+					$post_type = get_post_type_object( 'post' );
+				}
 				$menu_conf  = isset( $post_menus[ $menu_id ] ) ? $post_menus[ $menu_id ] : array();
 				$menu_name  = $this->getMenuNameByPostType( $menu_conf, $post_type );
 				$menu_icon  = $this->getMenuIconByPostType( $menu_conf, $post_type );
@@ -299,62 +322,59 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 					'icon'  => $menu_icon,
 					'query' => $menu_items,
 				);
-				if ( $post_menus ) {
-					?>
-					<div class="fed_dashboard_item active">
-						<div class="flex items-center justify-between pb-5 mb-6 border-b border-slate-100">
-							<div class="flex items-center gap-3">
-								<div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
-									<span class="<?php echo esc_attr( $menu_icon ); ?>"></span>
-								</div>
-								<div>
-									<h2 class="text-xl font-bold text-slate-900 tracking-tight mb-0">
-										<?php echo esc_html( $menu_name ); ?>
-									</h2>
-									<p class="text-xs text-slate-500 mb-0">
-										<?php echo esc_html( sprintf( __( 'Manage your %s items', 'frontend-dashboard-custom-post' ), strtolower( $menu_name ) ) ); ?>
-									</p>
-								</div>
+				?>
+				<div class="fed_dashboard_item active">
+					<div class="flex items-center justify-between pb-5 mb-6 border-b border-slate-100">
+						<div class="flex items-center gap-3">
+							<div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg">
+								<span class="<?php echo esc_attr( $menu_icon ); ?>"></span>
 							</div>
-							<?php if ( ! isset( $request['post_status'] ) && ! isset( $request['post_id'] ) && fed_cp_is_user_can_add_post( $menu_items['menu_request']['menu_id'] ) ) { ?>
-								<a class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-xs transition-all duration-150 no-underline cursor-pointer" href="<?php echo esc_url( add_query_arg( array( 'post_status' => 'add', 'fed_post_type' => $menu_items['menu_request']['menu_id'] ) ) ); ?>">
-									<i class="fa fa-plus text-xs" style="color: #ffffff !important;"></i>
-									<span style="color: #ffffff !important;"><?php esc_html_e( 'Add New', 'frontend-dashboard' ); ?></span>
-								</a>
-							<?php } ?>
+							<div>
+								<h2 class="text-xl font-bold text-slate-900 tracking-tight mb-0">
+									<?php echo esc_html( $menu_name ); ?>
+								</h2>
+								<p class="text-xs text-slate-500 mb-0">
+									<?php echo esc_html( sprintf( __( 'Manage your %s items', 'frontend-dashboard-custom-post' ), strtolower( $menu_name ) ) ); ?>
+								</p>
+							</div>
 						</div>
-						<div class="fed_dashboard_panel_body">
-							<?php
-							do_action( 'fed_dashboard_panel_inside_top' );
-							do_action( 'fed_dashboard_panel_inside_top_' . fed_get_data( 'menu_request.menu_slug',
-									$menu_items ) );
-							/**
-							 * Add New post
-							 */
-							if ( isset( $request['post_status'] ) && 'add' === $request['post_status'] ) {
-								$this->fed_cp_frontend_dashboard_add_new_post( $request, $menu );
-							}
-							/**
-							 * Edit Post by ID
-							 */
-							if ( isset( $request['post_id'] ) && 0 !== (int) $request['post_id'] ) {
-								$this->fed_cp_frontend_dashboard_edit_post_by_id( (int) $request['post_id'], $menu );
-							}
-							/**
-							 * List Post
-							 */
-							if ( ! isset( $request['post_status'] ) && ! isset( $request['post_id'] ) ) {
-								$this->fed_display_dashboard_view_post_list( $menu,
-									$menu_items['menu_request']['menu_id'] );
-							}
-							do_action( 'fed_dashboard_panel_inside_bottom' );
-							do_action( 'fed_dashboard_panel_inside_bottom_' . fed_get_data( 'menu_request.menu_slug',
-									$menu_items ) );
-							?>
-						</div>
+						<?php if ( ! isset( $request['post_status'] ) && ! isset( $request['post_id'] ) && fed_cp_is_user_can_add_post( $menu_id ) ) { ?>
+							<a class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-xs transition-all duration-150 no-underline cursor-pointer" href="<?php echo esc_url( add_query_arg( array( 'post_status' => 'add', 'fed_post_type' => $menu_id ) ) ); ?>">
+								<i class="fa fa-plus text-xs" style="color: #ffffff !important;"></i>
+								<span style="color: #ffffff !important;"><?php esc_html_e( 'Add New', 'frontend-dashboard' ); ?></span>
+							</a>
+						<?php } ?>
 					</div>
-					<?php
-				}
+					<div class="fed_dashboard_panel_body">
+						<?php
+						do_action( 'fed_dashboard_panel_inside_top' );
+						do_action( 'fed_dashboard_panel_inside_top_' . fed_get_data( 'menu_request.menu_slug',
+								$menu_items ) );
+						/**
+						 * Add New post
+						 */
+						if ( isset( $request['post_status'] ) && 'add' === $request['post_status'] ) {
+							$this->fed_cp_frontend_dashboard_add_new_post( $request, $menu );
+						}
+						/**
+						 * Edit Post by ID
+						 */
+						if ( isset( $request['post_id'] ) && 0 !== (int) $request['post_id'] ) {
+							$this->fed_cp_frontend_dashboard_edit_post_by_id( (int) $request['post_id'], $menu );
+						}
+						/**
+						 * List Post
+						 */
+						if ( ! isset( $request['post_status'] ) && ! isset( $request['post_id'] ) ) {
+							$this->fed_display_dashboard_view_post_list( $menu, $menu_id );
+						}
+						do_action( 'fed_dashboard_panel_inside_bottom' );
+						do_action( 'fed_dashboard_panel_inside_bottom_' . fed_get_data( 'menu_request.menu_slug',
+								$menu_items ) );
+						?>
+					</div>
+				</div>
+				<?php
 			}
 		}
 
@@ -435,6 +455,9 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 			$post_array       = array();
 			if ( $custom_post_type ) {
 				foreach ( $custom_post_type as $key => $post_type ) {
+					if ( 'attachment' === $key ) {
+						continue;
+					}
 					$post_object = get_post_type_object( $key );
 					$options     = isset( $cp_admin_settings[ $key ] ) ? $cp_admin_settings[ $key ] : array();
 
@@ -1093,14 +1116,20 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 			 */
 			$menu_icon = 'fa fa-file-text';
 
-			if ( null !== $post_type && isset( $post_type->menu_icon ) ) {
-				$menu_icon = 'dashicons ' . $post_type->menu_icon;
+			if ( null !== $post_type && isset( $post_type->menu_icon ) && ! empty( $post_type->menu_icon ) ) {
+				$menu_icon = $post_type->menu_icon;
 			}
-			if ( isset( $options['menu']['post_menu_icon'] ) && '' != $options['menu']['post_menu_icon'] ) {
-				$menu_icon = esc_attr( $options['menu']['post_menu_icon'] );
+			if ( isset( $options['menu']['post_menu_icon'] ) && '' !== trim( $options['menu']['post_menu_icon'] ) ) {
+				$menu_icon = trim( $options['menu']['post_menu_icon'] );
 			}
 
-			return $menu_icon;
+			if ( strpos( $menu_icon, 'dashicons-' ) !== false && strpos( $menu_icon, 'dashicons ' ) === false && 0 !== strpos( $menu_icon, 'dashicons' ) ) {
+				$menu_icon = 'dashicons ' . $menu_icon;
+			} elseif ( 0 === strpos( $menu_icon, 'dashicons-' ) ) {
+				$menu_icon = 'dashicons ' . $menu_icon;
+			}
+
+			return esc_attr( $menu_icon );
 		}
 
 		/**
@@ -1406,9 +1435,11 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 					<tbody class="divide-y divide-slate-100 text-sm text-slate-700">
 						<?php if ( empty( $posts ) ) { ?>
 							<tr>
-								<td colspan="5" class="py-12 text-center text-slate-400">
-									<i class="fa fa-folder-open-o text-3xl mb-2 block text-slate-300"></i>
-									<p class="text-sm font-medium mb-0"><?php esc_html_e( 'No records found.', 'frontend-dashboard' ); ?></p>
+								<td colspan="5" class="py-12 text-center text-slate-400" style="text-align: center !important;">
+									<div class="flex flex-col items-center justify-center text-center w-full mx-auto" style="display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; text-align: center !important; width: 100% !important; margin: 0 auto !important;">
+										<i class="fas fa-folder-open text-3xl mb-2 text-slate-300" style="margin: 0 auto 8px auto !important; display: block !important; text-align: center !important;"></i>
+										<p class="text-sm font-medium mb-0" style="margin: 0 !important; text-align: center !important;"><?php esc_html_e( 'No records found.', 'frontend-dashboard' ); ?></p>
+									</div>
 								</td>
 							</tr>
 						<?php } else {
