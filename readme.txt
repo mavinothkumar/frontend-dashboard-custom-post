@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/paypalme2/buffercode
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 3.0.2
+Stable tag: 3.0.3
 Requires Plugins: frontend-dashboard
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -39,6 +39,10 @@ For more documentation and FAQs, visit [https://faq.frontenddashboard.com/addons
 
 == Changelog ==
 
+= 3.0.3 =
+* Fix: Prevented smart quote conversion and HTML attribute corruption when publishing or updating custom post content, preserving image tags and attributes across edit cycles.
+* Compatibility: Fully compatible with Frontend Dashboard Core v3.0.9 and WordPress 6.7.
+
 = 3.0.2 =
 * Feature: Declared official WordPress 6.5+ plugin dependency on Frontend Dashboard core (Requires Plugins header).
 * Compatibility: Updated minimum WordPress version requirement to 6.5+.
@@ -58,6 +62,9 @@ More Changelogs:
 https://faq.frontenddashboard.com/changelog/custom-post/
 
 == Upgrade Notice ==
+
+= 3.0.3 =
+Maintenance update: Fixes custom post content attribute sanitization and preserves image tags across edit cycles. Fully compatible with Frontend Dashboard Core 3.0.9.
 
 = 3.0.2 =
 Maintenance & dependency update: Declared official WordPress 6.5+ plugin dependency on Frontend Dashboard core.

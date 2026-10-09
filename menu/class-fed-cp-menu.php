@@ -101,8 +101,12 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 				}
 
 
+				$raw_content = isset( $post['post_content'] ) ? wp_unslash( $post['post_content'] ) : '';
+				if ( is_string( $raw_content ) && '' !== $raw_content && function_exists( 'fed_clean_html_tag_attributes' ) ) {
+					$raw_content = fed_clean_html_tag_attributes( $raw_content );
+				}
 				$default['post_title']     = sanitize_text_field( $post['post_title'] );
-				$default['post_content']   = isset( $post['post_content'] ) ? wp_kses_post( $post['post_content'] ) : '';
+				$default['post_content']   = wp_kses_post( $raw_content );
 				$default['post_category']  = isset( $post['post_category'] ) ? sanitize_text_field( $post['post_category'] ) : '';
 				$default['tags_input']     = isset( $post['tags_input'] ) ? implode( ',', $post['tags_input'] ) : '';
 				$default['post_type']      = isset( $post['post_type'] ) ? sanitize_text_field( $post['post_type'] ) : 'post';
