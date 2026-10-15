@@ -105,16 +105,33 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 				if ( is_string( $raw_content ) && '' !== $raw_content && function_exists( 'fed_clean_html_tag_attributes' ) ) {
 					$raw_content = fed_clean_html_tag_attributes( $raw_content );
 				}
-				$default['post_title']     = sanitize_text_field( $post['post_title'] );
-				$default['post_content']   = wp_kses_post( $raw_content );
-				$default['post_category']  = isset( $post['post_category'] ) ? sanitize_text_field( $post['post_category'] ) : '';
-				$default['tags_input']     = isset( $post['tags_input'] ) ? implode( ',', $post['tags_input'] ) : '';
+				$default['post_title']   = sanitize_text_field( $post['post_title'] );
+				$default['post_content'] = wp_kses_post( $raw_content );
+
+				if ( isset( $post['post_category'] ) ) {
+					$default['post_category'] = is_array( $post['post_category'] )
+						? array_map( 'absint', $post['post_category'] )
+						: array_filter( array( absint( $post['post_category'] ) ) );
+				} elseif ( isset( $post['tax_input']['category'] ) ) {
+					$default['post_category'] = array_map( 'absint', (array) $post['tax_input']['category'] );
+				}
+
+				if ( isset( $post['tags_input'] ) ) {
+					$default['tags_input'] = is_array( $post['tags_input'] )
+						? implode( ',', array_map( 'sanitize_text_field', $post['tags_input'] ) )
+						: sanitize_text_field( $post['tags_input'] );
+				} elseif ( isset( $post['tax_input']['post_tag'] ) ) {
+					$default['tags_input'] = is_array( $post['tax_input']['post_tag'] )
+						? implode( ',', array_map( 'sanitize_text_field', $post['tax_input']['post_tag'] ) )
+						: sanitize_text_field( $post['tax_input']['post_tag'] );
+				}
+
 				$default['post_type']      = isset( $post['post_type'] ) ? sanitize_text_field( $post['post_type'] ) : 'post';
 				$default['comment_status'] = isset( $post['comment_status'] ) ? sanitize_text_field( $post['comment_status'] ) : 'open';
 				$default['post_status']    = fed_sanitize_text_field( $post_status );
 
 				if ( isset( $post['_thumbnail_id'] ) ) {
-					$default['_thumbnail_id'] = ( '' == $post['_thumbnail_id'] ) ? - 1 : (int) $post['_thumbnail_id'];
+					$default['_thumbnail_id'] = ( '' === $post['_thumbnail_id'] ) ? -1 : (int) $post['_thumbnail_id'];
 				}
 
 				if ( isset( $post['tax_input'] ) ) {
@@ -137,6 +154,21 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 
 				if ( $post_id instanceof WP_Error ) {
 					wp_send_json_error( $post_id->get_error_messages() );
+				}
+
+				if ( isset( $post['tax_input'] ) && is_array( $post['tax_input'] ) ) {
+					foreach ( $post['tax_input'] as $taxonomy => $terms ) {
+						if ( ! taxonomy_exists( $taxonomy ) ) {
+							continue;
+						}
+						$terms = is_array( $terms ) ? array_filter( $terms ) : $terms;
+						if ( is_taxonomy_hierarchical( $taxonomy ) ) {
+							$terms = array_unique( array_map( 'absint', (array) $terms ) );
+							wp_set_object_terms( $post_id, $terms, $taxonomy );
+						} else {
+							wp_set_post_terms( $post_id, $terms, $taxonomy );
+						}
+					}
 				}
 
 				wp_send_json_success( array(

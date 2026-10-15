@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/paypalme2/buffercode
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 3.0.3
+Stable tag: 3.0.4
 Requires Plugins: frontend-dashboard
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -38,6 +38,10 @@ Add, manage, and customize custom post types and custom taxonomies directly insi
 For more documentation and FAQs, visit [https://faq.frontenddashboard.com/addons-free/custom-post/overview/](https://faq.frontenddashboard.com/addons-free/custom-post/overview/).
 
 == Changelog ==
+
+= 3.0.4 =
+* Fix: Resolved category and custom taxonomy selection not persisting when creating or editing posts via frontend post forms.
+* Compatibility: Fully compatible with Frontend Dashboard Core v3.0.14 and WordPress 6.7.
 
 = 3.0.3 =
 * Fix: Prevented smart quote conversion and HTML attribute corruption when publishing or updating custom post content, preserving image tags and attributes across edit cycles.
