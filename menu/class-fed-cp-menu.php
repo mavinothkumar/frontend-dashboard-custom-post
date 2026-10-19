@@ -1264,7 +1264,7 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 				if ( 'pending' === $post_status ) {
 					unset( $default_post_status['publish'] );
 				} else {
-					$default_post_status = array( 'draft' => 'Draft' );
+					$default_post_status = array( 'draft' => __( 'Draft', 'frontend-dashboard-custom-post' ) );
 				}
 			}
 
@@ -1418,10 +1418,13 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 
 							<div class="pt-3 border-t border-slate-100">
 								<?php do_action( 'fed_dashboard_post_form_before_submit', $post_type, null ); ?>
-								<button class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
+								<?php
+								$submit_btn_label = isset( $default_post_status['publish'] ) ? __( 'Save & Publish', 'frontend-dashboard-custom-post' ) : __( 'Submit for Review', 'frontend-dashboard-custom-post' );
+								?>
+								<button id="fed_post_submit_btn" class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
 										type="submit">
 									<i class="fa fa-save text-xs" style="color: #ffffff !important;"></i>
-									<span style="color: #ffffff !important;"><?php esc_html_e( 'Save & Publish', 'frontend-dashboard-custom-post' ); ?></span>
+									<span id="fed_post_submit_btn_text" style="color: #ffffff !important;"><?php echo esc_html( $submit_btn_label ); ?></span>
 								</button>
 							</div>
 						</div>
@@ -1842,7 +1845,7 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 										unset( $default_post_status['publish'] );
 									}
 									if ( 'draft' === $post_status_setting && ! fed_is_admin() ) {
-										$default_post_status = array( 'draft' => 'Draft' );
+										$default_post_status = array( 'draft' => __( 'Draft', 'frontend-dashboard-custom-post' ) );
 									}
 									?>
 									<div class="space-y-1.5">

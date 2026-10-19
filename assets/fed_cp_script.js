@@ -71,6 +71,21 @@ jQuery( document ).ready( function ( $ ) {
 			$( this ).find( '.fed_post_status_on_hover' ).hide();
 		} );
 
+		$( document ).on( 'change', 'select[name="post_status"]', function () {
+			var status = $( this ).val();
+			var btnText = $( '#fed_post_submit_btn_text' );
+			if ( ! btnText.length ) {
+				return;
+			}
+			if ( status === 'draft' ) {
+				btnText.text( 'Save Draft' );
+			} else if ( status === 'pending' ) {
+				btnText.text( 'Submit for Review' );
+			} else if ( status === 'publish' ) {
+				btnText.text( 'Save & Publish' );
+			}
+		} );
+
 		function fed_toggle_loader( show ) {
 			if ( typeof show === 'boolean' ) {
 				if ( show ) {
