@@ -1302,6 +1302,10 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 						name="fed_post_type"
 						value="<?php echo esc_attr( $post_type ); ?>">
 
+				<input type="hidden"
+						name="fed_redirect_url"
+						value="<?php echo esc_url( remove_query_arg( array( 'post_status', 'post_id' ) ) ); ?>">
+
 				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 					<!-- Main Canvas (Left 8 Cols) -->
 					<div class="lg:col-span-8 space-y-6">
@@ -1515,6 +1519,17 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 											<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border <?php echo esc_attr( $badge_class ); ?>">
 												<?php echo esc_html( fed_get_display_post_status( $status ) ); ?>
 											</span>
+											<?php
+											$is_featured = is_sticky( $single_post->ID )
+												|| (bool) get_post_meta( $single_post->ID, '_fed_featured', true )
+												|| (bool) get_post_meta( $single_post->ID, '_fed_requested_featured', true );
+											if ( $is_featured ) :
+												?>
+												<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 shadow-2xs">
+													<i class="fa fa-star text-amber-500 text-[10px]"></i>
+													<?php esc_html_e( 'Featured', 'frontend-dashboard-custom-post' ); ?>
+												</span>
+											<?php endif; ?>
 										</div>
 									</td>
 									<td class="py-3.5 px-4 text-slate-600">
@@ -1757,6 +1772,10 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 						'input_type' => 'hidden',
 					) );
 					?>
+
+					<input type="hidden"
+							name="fed_redirect_url"
+							value="<?php echo esc_url( remove_query_arg( array( 'post_status', 'post_id' ) ) ); ?>">
 
 					<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 						<!-- Main Canvas (Left 8 Cols) -->
