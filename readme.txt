@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/paypalme2/buffercode
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 3.0.4
+Stable tag: 3.0.5
 Requires Plugins: frontend-dashboard
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -39,6 +39,10 @@ For more documentation and FAQs, visit [https://faq.frontenddashboard.com/addons
 
 == Changelog ==
 
+= 3.0.5 =
+* Feature: Added `fed_dashboard_post_form_before_submit` action hook in frontend post creation and editing templates (`menu/class-fed-cp-menu.php`), allowing monetization and add-on extensions to seamlessly render pricing notices, payment rules, featured add-on selectors, and prepaid package credits before form submission.
+* Compatibility: Fully compatible with Frontend Dashboard Core v3.0.17 and Frontend Dashboard Pay Per Post v3.0.0.
+
 = 3.0.4 =
 * Fix: Resolved category and custom taxonomy selection not persisting when creating or editing posts via frontend post forms.
 * Compatibility: Fully compatible with Frontend Dashboard Core v3.0.14 and WordPress 6.7.
@@ -66,6 +70,12 @@ More Changelogs:
 https://faq.frontenddashboard.com/changelog/custom-post/
 
 == Upgrade Notice ==
+
+= 3.0.5 =
+Adds `fed_dashboard_post_form_before_submit` action hook for monetization and add-on extensions. Fully compatible with Frontend Dashboard Core v3.0.17 and Frontend Dashboard Pay Per Post v3.0.0.
+
+= 3.0.4 =
+Fixes custom post category and taxonomy term assignment when saving posts from frontend forms.
 
 = 3.0.3 =
 Maintenance update: Fixes custom post content attribute sanitization and preserves image tags across edit cycles. Fully compatible with Frontend Dashboard Core 3.0.9.

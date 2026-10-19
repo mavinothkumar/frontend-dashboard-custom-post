@@ -1417,6 +1417,7 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 							?>
 
 							<div class="pt-3 border-t border-slate-100">
+								<?php do_action( 'fed_dashboard_post_form_before_submit', $post_type, null ); ?>
 								<button class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
 										type="submit">
 									<i class="fa fa-save text-xs" style="color: #ffffff !important;"></i>
@@ -1880,6 +1881,7 @@ if ( ! class_exists( 'Fed_Cp_Menu' ) ) {
 								?>
 
 								<div class="pt-3 border-t border-slate-100">
+									<?php do_action( 'fed_dashboard_post_form_before_submit', $post->post_type, $post ); ?>
 									<button class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
 											type="submit">
 										<i class="fa fa-save text-xs" style="color: #ffffff !important;"></i>

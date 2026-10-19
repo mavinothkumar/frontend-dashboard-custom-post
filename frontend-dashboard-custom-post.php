@@ -3,7 +3,7 @@
  * Plugin Name: Frontend Dashboard Custom Post and Taxonomies
  * Plugin URI: https://buffercode.com/plugin/frontend-dashboard-custom-post-and-taxonomies
  * Description: Frontend Dashboard Custom Post is a plugin to show the custom post inside the Frontend Dashboard.
- * Version: 3.0.4
+ * Version: 3.0.5
  * Requires at least: 6.5
  * Requires PHP: 8.0
  * Requires Plugins: frontend-dashboard
@@ -26,7 +26,7 @@ if ( $fed_check && is_plugin_active( 'frontend-dashboard/frontend-dashboard.php'
 	/**
 	 * Version Number
 	 */
-	define( 'FED_CP_PLUGIN_VERSION', '3.0.4' );
+	define( 'FED_CP_PLUGIN_VERSION', '3.0.5' );
 
 	/**
 	 * App Name
