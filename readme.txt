@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/paypalme2/buffercode
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 3.0.5
+Stable tag: 3.0.6
 Requires Plugins: frontend-dashboard
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -38,6 +38,12 @@ Add, manage, and customize custom post types and custom taxonomies directly insi
 For more documentation and FAQs, visit [https://faq.frontenddashboard.com/addons-free/custom-post/overview/](https://faq.frontenddashboard.com/addons-free/custom-post/overview/).
 
 == Changelog ==
+
+= 3.0.6 =
+* Feature: Featured Post Indicator: Added prominent visual "Featured" badge indicator in frontend post lists for posts highlighted as featured.
+* Feature: Post Submission Redirect: Added `fed_redirect_url` support to frontend post creation and editing forms, seamlessly returning authors to the post list view after submitting a new post or requesting review.
+* Enhancement: Context-Aware Form Action Buttons: Form submission buttons dynamically display intuitive localized text ("Submit for Review", "Publish", "Update") based on user post publishing permissions and current post status.
+* Compatibility: Fully compatible with Frontend Dashboard Core v3.0.18 and Frontend Dashboard Pay Per Post v3.0.0.
 
 = 3.0.5 =
 * Feature: Added `fed_dashboard_post_form_before_submit` action hook in frontend post creation and editing templates (`menu/class-fed-cp-menu.php`), allowing monetization and add-on extensions to seamlessly render pricing notices, payment rules, featured add-on selectors, and prepaid package credits before form submission.
